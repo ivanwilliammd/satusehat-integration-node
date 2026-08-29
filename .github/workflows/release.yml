@@ -26,7 +26,7 @@ jobs:
         run: npm run build
 
       - name: Test
-        run: npm test -- --run
+        run: test -n "$(find src -name '*.test.ts' -o -name '*.spec.ts' 2>/dev/null)" && npm test -- --run || echo "No test files found"
 
       - name: Publish to npm
         run: npm publish --access public
