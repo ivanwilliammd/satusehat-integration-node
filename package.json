@@ -1,5 +1,5 @@
 {
-  "name": "@ivanwilliammd/satusehat-integration-node",
+  "name": "@ivanwilliammd/satusehat-integration",
   "version": "4.11.0",
   "description": "SATUSEHAT FHIR R4 SDK for Node.js / TypeScript",
   "main": "dist/index.js",
