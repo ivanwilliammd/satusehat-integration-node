@@ -1,45 +1,60 @@
-/**
- * AllergyIntolerance FHIR R4 Resource Builder
- * @link https://www.hl7.org/fhir/allergyintolerance.html
- */
-import { SharedBuilder } from './SharedBuilder';
-import { CodeableConcept, Identifier, Reference } from '../datatype/datatypes';
+/** AllergyIntolerance FHIR R4 Resource Builder */
+import { CodeableConcept, Reference, Identifier } from '../datatype/datatypes';
 
-export class AllergyIntolerance extends SharedBuilder {
-  constructor() { super(); this.data.resourceType = 'AllergyIntolerance'; }
+export class AllergyIntolerance {
+  private data: Record<string, any> = { resourceType: 'AllergyIntolerance' };
 
-  addIdentifier(identifier: Identifier): this { super.addIdentifier(identifier); return this; }
+  build(): Record<string, any> {
+    return Object.fromEntries(
+      Object.entries(this.data).filter(([, v]) => v !== null && v !== undefined && !(Array.isArray(v) && v.length === 0))
+    );
+  }
+
+  addIdentifier(identifier: Identifier): this {
+    this.data['identifier'] = this.data['identifier'] || [];
+    this.data['identifier'].push(identifier.toArray());
+    return this;
+  }
   setClinicalStatus(status: string): this {
-    this.set('clinicalStatus', { coding: [{ system: 'http://terminology.hl7.org/CodeSystem/allergyintolerance-clinical', code: status }] });
+    this.data['clinicalStatus'] = { coding: [{ system: 'http://terminology.hl7.org/CodeSystem/allergyintolerance-clinical', code: status }] };
     return this;
   }
   setVerificationStatus(status: string): this {
-    this.set('verificationStatus', { coding: [{ system: 'http://terminology.hl7.org/CodeSystem/allergyintolerance-verification', code: status }] });
+    this.data['verificationStatus'] = { coding: [{ system: 'http://terminology.hl7.org/CodeSystem/allergyintolerance-verification', code: status }] };
     return this;
   }
-  setType(type: string): this { this.set('type', type); return this; }
-  addCategory(category: string): this { this.push('category', category); return this; }
-  setCriticality(criticality: string): this { this.set('criticality', criticality); return this; }
-  setCode(code: CodeableConcept): this { this.set('code', this.nestedToArray(code)); return this; }
-  setPatient(patient: Reference): this { this.set('patient', this.nestedToArray(patient)); return this; }
-  setEncounter(encounter: Reference): this { this.set('encounter', this.nestedToArray(encounter)); return this; }
-  setOnsetDateTime(dateTime: string): this { this.set('onsetDateTime', dateTime); return this; }
-  setRecordedDate(dateTime: string): this { this.set('recordedDate', dateTime); return this; }
-  setRecorder(recorder: Reference): this { this.set('recorder', this.nestedToArray(recorder)); return this; }
-  setAsserter(asserter: Reference): this { this.set('asserter', this.nestedToArray(asserter)); return this; }
-  setLastOccurrence(dateTime: string): this { this.set('lastOccurrence', dateTime); return this; }
-  addNote(text: string): this { this.push('note', { text }); return this; }
+  setType(type: string): this { this.data['type'] = type; return this; }
+  addCategory(category: string): this {
+    this.data['category'] = this.data['category'] || [];
+    this.data['category'].push(category);
+    return this;
+  }
+  setCriticality(criticality: string): this { this.data['criticality'] = criticality; return this; }
+  setCode(code: CodeableConcept): this { this.data['code'] = code.toArray(); return this; }
+  setPatient(patient: Reference): this { this.data['patient'] = patient.toArray(); return this; }
+  setEncounter(encounter: Reference): this { this.data['encounter'] = encounter.toArray(); return this; }
+  setOnsetDateTime(dateTime: string): this { this.data['onsetDateTime'] = dateTime; return this; }
+  setRecordedDate(dateTime: string): this { this.data['recordedDate'] = dateTime; return this; }
+  setRecorder(recorder: Reference): this { this.data['recorder'] = recorder.toArray(); return this; }
+  setAsserter(asserter: Reference): this { this.data['asserter'] = asserter.toArray(); return this; }
+  setLastOccurrence(dateTime: string): this { this.data['lastOccurrence'] = dateTime; return this; }
+  addNote(text: string): this {
+    this.data['note'] = this.data['note'] || [];
+    this.data['note'].push({ text });
+    return this;
+  }
   addReaction(substance: CodeableConcept, manifestation: CodeableConcept, description?: string, onset?: string, severity?: string, exposureRoute?: CodeableConcept, note?: string): this {
-    const reaction: Record<string, unknown> = {
-      substance: this.nestedToArray(substance),
-      manifestation: [this.nestedToArray(manifestation)],
+    const reaction: Record<string, any> = {
+      substance: substance.toArray(),
+      manifestation: [manifestation.toArray()],
     };
     if (description !== undefined) reaction['description'] = description;
     if (onset !== undefined) reaction['onset'] = onset;
     if (severity !== undefined) reaction['severity'] = severity;
-    if (exposureRoute !== undefined) reaction['exposureRoute'] = this.nestedToArray(exposureRoute);
+    if (exposureRoute !== undefined) reaction['exposureRoute'] = exposureRoute.toArray();
     if (note !== undefined) reaction['note'] = [{ text: note }];
-    this.push('reaction', reaction);
+    this.data['reaction'] = this.data['reaction'] || [];
+    this.data['reaction'].push(reaction);
     return this;
   }
 }

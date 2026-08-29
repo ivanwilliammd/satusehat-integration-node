@@ -1,51 +1,89 @@
-/**
- * Procedure FHIR R4 Resource Builder
- * @link https://www.hl7.org/fhir/procedure.html
- */
-import { SharedBuilder } from './SharedBuilder';
-import { Annotation, CodeableConcept, Identifier, Period, Quantity, Range, Reference } from '../datatype/datatypes';
+/** Procedure FHIR R4 Resource Builder */
+import { Annotation, CodeableConcept, Identifier, Period, Range, Reference } from '../datatype/datatypes';
 
-export class Procedure extends SharedBuilder {
-  constructor() { super(); this.data.resourceType = 'Procedure'; }
+export class Procedure {
+  private data: Record<string, any> = { resourceType: 'Procedure' };
 
-  setId(id: string): this { this.set('id', id); return this; }
-  addIdentifier(identifier: Identifier): this { super.addIdentifier(identifier); return this; }
-  setStatus(status: string): this { this.set('status', status); return this; }
-  setCategory(category: CodeableConcept): this { this.set('category', this.nestedToArray(category)); return this; }
-  setCode(code: CodeableConcept): this { this.set('code', this.nestedToArray(code)); return this; }
-  setSubject(subject: Reference): this { this.set('subject', this.nestedToArray(subject)); return this; }
-  setEncounter(encounter: Reference): this { this.set('encounter', this.nestedToArray(encounter)); return this; }
-  // performed[x] polymorphic setters
-  setPerformedDateTime(dateTime: string): this { this.set('performedDateTime', dateTime); return this; }
-  setPerformedPeriod(period: Period): this { this.set('performedPeriod', this.nestedToArray(period)); return this; }
-  setPerformedString(performedString: string): this { this.set('performedString', performedString); return this; }
-  setPerformedAge(age: Range): this { this.set('performedAge', this.nestedToArray(age)); return this; }
-  setPerformedRange(range: Range): this { this.set('performedRange', this.nestedToArray(range)); return this; }
-  addPerformer(actor: Reference, function$?: CodeableConcept, onBehalfOf?: Reference): this {
-    const performer: Record<string, unknown> = { actor: this.nestedToArray(actor) };
-    if (function$ !== undefined) performer['function'] = this.nestedToArray(function$);
-    if (onBehalfOf !== undefined) performer['onBehalfOf'] = this.nestedToArray(onBehalfOf);
-    this.push('performer', performer);
+  build(): Record<string, any> {
+    return Object.fromEntries(
+      Object.entries(this.data).filter(([, v]) => v !== null && v !== undefined && !(Array.isArray(v) && v.length === 0))
+    );
+  }
+
+  setId(id: string): this { this.data['id'] = id; return this; }
+  addIdentifier(identifier: Identifier): this {
+    this.data['identifier'] = this.data['identifier'] || [];
+    this.data['identifier'].push(identifier.toArray());
     return this;
   }
-  setOutcome(outcome: CodeableConcept): this { this.set('outcome', this.nestedToArray(outcome)); return this; }
-  addReport(report: Reference): this { this.push('report', this.nestedToArray(report)); return this; }
-  addFollowUp(followUp: CodeableConcept): this { this.push('followUp', this.nestedToArray(followUp)); return this; }
-  addNote(note: Annotation): this { this.push('note', this.nestedToArray(note)); return this; }
+  setStatus(status: string): this { this.data['status'] = status; return this; }
+  setCategory(category: CodeableConcept): this { this.data['category'] = category.toArray(); return this; }
+  setCode(code: CodeableConcept): this { this.data['code'] = code.toArray(); return this; }
+  setSubject(subject: Reference): this { this.data['subject'] = subject.toArray(); return this; }
+  setEncounter(encounter: Reference): this { this.data['encounter'] = encounter.toArray(); return this; }
+  setPerformedDateTime(dateTime: string): this { this.data['performedDateTime'] = dateTime; return this; }
+  setPerformedPeriod(period: Period): this { this.data['performedPeriod'] = period.toArray(); return this; }
+  setPerformedString(performedString: string): this { this.data['performedString'] = performedString; return this; }
+  setPerformedAge(age: Range): this { this.data['performedAge'] = age.toArray(); return this; }
+  setPerformedRange(range: Range): this { this.data['performedRange'] = range.toArray(); return this; }
+  addPerformer(actor: Reference, fn?: CodeableConcept, onBehalfOf?: Reference): this {
+    const performer: Record<string, any> = { actor: actor.toArray() };
+    if (fn !== undefined) performer['function'] = fn.toArray();
+    if (onBehalfOf !== undefined) performer['onBehalfOf'] = onBehalfOf.toArray();
+    this.data['performer'] = this.data['performer'] || [];
+    this.data['performer'].push(performer);
+    return this;
+  }
+  setOutcome(outcome: CodeableConcept): this { this.data['outcome'] = outcome.toArray(); return this; }
+  addReport(report: Reference): this {
+    this.data['report'] = this.data['report'] || [];
+    this.data['report'].push(report.toArray());
+    return this;
+  }
+  addFollowUp(followUp: CodeableConcept): this {
+    this.data['followUp'] = this.data['followUp'] || [];
+    this.data['followUp'].push(followUp.toArray());
+    return this;
+  }
+  addNote(note: Annotation): this {
+    this.data['note'] = this.data['note'] || [];
+    this.data['note'].push(note.toArray());
+    return this;
+  }
   addFocalDevice(action: CodeableConcept, device?: Reference, manufactureItem?: Reference): this {
-    const focalDevice: Record<string, unknown> = { action: this.nestedToArray(action) };
-    if (device !== undefined) focalDevice['device'] = this.nestedToArray(device);
-    if (manufactureItem !== undefined) focalDevice['manufactureItem'] = this.nestedToArray(manufactureItem);
-    this.push('focalDevice', focalDevice);
+    const focalDevice: Record<string, any> = { action: action.toArray() };
+    if (device !== undefined) focalDevice['device'] = device.toArray();
+    if (manufactureItem !== undefined) focalDevice['manufactureItem'] = manufactureItem.toArray();
+    this.data['focalDevice'] = this.data['focalDevice'] || [];
+    this.data['focalDevice'].push(focalDevice);
     return this;
   }
   addUsedReference(reference: Reference, type?: CodeableConcept): this {
-    const used = this.nestedToArray(reference) as Record<string, unknown>;
-    if (type !== undefined) used['type'] = this.nestedToArray(type);
-    this.push('usedReference', used);
+    const used = reference.toArray() as Record<string, any>;
+    if (type !== undefined) used['type'] = type.toArray();
+    this.data['usedReference'] = this.data['usedReference'] || [];
+    this.data['usedReference'].push(used);
     return this;
   }
-  addUsedCode(usedCode: CodeableConcept): this { this.push('usedCode', this.nestedToArray(usedCode)); return this; }
-  addBodySite(bodySite: CodeableConcept): this { this.push('bodySite', this.nestedToArray(bodySite)); return this; }
-  addExtension(url: string, value: unknown, valueType?: string): this { super.addExtension(url, value, valueType); return this; }
+  addUsedCode(usedCode: CodeableConcept): this {
+    this.data['usedCode'] = this.data['usedCode'] || [];
+    this.data['usedCode'].push(usedCode.toArray());
+    return this;
+  }
+  addBodySite(bodySite: CodeableConcept): this {
+    this.data['bodySite'] = this.data['bodySite'] || [];
+    this.data['bodySite'].push(bodySite.toArray());
+    return this;
+  }
+  addExtension(url: string, value: unknown, valueType?: string): this {
+    const extension: Record<string, any> = { url };
+    if (valueType !== undefined) {
+      extension['value' + valueType.charAt(0).toUpperCase() + valueType.slice(1)] = value;
+    } else {
+      extension['valueString'] = typeof value === 'string' ? value : value;
+    }
+    this.data['extension'] = this.data['extension'] || [];
+    this.data['extension'].push(extension);
+    return this;
+  }
 }

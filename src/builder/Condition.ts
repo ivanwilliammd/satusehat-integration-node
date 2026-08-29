@@ -1,49 +1,73 @@
-/**
- * Condition FHIR R4 Resource Builder
- * @link https://www.hl7.org/fhir/condition.html
- */
-import { SharedBuilder } from './SharedBuilder';
+/** Condition FHIR R4 Resource Builder */
 import { Annotation, CodeableConcept, Identifier, Period, Range, Reference } from '../datatype/datatypes';
 
-export class Condition extends SharedBuilder {
-  constructor() { super(); this.data.resourceType = 'Condition'; }
+export class Condition {
+  private data: Record<string, any> = { resourceType: 'Condition' };
 
-  setId(id: string): this { this.set('id', id); return this; }
-  addIdentifier(identifier: Identifier): this { super.addIdentifier(identifier); return this; }
-  setClinicalStatus(clinicalStatus: CodeableConcept): this { this.set('clinicalStatus', this.nestedToArray(clinicalStatus)); return this; }
-  setVerificationStatus(verificationStatus: CodeableConcept): this { this.set('verificationStatus', this.nestedToArray(verificationStatus)); return this; }
-  addCategory(category: CodeableConcept): this { this.push('category', this.nestedToArray(category)); return this; }
-  setSeverity(severity: CodeableConcept): this { this.set('severity', this.nestedToArray(severity)); return this; }
-  setCode(code: CodeableConcept): this { this.set('code', this.nestedToArray(code)); return this; }
-  setSubject(subject: Reference): this { this.set('subject', this.nestedToArray(subject)); return this; }
-  setEncounter(encounter: Reference): this { this.set('encounter', this.nestedToArray(encounter)); return this; }
-  // onset[x] polymorphic setters
-  setOnsetDateTime(dateTime: string): this { this.set('onsetDateTime', dateTime); return this; }
-  setOnsetAge(age: Range): this { this.set('onsetAge', this.nestedToArray(age)); return this; }
-  setOnsetPeriod(period: Period): this { this.set('onsetPeriod', this.nestedToArray(period)); return this; }
-  setOnsetRange(range: Range): this { this.set('onsetRange', this.nestedToArray(range)); return this; }
-  setOnsetString(onsetString: string): this { this.set('onsetString', onsetString); return this; }
-  // abatement[x] polymorphic setters
-  setAbatementDateTime(dateTime: string): this { this.set('abatementDateTime', dateTime); return this; }
-  setAbatementAge(age: Range): this { this.set('abatementAge', this.nestedToArray(age)); return this; }
-  setAbatementPeriod(period: Period): this { this.set('abatementPeriod', this.nestedToArray(period)); return this; }
-  setAbatementRange(range: Range): this { this.set('abatementRange', this.nestedToArray(range)); return this; }
-  setAbatementString(abatementString: string): this { this.set('abatementString', abatementString); return this; }
-  setRecordedDate(recordedDate: string): this { this.set('recordedDate', recordedDate); return this; }
-  setRecorder(recorder: Reference): this { this.set('recorder', this.nestedToArray(recorder)); return this; }
-  setAsserter(asserter: Reference): this { this.set('asserter', this.nestedToArray(asserter)); return this; }
+  build(): Record<string, any> {
+    return Object.fromEntries(
+      Object.entries(this.data).filter(([, v]) => v !== null && v !== undefined && !(Array.isArray(v) && v.length === 0))
+    );
+  }
+
+  setId(id: string): this { this.data['id'] = id; return this; }
+  addIdentifier(identifier: Identifier): this {
+    this.data['identifier'] = this.data['identifier'] || [];
+    this.data['identifier'].push(identifier.toArray());
+    return this;
+  }
+  setClinicalStatus(clinicalStatus: CodeableConcept): this { this.data['clinicalStatus'] = clinicalStatus.toArray(); return this; }
+  setVerificationStatus(verificationStatus: CodeableConcept): this { this.data['verificationStatus'] = verificationStatus.toArray(); return this; }
+  addCategory(category: CodeableConcept): this {
+    this.data['category'] = this.data['category'] || [];
+    this.data['category'].push(category.toArray());
+    return this;
+  }
+  setSeverity(severity: CodeableConcept): this { this.data['severity'] = severity.toArray(); return this; }
+  setCode(code: CodeableConcept): this { this.data['code'] = code.toArray(); return this; }
+  setSubject(subject: Reference): this { this.data['subject'] = subject.toArray(); return this; }
+  setEncounter(encounter: Reference): this { this.data['encounter'] = encounter.toArray(); return this; }
+  setOnsetDateTime(dateTime: string): this { this.data['onsetDateTime'] = dateTime; return this; }
+  setOnsetAge(age: Range): this { this.data['onsetAge'] = age.toArray(); return this; }
+  setOnsetPeriod(period: Period): this { this.data['onsetPeriod'] = period.toArray(); return this; }
+  setOnsetRange(range: Range): this { this.data['onsetRange'] = range.toArray(); return this; }
+  setOnsetString(onsetString: string): this { this.data['onsetString'] = onsetString; return this; }
+  setAbatementDateTime(dateTime: string): this { this.data['abatementDateTime'] = dateTime; return this; }
+  setAbatementAge(age: Range): this { this.data['abatementAge'] = age.toArray(); return this; }
+  setAbatementPeriod(period: Period): this { this.data['abatementPeriod'] = period.toArray(); return this; }
+  setAbatementRange(range: Range): this { this.data['abatementRange'] = range.toArray(); return this; }
+  setAbatementString(abatementString: string): this { this.data['abatementString'] = abatementString; return this; }
+  setRecordedDate(recordedDate: string): this { this.data['recordedDate'] = recordedDate; return this; }
+  setRecorder(recorder: Reference): this { this.data['recorder'] = recorder.toArray(); return this; }
+  setAsserter(asserter: Reference): this { this.data['asserter'] = asserter.toArray(); return this; }
   addStage(summary: CodeableConcept, assessment?: Reference): this {
-    const stage: Record<string, unknown> = { summary: this.nestedToArray(summary) };
-    if (assessment !== undefined) stage['assessment'] = [this.nestedToArray(assessment)];
-    this.push('stage', stage);
+    const stage: Record<string, any> = { summary: summary.toArray() };
+    if (assessment !== undefined) stage['assessment'] = [assessment.toArray()];
+    this.data['stage'] = this.data['stage'] || [];
+    this.data['stage'].push(stage);
     return this;
   }
   addEvidence(code: CodeableConcept, detail?: Reference): this {
-    const evidence: Record<string, unknown> = { code: [this.nestedToArray(code)] };
-    if (detail !== undefined) evidence['detail'] = [this.nestedToArray(detail)];
-    this.push('evidence', evidence);
+    const evidence: Record<string, any> = { code: [code.toArray()] };
+    if (detail !== undefined) evidence['detail'] = [detail.toArray()];
+    this.data['evidence'] = this.data['evidence'] || [];
+    this.data['evidence'].push(evidence);
     return this;
   }
-  addNote(note: Annotation): this { this.push('note', this.nestedToArray(note)); return this; }
-  addExtension(url: string, value: unknown, valueType?: string): this { super.addExtension(url, value, valueType); return this; }
+  addNote(note: Annotation): this {
+    this.data['note'] = this.data['note'] || [];
+    this.data['note'].push(note.toArray());
+    return this;
+  }
+  addExtension(url: string, value: unknown, valueType?: string): this {
+    const extension: Record<string, any> = { url };
+    if (valueType !== undefined) {
+      extension['value' + valueType.charAt(0).toUpperCase() + valueType.slice(1)] = value;
+    } else {
+      extension['valueString'] = typeof value === 'string' ? value : value;
+    }
+    this.data['extension'] = this.data['extension'] || [];
+    this.data['extension'].push(extension);
+    return this;
+  }
 }

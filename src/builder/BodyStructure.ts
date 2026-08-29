@@ -1,23 +1,36 @@
-/**
- * BodyStructure FHIR R4 Resource Builder
- * @link https://www.hl7.org/fhir/bodystructure.html
- */
-import { SharedBuilder } from './SharedBuilder';
+/** BodyStructure FHIR R4 Resource Builder */
 import { CodeableConcept, Identifier, Reference } from '../datatype/datatypes';
 
-export class BodyStructure extends SharedBuilder {
-  constructor() { super(); this.data.resourceType = 'BodyStructure'; }
+export class BodyStructure {
+  private data: Record<string, any> = { resourceType: 'BodyStructure' };
 
-  setId(id: string): this { this.set('id', id); return this; }
-  addIdentifier(identifier: Identifier): this { super.addIdentifier(identifier); return this; }
-  setActive(active: boolean): this { this.set('active', active); return this; }
-  setMorphology(morphology: CodeableConcept): this { this.set('morphology', this.nestedToArray(morphology)); return this; }
-  setLocation(location: CodeableConcept): this { this.set('location', this.nestedToArray(location)); return this; }
-  addLocationQualifier(qualifier: CodeableConcept): this { this.push('locationQualifier', this.nestedToArray(qualifier)); return this; }
-  setDescription(description: string): this { this.set('description', description); return this; }
-  setImage(data: string, contentType: string, title?: string): this {
-    this.push('image', { data, contentType, ...(title !== undefined ? { title } : {}) });
+  build(): Record<string, any> {
+    return Object.fromEntries(
+      Object.entries(this.data).filter(([, v]) => v !== null && v !== undefined && !(Array.isArray(v) && v.length === 0))
+    );
+  }
+
+  setId(id: string): this { this.data['id'] = id; return this; }
+  addIdentifier(system: string, value: string, use?: string, typeCode?: string, typeDisplay?: string): this {
+    const ident: Record<string, any> = { system, value };
+    if (use !== undefined) ident['use'] = use;
+    if (typeCode !== undefined) {
+      ident['type'] = { coding: [{ system: 'http://terminology.hl7.org/CodeSystem/v2-0203', code: typeCode, display: typeDisplay ?? typeCode }] };
+    }
+    this.data['identifier'] = this.data['identifier'] || [];
+    this.data['identifier'].push(ident);
     return this;
   }
-  setPatient(patient: Reference): this { this.set('patient', this.nestedToArray(patient)); return this; }
+  setStatus(status: string): this { this.data['status'] = status; return this; }
+  setCode(system: string, code: string, display: string): this {
+    this.data['code'] = { coding: [{ system, code, display }] };
+    return this;
+  }
+  setSubject(reference: string, display?: string): this {
+    const subject: Record<string, any> = { reference };
+    if (display !== undefined) subject['display'] = display;
+    this.data['subject'] = subject;
+    return this;
+  }
+  setEncounter(reference: string): this { this.data['encounter'] = { reference }; return this; }
 }

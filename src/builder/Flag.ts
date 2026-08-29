@@ -1,20 +1,36 @@
-/**
- * Flag FHIR R4 Resource Builder
- * @link https://www.hl7.org/fhir/flag.html
- */
-import { SharedBuilder } from './SharedBuilder';
+/** Flag FHIR R4 Resource Builder */
 import { CodeableConcept, Identifier, Period, Reference } from '../datatype/datatypes';
 
-export class Flag extends SharedBuilder {
-  constructor() { super(); this.data.resourceType = 'Flag'; }
+export class Flag {
+  private data: Record<string, any> = { resourceType: 'Flag' };
 
-  setId(id: string): this { this.set('id', id); return this; }
-  addIdentifier(identifier: Identifier): this { super.addIdentifier(identifier); return this; }
-  setStatus(status: string): this { this.set('status', status); return this; }
-  setCategory(category: CodeableConcept): this { this.set('category', this.nestedToArray(category)); return this; }
-  setCode(code: CodeableConcept): this { this.set('code', this.nestedToArray(code)); return this; }
-  setSubject(subject: Reference): this { this.set('subject', this.nestedToArray(subject)); return this; }
-  setEncounter(encounter: Reference): this { this.set('encounter', this.nestedToArray(encounter)); return this; }
-  setPeriod(period: Period): this { this.set('period', this.nestedToArray(period)); return this; }
-  setAuthor(author: Reference): this { this.set('author', this.nestedToArray(author)); return this; }
+  build(): Record<string, any> {
+    return Object.fromEntries(
+      Object.entries(this.data).filter(([, v]) => v !== null && v !== undefined && !(Array.isArray(v) && v.length === 0))
+    );
+  }
+
+  setId(id: string): this { this.data['id'] = id; return this; }
+  addIdentifier(system: string, value: string, use?: string, typeCode?: string, typeDisplay?: string): this {
+    const ident: Record<string, any> = { system, value };
+    if (use !== undefined) ident['use'] = use;
+    if (typeCode !== undefined) {
+      ident['type'] = { coding: [{ system: 'http://terminology.hl7.org/CodeSystem/v2-0203', code: typeCode, display: typeDisplay ?? typeCode }] };
+    }
+    this.data['identifier'] = this.data['identifier'] || [];
+    this.data['identifier'].push(ident);
+    return this;
+  }
+  setStatus(status: string): this { this.data['status'] = status; return this; }
+  setCode(system: string, code: string, display: string): this {
+    this.data['code'] = { coding: [{ system, code, display }] };
+    return this;
+  }
+  setSubject(reference: string, display?: string): this {
+    const subject: Record<string, any> = { reference };
+    if (display !== undefined) subject['display'] = display;
+    this.data['subject'] = subject;
+    return this;
+  }
+  setEncounter(reference: string): this { this.data['encounter'] = { reference }; return this; }
 }

@@ -1,37 +1,58 @@
-/**
- * EpisodeOfCare FHIR R4 Resource Builder
- * @link https://www.hl7.org/fhir/episodeofcare.html
- */
-import { SharedBuilder } from './SharedBuilder';
+/** EpisodeOfCare FHIR R4 Resource Builder */
 import { CodeableConcept, Identifier, Period, Reference } from '../datatype/datatypes';
 
-export class EpisodeOfCare extends SharedBuilder {
-  constructor() { super(); this.data.resourceType = 'EpisodeOfCare'; }
+export class EpisodeOfCare {
+  private data: Record<string, any> = { resourceType: 'EpisodeOfCare' };
 
-  setId(id: string): this { this.set('id', id); return this; }
-  addIdentifier(identifier: Identifier): this { super.addIdentifier(identifier); return this; }
-  setStatus(status: string): this { this.set('status', status); return this; }
+  build(): Record<string, any> {
+    return Object.fromEntries(
+      Object.entries(this.data).filter(([, v]) => v !== null && v !== undefined && !(Array.isArray(v) && v.length === 0))
+    );
+  }
+
+  setId(id: string): this { this.data['id'] = id; return this; }
+  addIdentifier(identifier: Identifier): this {
+    this.data['identifier'] = this.data['identifier'] || [];
+    this.data['identifier'].push(identifier.toArray());
+    return this;
+  }
+  setStatus(status: string): this { this.data['status'] = status; return this; }
   addStatusHistory(status: string, start: string, end?: string): this {
-    const period: Record<string, unknown> = { start };
+    const period: Record<string, any> = { start };
     if (end !== undefined) period['end'] = end;
-    this.push('statusHistory', { status, period });
+    this.data['statusHistory'] = this.data['statusHistory'] || [];
+    this.data['statusHistory'].push({ status, period });
     return this;
   }
-  setPatient(patient: Reference): this { this.set('patient', this.nestedToArray(patient)); return this; }
-  setManagingOrganization(organization: Reference): this { this.set('managingOrganization', this.nestedToArray(organization)); return this; }
-  addType(type: CodeableConcept): this { this.push('type', this.nestedToArray(type)); return this; }
-  setPeriod(period: Period): this { this.set('period', this.nestedToArray(period)); return this; }
+  setPatient(patient: Reference): this { this.data['patient'] = patient.toArray(); return this; }
+  setManagingOrganization(organization: Reference): this { this.data['managingOrganization'] = organization.toArray(); return this; }
+  addType(type: CodeableConcept): this {
+    this.data['type'] = this.data['type'] || [];
+    this.data['type'].push(type.toArray());
+    return this;
+  }
+  setPeriod(period: Period): this { this.data['period'] = period.toArray(); return this; }
   addDiagnosis(condition: Reference, role: CodeableConcept, rank?: number): this {
-    const diagnosis: Record<string, unknown> = {
-      condition: this.nestedToArray(condition),
-      role: this.nestedToArray(role),
-    };
+    const diagnosis: Record<string, any> = { condition: condition.toArray(), role: role.toArray() };
     if (rank !== undefined) diagnosis['rank'] = rank;
-    this.push('diagnosis', diagnosis);
+    this.data['diagnosis'] = this.data['diagnosis'] || [];
+    this.data['diagnosis'].push(diagnosis);
     return this;
   }
-  addReferralRequest(referralRequest: Reference): this { this.push('referralRequest', this.nestedToArray(referralRequest)); return this; }
-  setCareManager(careManager: Reference): this { this.set('careManager', this.nestedToArray(careManager)); return this; }
-  addTeam(team: Reference): this { this.push('team', this.nestedToArray(team)); return this; }
-  addAccount(account: Reference): this { this.push('account', this.nestedToArray(account)); return this; }
+  addReferralRequest(referralRequest: Reference): this {
+    this.data['referralRequest'] = this.data['referralRequest'] || [];
+    this.data['referralRequest'].push(referralRequest.toArray());
+    return this;
+  }
+  setCareManager(careManager: Reference): this { this.data['careManager'] = careManager.toArray(); return this; }
+  addTeam(team: Reference): this {
+    this.data['team'] = this.data['team'] || [];
+    this.data['team'].push(team.toArray());
+    return this;
+  }
+  addAccount(account: Reference): this {
+    this.data['account'] = this.data['account'] || [];
+    this.data['account'].push(account.toArray());
+    return this;
+  }
 }

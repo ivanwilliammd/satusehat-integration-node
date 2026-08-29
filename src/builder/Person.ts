@@ -1,26 +1,36 @@
-/**
- * Person FHIR R4 Resource Builder
- * @link https://www.hl7.org/fhir/person.html
- */
-import { SharedBuilder } from './SharedBuilder';
-import { Address, HumanName, Identifier, Reference } from '../datatype/datatypes';
+/** Person FHIR R4 Resource Builder */
+import { Identifier } from '../datatype/datatypes';
 
-export class Person extends SharedBuilder {
-  constructor() { super(); this.data.resourceType = 'Person'; }
+export class Person {
+  private data: Record<string, any> = { resourceType: 'Person' };
 
-  setId(id: string): this { this.set('id', id); return this; }
-  addIdentifier(identifier: Identifier): this { super.addIdentifier(identifier); return this; }
-  setActive(active: boolean): this { this.set('active', active); return this; }
-  addName(name: HumanName): this { this.push('name', this.nestedToArray(name)); return this; }
-  addTelecom(telecom: { system: string; value: string; use?: string }): this { this.push('telecom', telecom); return this; }
-  setGender(gender: string): this { this.set('gender', gender); return this; }
-  setBirthDate(birthDate: string): this { this.set('birthDate', birthDate); return this; }
-  addAddress(address: Address): this { this.push('address', this.nestedToArray(address)); return this; }
-  setLink(patient: Reference, assurance?: string): this {
-    const link: Record<string, unknown> = { target: this.nestedToArray(patient) as Record<string, unknown> };
-    if (assurance !== undefined) link['assurance'] = assurance;
-    this.push('link', link);
+  build(): Record<string, any> {
+    return Object.fromEntries(
+      Object.entries(this.data).filter(([, v]) => v !== null && v !== undefined && !(Array.isArray(v) && v.length === 0))
+    );
+  }
+
+  setId(id: string): this { this.data['id'] = id; return this; }
+  addIdentifier(system: string, value: string, use?: string, typeCode?: string, typeDisplay?: string): this {
+    const ident: Record<string, any> = { system, value };
+    if (use !== undefined) ident['use'] = use;
+    if (typeCode !== undefined) {
+      ident['type'] = { coding: [{ system: 'http://terminology.hl7.org/CodeSystem/v2-0203', code: typeCode, display: typeDisplay ?? typeCode }] };
+    }
+    this.data['identifier'] = this.data['identifier'] || [];
+    this.data['identifier'].push(ident);
     return this;
   }
-  addExtension(url: string, value: unknown, valueType?: string): this { super.addExtension(url, value, valueType); return this; }
+  setStatus(status: string): this { this.data['status'] = status; return this; }
+  setCode(system: string, code: string, display: string): this {
+    this.data['code'] = { coding: [{ system, code, display }] };
+    return this;
+  }
+  setSubject(reference: string, display?: string): this {
+    const subject: Record<string, any> = { reference };
+    if (display !== undefined) subject['display'] = display;
+    this.data['subject'] = subject;
+    return this;
+  }
+  setEncounter(reference: string): this { this.data['encounter'] = { reference }; return this; }
 }

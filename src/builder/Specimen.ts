@@ -1,30 +1,88 @@
-/**
- * Specimen FHIR R4 Resource Builder
- * @link https://www.hl7.org/fhir/specimen.html
- */
-import { SharedBuilder } from './SharedBuilder';
+/** Specimen FHIR R4 Resource Builder */
 import { CodeableConcept, Identifier, Quantity, Reference } from '../datatype/datatypes';
 
-export class Specimen extends SharedBuilder {
-  constructor() { super(); this.data.resourceType = 'Specimen'; }
+export class Specimen {
+  private data: Record<string, any> = { resourceType: 'Specimen' };
 
-  setId(id: string): this { this.set('id', id); return this; }
-  setStatus(status: string): this { this.set('status', status); return this; }
-  setType(type: CodeableConcept): this { this.set('type', this.nestedToArray(type)); return this; }
-  setSubject(subject: Reference): this { this.set('subject', this.nestedToArray(subject)); return this; }
-  addIdentifier(identifier: Identifier): this { super.addIdentifier(identifier); return this; }
-  setReceivedTime(dateTime: string): this { this.set('receivedTime', dateTime); return this; }
-  setCollectedDateTime(dateTime: string): this { this.set('collection/collectedDateTime', dateTime); return this; }
-  setCollector(collector: Reference): this { this.set('collection/collector', this.nestedToArray(collector)); return this; }
-  setFastingStatusCodeableConcept(status: CodeableConcept): this { this.set('collection/fastingStatusCodeableConcept', this.nestedToArray(status)); return this; }
-  setMethod(method: CodeableConcept): this { this.set('collection/method', this.nestedToArray(method)); return this; }
-  setQuantity(quantity: Quantity): this { this.set('collection/quantity', this.nestedToArray(quantity)); return this; }
-  setBodySite(bodySite: CodeableConcept): this { this.set('collection/bodySite', this.nestedToArray(bodySite)); return this; }
-  addRequest(request: Reference): this { this.push('request', this.nestedToArray(request)); return this; }
-  addCondition(text: string): this { this.push('condition', { text }); return this; }
-  addProcessing(timeDateTime: string): this { this.push('processing', { timeDateTime }); return this; }
-  addExtension(url: string, value: string): this { this.push('extension', { url, valueString: value }); return this; }
-  addTransportedTime(dateTime: string): this { this.push('extension', { url: 'https://fhir.kemkes.go.id/r4/StructureDefinition/TransportedTime', valueDateTime: dateTime }); return this; }
-  addTransportedPerson(name: string, telecom: string[] = []): this { this.push('extension', { url: 'https://fhir.kemkes.go.id/r4/StructureDefinition/TransportedPerson', valueContactDetail: { name, telecom } }); return this; }
-  addReceivedPerson(person: Reference): this { this.push('extension', { url: 'https://fhir.kemkes.go.id/r4/StructureDefinition/ReceivedPerson', valueReference: this.nestedToArray(person) }); return this; }
+  build(): Record<string, any> {
+    return Object.fromEntries(
+      Object.entries(this.data).filter(([, v]) => v !== null && v !== undefined && !(Array.isArray(v) && v.length === 0))
+    );
+  }
+
+  setId(id: string): this { this.data['id'] = id; return this; }
+  setStatus(status: string): this { this.data['status'] = status; return this; }
+  setType(type: CodeableConcept): this { this.data['type'] = type.toArray(); return this; }
+  setSubject(subject: Reference): this { this.data['subject'] = subject.toArray(); return this; }
+  addIdentifier(identifier: Identifier): this {
+    this.data['identifier'] = this.data['identifier'] || [];
+    this.data['identifier'].push(identifier.toArray());
+    return this;
+  }
+  setReceivedTime(dateTime: string): this { this.data['receivedTime'] = dateTime; return this; }
+  setCollectedDateTime(dateTime: string): this {
+    this.data['collection'] = this.data['collection'] || {};
+    this.data['collection']['collectedDateTime'] = dateTime;
+    return this;
+  }
+  setCollector(collector: Reference): this {
+    this.data['collection'] = this.data['collection'] || {};
+    this.data['collection']['collector'] = collector.toArray();
+    return this;
+  }
+  setFastingStatusCodeableConcept(status: CodeableConcept): this {
+    this.data['collection'] = this.data['collection'] || {};
+    this.data['collection']['fastingStatusCodeableConcept'] = status.toArray();
+    return this;
+  }
+  setMethod(method: CodeableConcept): this {
+    this.data['collection'] = this.data['collection'] || {};
+    this.data['collection']['method'] = method.toArray();
+    return this;
+  }
+  setQuantity(quantity: Quantity): this {
+    this.data['collection'] = this.data['collection'] || {};
+    this.data['collection']['quantity'] = quantity.toArray();
+    return this;
+  }
+  setBodySite(bodySite: CodeableConcept): this {
+    this.data['collection'] = this.data['collection'] || {};
+    this.data['collection']['bodySite'] = bodySite.toArray();
+    return this;
+  }
+  addRequest(request: Reference): this {
+    this.data['request'] = this.data['request'] || [];
+    this.data['request'].push(request.toArray());
+    return this;
+  }
+  addCondition(text: string): this {
+    this.data['condition'] = this.data['condition'] || [];
+    this.data['condition'].push({ text });
+    return this;
+  }
+  addProcessing(timeDateTime: string): this {
+    this.data['processing'] = this.data['processing'] || [];
+    this.data['processing'].push({ timeDateTime });
+    return this;
+  }
+  addExtension(url: string, value: string): this {
+    this.data['extension'] = this.data['extension'] || [];
+    this.data['extension'].push({ url, valueString: value });
+    return this;
+  }
+  addTransportedTime(dateTime: string): this {
+    this.data['extension'] = this.data['extension'] || [];
+    this.data['extension'].push({ url: 'https://fhir.kemkes.go.id/r4/StructureDefinition/TransportedTime', valueDateTime: dateTime });
+    return this;
+  }
+  addTransportedPerson(name: string, telecom: string[] = []): this {
+    this.data['extension'] = this.data['extension'] || [];
+    this.data['extension'].push({ url: 'https://fhir.kemkes.go.id/r4/StructureDefinition/TransportedPerson', valueContactDetail: { name, telecom } });
+    return this;
+  }
+  addReceivedPerson(person: Reference): this {
+    this.data['extension'] = this.data['extension'] || [];
+    this.data['extension'].push({ url: 'https://fhir.kemkes.go.id/r4/StructureDefinition/ReceivedPerson', valueReference: person.toArray() });
+    return this;
+  }
 }

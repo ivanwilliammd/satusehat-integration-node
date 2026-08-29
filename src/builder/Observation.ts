@@ -1,66 +1,99 @@
-/**
- * Observation FHIR R4 Resource Builder
- * @link https://www.hl7.org/fhir/observation.html
- */
-import { SharedBuilder } from './SharedBuilder';
+/** Observation FHIR R4 Resource Builder */
 import { Annotation, CodeableConcept, Identifier, Period, Quantity, Range, Ratio, Reference } from '../datatype/datatypes';
 
-export class Observation extends SharedBuilder {
-  constructor() { super(); this.data.resourceType = 'Observation'; }
+export class Observation {
+  private data: Record<string, any> = { resourceType: 'Observation' };
 
-  setId(id: string): this { this.set('id', id); return this; }
-  addIdentifier(identifier: Identifier): this { super.addIdentifier(identifier); return this; }
-  setStatus(status: string): this { this.set('status', status); return this; }
-  addCategory(category: CodeableConcept): this { this.push('category', this.nestedToArray(category)); return this; }
-  setCode(code: CodeableConcept): this { this.set('code', this.nestedToArray(code)); return this; }
-  setSubject(subject: Reference): this { this.set('subject', this.nestedToArray(subject)); return this; }
-  setEncounter(encounter: Reference): this { this.set('encounter', this.nestedToArray(encounter)); return this; }
-  setEffectiveDateTime(dateTime: string): this { this.set('effectiveDateTime', dateTime); return this; }
-  setEffectivePeriod(period: Period): this { this.set('effectivePeriod', this.nestedToArray(period)); return this; }
-  setEffectiveInstant(instant: string): this { this.set('effectiveInstant', instant); return this; }
-  setEffectivePeriodStart(start: string): this { this.set('effectivePeriod', { start }); return this; }
-  setEffectivePeriodEnd(end: string): this {
-    const existing = (this.data['effectivePeriod'] as Record<string, unknown>) ?? {};
-    this.set('effectivePeriod', { ...existing, end });
+  build(): Record<string, any> {
+    return Object.fromEntries(
+      Object.entries(this.data).filter(([, v]) => v !== null && v !== undefined && !(Array.isArray(v) && v.length === 0))
+    );
+  }
+
+  setId(id: string): this { this.data['id'] = id; return this; }
+  addIdentifier(identifier: Identifier): this {
+    this.data['identifier'] = this.data['identifier'] || [];
+    this.data['identifier'].push(identifier.toArray());
     return this;
   }
-  // Value[x] polymorphic setters
-  setValueQuantity(value: Quantity): this { this.set('valueQuantity', this.nestedToArray(value)); return this; }
-  setValueCodeableConcept(value: CodeableConcept): this { this.set('valueCodeableConcept', this.nestedToArray(value)); return this; }
-  setValueString(value: string): this { this.set('valueString', value); return this; }
-  setValueBoolean(value: boolean): this { this.set('valueBoolean', value); return this; }
-  setValueInteger(value: number): this { this.set('valueInteger', value); return this; }
-  setValueRange(value: Range): this { this.set('valueRange', this.nestedToArray(value)); return this; }
-  setValueRatio(value: Ratio): this { this.set('valueRatio', this.nestedToArray(value)); return this; }
-  setValueTime(value: string): this { this.set('valueTime', value); return this; }
-  setValueDateTime(value: string): this { this.set('valueDateTime', value); return this; }
-  setValuePeriod(value: Period): this { this.set('valuePeriod', this.nestedToArray(value)); return this; }
-  addInterpretation(interpretation: CodeableConcept): this { this.push('interpretation', this.nestedToArray(interpretation)); return this; }
-  addNote(note: Annotation): this { this.push('note', this.nestedToArray(note)); return this; }
-  addBodySite(bodySite: CodeableConcept): this { this.push('bodySite', this.nestedToArray(bodySite)); return this; }
-  setMethod(method: CodeableConcept): this { this.set('method', this.nestedToArray(method)); return this; }
-  setSpecimen(specimen: Reference): this { this.set('specimen', this.nestedToArray(specimen)); return this; }
-  setDevice(device: Reference): this { this.set('device', this.nestedToArray(device)); return this; }
+  setStatus(status: string): this { this.data['status'] = status; return this; }
+  addCategory(category: CodeableConcept): this {
+    this.data['category'] = this.data['category'] || [];
+    this.data['category'].push(category.toArray());
+    return this;
+  }
+  setCode(code: CodeableConcept): this { this.data['code'] = code.toArray(); return this; }
+  setSubject(subject: Reference): this { this.data['subject'] = subject.toArray(); return this; }
+  setEncounter(encounter: Reference): this { this.data['encounter'] = encounter.toArray(); return this; }
+  setEffectiveDateTime(dateTime: string): this { this.data['effectiveDateTime'] = dateTime; return this; }
+  setEffectivePeriod(period: Period): this { this.data['effectivePeriod'] = period.toArray(); return this; }
+  setEffectiveInstant(instant: string): this { this.data['effectiveInstant'] = instant; return this; }
+  setEffectivePeriodStart(start: string): this { this.data['effectivePeriod'] = { start }; return this; }
+  setEffectivePeriodEnd(end: string): this {
+    const existing = (this.data['effectivePeriod'] as Record<string, any>) ?? {};
+    this.data['effectivePeriod'] = { ...existing, end };
+    return this;
+  }
+  setValueQuantity(value: Quantity): this { this.data['valueQuantity'] = value.toArray(); return this; }
+  setValueCodeableConcept(value: CodeableConcept): this { this.data['valueCodeableConcept'] = value.toArray(); return this; }
+  setValueString(value: string): this { this.data['valueString'] = value; return this; }
+  setValueBoolean(value: boolean): this { this.data['valueBoolean'] = value; return this; }
+  setValueInteger(value: number): this { this.data['valueInteger'] = value; return this; }
+  setValueRange(value: Range): this { this.data['valueRange'] = value.toArray(); return this; }
+  setValueRatio(value: Ratio): this { this.data['valueRatio'] = value.toArray(); return this; }
+  setValueTime(value: string): this { this.data['valueTime'] = value; return this; }
+  setValueDateTime(value: string): this { this.data['valueDateTime'] = value; return this; }
+  setValuePeriod(value: Period): this { this.data['valuePeriod'] = value.toArray(); return this; }
+  addInterpretation(interpretation: CodeableConcept): this {
+    this.data['interpretation'] = this.data['interpretation'] || [];
+    this.data['interpretation'].push(interpretation.toArray());
+    return this;
+  }
+  addNote(note: Annotation): this {
+    this.data['note'] = this.data['note'] || [];
+    this.data['note'].push(note.toArray());
+    return this;
+  }
+  addBodySite(bodySite: CodeableConcept): this {
+    this.data['bodySite'] = this.data['bodySite'] || [];
+    this.data['bodySite'].push(bodySite.toArray());
+    return this;
+  }
+  setMethod(method: CodeableConcept): this { this.data['method'] = method.toArray(); return this; }
+  setSpecimen(specimen: Reference): this { this.data['specimen'] = specimen.toArray(); return this; }
+  setDevice(device: Reference): this { this.data['device'] = device.toArray(); return this; }
   addReferenceRange(low?: Quantity, high?: Quantity, type?: CodeableConcept, text?: string): this {
-    const range: Record<string, unknown> = {};
-    if (low !== undefined) range['low'] = this.nestedToArray(low);
-    if (high !== undefined) range['high'] = this.nestedToArray(high);
-    if (type !== undefined) range['type'] = this.nestedToArray(type);
+    const range: Record<string, any> = {};
+    if (low !== undefined) range['low'] = low.toArray();
+    if (high !== undefined) range['high'] = high.toArray();
+    if (type !== undefined) range['type'] = type.toArray();
     if (text !== undefined) range['text'] = text;
-    this.push('referenceRange', Object.fromEntries(Object.entries(range).filter(([, v]) => v !== undefined)));
+    this.data['referenceRange'] = this.data['referenceRange'] || [];
+    this.data['referenceRange'].push(Object.fromEntries(Object.entries(range).filter(([, v]) => v !== undefined)));
     return this;
   }
   addComponent(code: CodeableConcept, value: Quantity | CodeableConcept | Range | Ratio | string | number | boolean): this {
-    const component: Record<string, unknown> = { code: this.nestedToArray(code) };
-    if (value instanceof Quantity) component['valueQuantity'] = this.nestedToArray(value);
-    else if (value instanceof CodeableConcept) component['valueCodeableConcept'] = this.nestedToArray(value);
-    else if (value instanceof Range) component['valueRange'] = this.nestedToArray(value);
-    else if (value instanceof Ratio) component['valueRatio'] = this.nestedToArray(value);
+    const component: Record<string, any> = { code: code.toArray() };
+    if (value instanceof Quantity) component['valueQuantity'] = value.toArray();
+    else if (value instanceof CodeableConcept) component['valueCodeableConcept'] = value.toArray();
+    else if (value instanceof Range) component['valueRange'] = value.toArray();
+    else if (value instanceof Ratio) component['valueRatio'] = value.toArray();
     else if (typeof value === 'string') component['valueString'] = value;
     else if (typeof value === 'number') component['valueInteger'] = value;
     else if (typeof value === 'boolean') component['valueBoolean'] = value;
-    this.push('component', component);
+    this.data['component'] = this.data['component'] || [];
+    this.data['component'].push(component);
     return this;
   }
-  addExtension(url: string, value: unknown, valueType?: string): this { super.addExtension(url, value, valueType); return this; }
+  addExtension(url: string, value: unknown, valueType?: string): this {
+    const extension: Record<string, any> = { url };
+    if (valueType !== undefined) {
+      extension['value' + valueType.charAt(0).toUpperCase() + valueType.slice(1)] = value;
+    } else {
+      extension['valueString'] = typeof value === 'string' ? value : value;
+    }
+    this.data['extension'] = this.data['extension'] || [];
+    this.data['extension'].push(extension);
+    return this;
+  }
 }
