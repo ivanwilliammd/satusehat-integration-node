@@ -1,86 +1,367 @@
 export class BaseBuilder {
+
   protected data: any = {};
+
+  constructor(protected resourceType: string) {}
+
+  getResourceType(): string { return this.resourceType; }
+
   toJSON(): any { return this.data; }
-}
 
-export class PatientBuilder extends BaseBuilder {
-  constructor() { super(); this.data.resourceType = 'Patient'; }
-  setNik(nik: string): this {
-    this.data.identifier = [{ system: 'https://fhir.kemkes.go.id/id/nik', value: nik }];
-    return this;
-  }
-  setName(name: string): this { this.data.name = [{ use: 'official', text: name }]; return this; }
-  setGender(gender: string): this { this.data.gender = gender; return this; }
-  setBirthDate(date: string): this { this.data.birthDate = date; return this; }
-}
-
-export class PractitionerBuilder extends BaseBuilder {
-  constructor() { super(); this.data.resourceType = 'Practitioner'; }
-  setNik(nik: string): this {
-    this.data.identifier = [{ system: 'https://fhir.kemkes.go.id/id/nik', value: nik }];
-    return this;
-  }
-  setName(name: string): this { this.data.name = [{ use: 'official', text: name }]; return this; }
-}
-
-export class OrganizationBuilder extends BaseBuilder {
-  constructor() { super(); this.data.resourceType = 'Organization'; }
   setId(id: string): this { this.data.id = id; return this; }
-  setName(name: string): this { this.data.name = name; return this; }
+
+  addMeta(meta: any): this { this.data.meta = meta; return this; }
+
+  addExtension(ext: string, val: any): this { this.data[ext] = val; return this; }
+
 }
 
-export class LocationBuilder extends BaseBuilder {
-  constructor() { super(); this.data.resourceType = 'Location'; }
-  setName(name: string): this { this.data.name = name; return this; }
-  setManagingOrganization(orgRef: string): this {
-    this.data.managingOrganization = { reference: orgRef };
-    return this;
-  }
+
+export class AccountBuilder extends BaseBuilder {
+
+  constructor() { super("Account"); }
+
 }
 
-export class EncounterBuilder extends BaseBuilder {
-  constructor() { super(); this.data.resourceType = 'Encounter'; }
-  setStatus(status: string): this { this.data.status = status; return this; }
-  setSubject(ref: string, display: string): this {
-    this.data.subject = { reference: ref, display };
-    return this;
-  }
+
+export class AllergyIntoleranceBuilder extends BaseBuilder {
+
+  constructor() { super("AllergyIntolerance"); }
+
 }
 
-export class ConditionBuilder extends BaseBuilder {
-  constructor() { super(); this.data.resourceType = 'Condition'; }
-  setClinicalStatus(code: string): this {
-    this.data.clinicalStatus = {
-      coding: [{ system: 'http://terminology.hl7.org/CodeSystem/condition-clinical', code }]
-    };
-    return this;
-  }
-  setSubject(ref: string, display: string): this {
-    this.data.subject = { reference: ref, display };
-    return this;
-  }
+
+export class BundleBuilder extends BaseBuilder {
+
+  constructor() { super("Bundle"); }
+
 }
+
+
+export class CarePlanBuilder extends BaseBuilder {
+
+  constructor() { super("CarePlan"); }
+
+}
+
+
+export class ChargeItemBuilder extends BaseBuilder {
+
+  constructor() { super("ChargeItem"); }
+
+}
+
+
+export class ChargeItemDefinitionBuilder extends BaseBuilder {
+
+  constructor() { super("ChargeItemDefinition"); }
+
+}
+
+
+export class ChargeItemResponseBuilder extends BaseBuilder {
+
+  constructor() { super("ChargeItemResponse"); }
+
+}
+
 
 export class ClaimBuilder extends BaseBuilder {
-  constructor() {
-    super("Claim");
-  }
-  setStatus(status: string): this {
-    this.data.status = status;
-    return this;
-  }
-  setUse(use: string): this {
-    this.data.use = use;
-    return this;
-  }
+
+  constructor() { super("Claim"); }
+
 }
 
+
+export class ClaimResponseBuilder extends BaseBuilder {
+
+  constructor() { super("ClaimResponse"); }
+
+}
+
+
+export class ClinicalImpressionBuilder extends BaseBuilder {
+
+  constructor() { super("ClinicalImpression"); }
+
+}
+
+
+export class CompositionBuilder extends BaseBuilder {
+
+  constructor() { super("Composition"); }
+
+}
+
+
+export class ConditionBuilder extends BaseBuilder {
+
+  constructor() { super("Condition"); }
+
+}
+
+
 export class CoverageBuilder extends BaseBuilder {
-  constructor() {
-    super("Coverage");
-  }
-  setStatus(status: string): this {
-    this.data.status = status;
-    return this;
-  }
+
+  constructor() { super("Coverage"); }
+
+}
+
+
+export class CoverageEligibilityRequestBuilder extends BaseBuilder {
+
+  constructor() { super("CoverageEligibilityRequest"); }
+
+}
+
+
+export class CoverageEligibilityResponseBuilder extends BaseBuilder {
+
+  constructor() { super("CoverageEligibilityResponse"); }
+
+}
+
+
+export class DeviceBuilder extends BaseBuilder {
+
+  constructor() { super("Device"); }
+
+}
+
+
+export class DiagnosticReportBuilder extends BaseBuilder {
+
+  constructor() { super("DiagnosticReport"); }
+
+}
+
+
+export class DocumentReferenceBuilder extends BaseBuilder {
+
+  constructor() { super("DocumentReference"); }
+
+}
+
+
+export class EncounterBuilder extends BaseBuilder {
+
+  constructor() { super("Encounter"); }
+
+}
+
+
+export class EpisodeOfCareBuilder extends BaseBuilder {
+
+  constructor() { super("EpisodeOfCare"); }
+
+}
+
+
+export class FamilyMemberHistoryBuilder extends BaseBuilder {
+
+  constructor() { super("FamilyMemberHistory"); }
+
+}
+
+
+export class GenomicStudyBuilder extends BaseBuilder {
+
+  constructor() { super("GenomicStudy"); }
+
+}
+
+
+export class GoalBuilder extends BaseBuilder {
+
+  constructor() { super("Goal"); }
+
+}
+
+
+export class GroupBuilder extends BaseBuilder {
+
+  constructor() { super("Group"); }
+
+}
+
+
+export class ImagingStudyBuilder extends BaseBuilder {
+
+  constructor() { super("ImagingStudy"); }
+
+}
+
+
+export class ImmunizationBuilder extends BaseBuilder {
+
+  constructor() { super("Immunization"); }
+
+}
+
+
+export class InvoiceBuilder extends BaseBuilder {
+
+  constructor() { super("Invoice"); }
+
+}
+
+
+export class LocationBuilder extends BaseBuilder {
+
+  constructor() { super("Location"); }
+
+}
+
+
+export class MedicationBuilder extends BaseBuilder {
+
+  constructor() { super("Medication"); }
+
+}
+
+
+export class MedicationAdministrationBuilder extends BaseBuilder {
+
+  constructor() { super("MedicationAdministration"); }
+
+}
+
+
+export class MedicationDispenseBuilder extends BaseBuilder {
+
+  constructor() { super("MedicationDispense"); }
+
+}
+
+
+export class MedicationRequestBuilder extends BaseBuilder {
+
+  constructor() { super("MedicationRequest"); }
+
+}
+
+
+export class MedicationStatementBuilder extends BaseBuilder {
+
+  constructor() { super("MedicationStatement"); }
+
+}
+
+
+export class MolecularSequenceBuilder extends BaseBuilder {
+
+  constructor() { super("MolecularSequence"); }
+
+}
+
+
+export class NutritionOrderBuilder extends BaseBuilder {
+
+  constructor() { super("NutritionOrder"); }
+
+}
+
+
+export class ObservationBuilder extends BaseBuilder {
+
+  constructor() { super("Observation"); }
+
+}
+
+
+export class OrganizationBuilder extends BaseBuilder {
+
+  constructor() { super("Organization"); }
+
+}
+
+
+export class PatientBuilder extends BaseBuilder {
+
+  constructor() { super("Patient"); }
+
+}
+
+
+export class PaymentNoticeBuilder extends BaseBuilder {
+
+  constructor() { super("PaymentNotice"); }
+
+}
+
+
+export class PaymentReconciliationBuilder extends BaseBuilder {
+
+  constructor() { super("PaymentReconciliation"); }
+
+}
+
+
+export class PractitionerBuilder extends BaseBuilder {
+
+  constructor() { super("Practitioner"); }
+
+}
+
+
+export class PractitionerRoleBuilder extends BaseBuilder {
+
+  constructor() { super("PractitionerRole"); }
+
+}
+
+
+export class ProcedureBuilder extends BaseBuilder {
+
+  constructor() { super("Procedure"); }
+
+}
+
+
+export class QuestionnaireResponseBuilder extends BaseBuilder {
+
+  constructor() { super("QuestionnaireResponse"); }
+
+}
+
+
+export class RelatedPersonBuilder extends BaseBuilder {
+
+  constructor() { super("RelatedPerson"); }
+
+}
+
+
+export class RiskAssessmentBuilder extends BaseBuilder {
+
+  constructor() { super("RiskAssessment"); }
+
+}
+
+
+export class ServiceRequestBuilder extends BaseBuilder {
+
+  constructor() { super("ServiceRequest"); }
+
+}
+
+
+export class SpecimenBuilder extends BaseBuilder {
+
+  constructor() { super("Specimen"); }
+
+}
+
+
+export class SubstanceBuilder extends BaseBuilder {
+
+  constructor() { super("Substance"); }
+
+}
+
+
+export class TaskBuilder extends BaseBuilder {
+
+  constructor() { super("Task"); }
+
 }
