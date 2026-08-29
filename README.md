@@ -1,4 +1,4 @@
-# satusehat-integration-node
+# satusehat-integration
 
 > **Open-source Node.js SDK for integrating with SATUSEHAT** — Indonesia's national health data platform powered by FHIR R4. Pure JavaScript/TypeScript, no framework dependency.
 
@@ -11,7 +11,7 @@
 
 ## Overview
 
-`satusehat-integration-node` is an **open-source** Node.js SDK for integrating with **SATUSEHAT** — Indonesia's national health data platform powered by FHIR R4.
+`satusehat-integration` is an **open-source** Node.js SDK for integrating with **SATUSEHAT** — Indonesia's national health data platform powered by FHIR R4.
 
 Built on the official [SATUSEHAT Platform Guidelines](https://satusehat.kemkes.go.id/platform/docs). Ships with:
 - **50 DataType** interfaces — composable FHIR R4 value objects with `toJSON()` serialization
@@ -32,9 +32,9 @@ Zero dependencies beyond TypeScript runtime. Works with any JS framework or plai
 ## Quick Install
 
 ```bash
-npm install @ivanwilliammd/satusehat-integration-node
+npm install @ivanwilliammd/satusehat-integration
 # or
-yarn add @ivanwilliammd/satusehat-integration-node
+yarn add @ivanwilliammd/satusehat-integration
 ```
 
 ```env
@@ -63,7 +63,7 @@ Atomic FHIR R4 value interfaces. All provide a `toJSON()` method — nested type
 Example — `HumanName`:
 
 ```typescript
-import { HumanName } from '@ivanwilliammd/satusehat-integration-node';
+import { HumanName } from '@ivanwilliammd/satusehat-integration';
 
 const name: HumanName = {
     family: 'Doe',
@@ -78,7 +78,7 @@ const name: HumanName = {
 Fluent builder for each FHIR resource. Each builder exposes chainable methods and returns the resource payload via `toJSON()`.
 
 ```typescript
-import { PatientBuilder, HumanName } from '@ivanwilliammd/satusehat-integration-node';
+import { PatientBuilder, HumanName } from '@ivanwilliammd/satusehat-integration';
 
 const patient = new PatientBuilder()
     .setId('12345678-1234-1234-1234-123456789012')
@@ -118,7 +118,7 @@ All 51 resources fully implemented via PayloadBuilder classes. Core (✅) + Non-
 ### Patient
 
 ```typescript
-import { PatientBuilder } from '@ivanwilliammd/satusehat-integration-node';
+import { PatientBuilder } from '@ivanwilliammd/satusehat-integration';
 
 const patient = new PatientBuilder()
     .setId('12345678-1234-1234-1234-123456789012')
@@ -134,7 +134,7 @@ console.log(JSON.stringify(payload, null, 2));
 ### Claim (BPJS Klaim)
 
 ```typescript
-import { ClaimBuilder } from '@ivanwilliammd/satusehat-integration-node';
+import { ClaimBuilder } from '@ivanwilliammd/satusehat-integration';
 
 const claim = new ClaimBuilder()
     .setStatus('active')
@@ -153,12 +153,12 @@ const payload = claim.toJSON();
 
 | Page | Description |
 |------|-------------|
-| [Wiki Home](https://github.com/ivanwilliammd/satusehat-integration-node.wiki.git) | Full documentation |
-| [Getting Started](https://github.com/ivanwilliammd/satusehat-integration-node/wiki/Getting-Started) | Installation, configuration |
-| [DataTypes](https://github.com/ivanwilliammd/satusehat-integration-node/wiki/DataTypes) | Complete type reference |
-| [Builders](https://github.com/ivanwilliammd/satusehat-integration-node/wiki/Builders) | Builder usage guide |
-| [Resources](https://github.com/ivanwilliammd/satusehat-integration-node/wiki/Resources) | All FHIR resources |
-| [Claim Module](https://github.com/ivanwilliammd/satusehat-integration-node/wiki/Claim-Module) | BPJS Klaim integration |
+| [Wiki Home](https://github.com/ivanwilliammd/satusehat-integration.wiki.git) | Full documentation |
+| [Getting Started](https://github.com/ivanwilliammd/satusehat-integration/wiki/Getting-Started) | Installation, configuration |
+| [DataTypes](https://github.com/ivanwilliammd/satusehat-integration/wiki/DataTypes) | Complete type reference |
+| [Builders](https://github.com/ivanwilliammd/satusehat-integration/wiki/Builders) | Builder usage guide |
+| [Resources](https://github.com/ivanwilliammd/satusehat-integration/wiki/Resources) | All FHIR resources |
+| [Claim Module](https://github.com/ivanwilliammd/satusehat-integration/wiki/Claim-Module) | BPJS Klaim integration |
 
 ---
 
