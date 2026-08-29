@@ -60,3 +60,27 @@ export class ConditionBuilder extends BaseBuilder {
     return this;
   }
 }
+
+export class ClaimBuilder extends BaseBuilder {
+  constructor() {
+    super("Claim");
+  }
+  setStatus(status: string): this {
+    this.data.status = status;
+    return this;
+  }
+  setUse(use: string): this {
+    this.data.use = use;
+    return this;
+  }
+}
+
+export class CoverageBuilder extends BaseBuilder {
+  constructor() {
+    super("Coverage");
+  }
+  setStatus(status: string): this {
+    this.data.status = status;
+    return this;
+  }
+}
