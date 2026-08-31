@@ -2,6 +2,12 @@
   "name": "@ivanwilliammd/satusehat-integration",
   "version": "4.11.3",
   "description": "SATUSEHAT FHIR R4 SDK for Node.js / TypeScript",
+  "license": "MIT",
+  "repository": "https://github.com/ivanwilliammd/satusehat-integration-node",
+  "files": [
+    "dist",
+    "README.md"
+  ],
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
