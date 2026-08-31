@@ -1,5 +1,6 @@
 /** Observation FHIR R4 Resource Builder */
 import { Annotation, CodeableConcept, Identifier, Period, Quantity, Range, Ratio, Reference } from '../datatype/datatypes';
+import { TerminologyResolver } from '../terminology/resolver';
 
 export class Observation {
   private data: Record<string, any> = { resourceType: 'Observation' };
@@ -17,12 +18,18 @@ export class Observation {
     return this;
   }
   setStatus(status: string): this { this.data['status'] = status; return this; }
-  addCategory(category: CodeableConcept): this {
+  addCategory(category: CodeableConcept | string | Record<string, any>): this {
     this.data['category'] = this.data['category'] || [];
-    this.data['category'].push(category.toArray());
+    this.data['category'].push(
+      typeof category === 'string' ? TerminologyResolver.resolve(category) : category.toArray ? category.toArray() : category
+    );
     return this;
   }
-  setCode(code: CodeableConcept): this { this.data['code'] = code.toArray(); return this; }
+  setCode(code: CodeableConcept | string | Record<string, any>): this {
+    this.data['code'] =
+      typeof code === 'string' ? TerminologyResolver.resolve(code) : code.toArray ? code.toArray() : code;
+    return this;
+  }
   setSubject(subject: Reference): this { this.data['subject'] = subject.toArray(); return this; }
   setEncounter(encounter: Reference): this { this.data['encounter'] = encounter.toArray(); return this; }
   setEffectiveDateTime(dateTime: string): this { this.data['effectiveDateTime'] = dateTime; return this; }

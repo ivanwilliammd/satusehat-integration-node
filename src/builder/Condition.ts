@@ -1,8 +1,13 @@
 /** Condition FHIR R4 Resource Builder */
 import { Annotation, CodeableConcept, Identifier, Period, Range, Reference } from '../datatype/datatypes';
+import { TerminologyResolver } from '../terminology/resolver';
 
 export class Condition {
   private data: Record<string, any> = { resourceType: 'Condition' };
+
+  private cc(value: CodeableConcept | string | Record<string, any>): Record<string, any> {
+    return typeof value === 'string' ? (TerminologyResolver.resolve(value) as Record<string, any>) : value.toArray ? value.toArray() : value;
+  }
 
   build(): Record<string, any> {
     return Object.fromEntries(
@@ -16,15 +21,15 @@ export class Condition {
     this.data['identifier'].push(identifier.toArray());
     return this;
   }
-  setClinicalStatus(clinicalStatus: CodeableConcept): this { this.data['clinicalStatus'] = clinicalStatus.toArray(); return this; }
-  setVerificationStatus(verificationStatus: CodeableConcept): this { this.data['verificationStatus'] = verificationStatus.toArray(); return this; }
-  addCategory(category: CodeableConcept): this {
+  setClinicalStatus(clinicalStatus: CodeableConcept | string): this { this.data['clinicalStatus'] = this.cc(clinicalStatus); return this; }
+  setVerificationStatus(verificationStatus: CodeableConcept | string): this { this.data['verificationStatus'] = this.cc(verificationStatus); return this; }
+  addCategory(category: CodeableConcept | string): this {
     this.data['category'] = this.data['category'] || [];
-    this.data['category'].push(category.toArray());
+    this.data['category'].push(this.cc(category));
     return this;
   }
-  setSeverity(severity: CodeableConcept): this { this.data['severity'] = severity.toArray(); return this; }
-  setCode(code: CodeableConcept): this { this.data['code'] = code.toArray(); return this; }
+  setSeverity(severity: CodeableConcept | string): this { this.data['severity'] = this.cc(severity); return this; }
+  setCode(code: CodeableConcept | string): this { this.data['code'] = this.cc(code); return this; }
   setSubject(subject: Reference): this { this.data['subject'] = subject.toArray(); return this; }
   setEncounter(encounter: Reference): this { this.data['encounter'] = encounter.toArray(); return this; }
   setOnsetDateTime(dateTime: string): this { this.data['onsetDateTime'] = dateTime; return this; }

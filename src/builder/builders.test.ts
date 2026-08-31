@@ -4,6 +4,9 @@ import { EndpointBuilder } from './Endpoint';
 import { PurificationDecisionBuilder } from './PurificationDecision';
 import { MedicationStatementBuilder } from './MedicationStatement';
 import { TaskBuilder } from './Task';
+import { Observation } from './Observation';
+import { Condition } from './Condition';
+import { CodeableConcept, Coding } from '../datatype/datatypes';
 import { ActivityDefinition } from './ActivityDefinition';
 import { CapabilityStatement } from './CapabilityStatement';
 import { CatalogEntry } from './CatalogEntry';
@@ -407,5 +410,43 @@ describe('Phase 6 — FHIR R4 non-SATUSEHAT resources', () => {
       .build();
     expect(payload.organization.reference).toBe('org-1');
     expect(payload.code.coding[0].code).toBe('provider');
+  });
+});
+
+describe('Phase 7 — terminology castable', () => {
+  it('Observation.setCode with ICD10 notation resolves system', () => {
+    const payload = new Observation().setCode('ICD10:A00').build();
+    expect(payload.code.coding[0].system).toBe('http://hl7.org/fhir/sid/icd-10');
+    expect(payload.code.coding[0].code).toBe('A00');
+  });
+
+  it('Observation.setCode with LOINC notation resolves system', () => {
+    const payload = new Observation().setCode('LOINC:2951-2').build();
+    expect(payload.code.coding[0].system).toBe('http://loinc.org');
+    expect(payload.code.coding[0].code).toBe('2951-2');
+  });
+
+  it('Observation.addCategory with plain text → { text }', () => {
+    const payload = new Observation().addCategory('vital-signs').build();
+    expect(payload.category[0].text).toBe('vital-signs');
+  });
+
+  it('Observation.addCategory with SNOMED notation resolves', () => {
+    const payload = new Observation().addCategory('SNOMED:386053000').build();
+    expect(payload.category[0].coding[0].system).toBe('http://snomed.info/sct');
+  });
+
+  it('Condition.setCode with ICD10 notation + typed CC', () => {
+    const typed = new CodeableConcept();
+    typed.addCoding(new Coding('http://example.com', 'X', 'X'));
+    const payload = new Condition().setCode('ICD10:J18.9').build();
+    expect(payload.code.coding[0].system).toBe('http://hl7.org/fhir/sid/icd-10');
+    const payload2 = new Condition().setCode(typed).build();
+    expect(payload2.code.coding[0].system).toBe('http://example.com');
+  });
+
+  it('Condition.setSeverity castable', () => {
+    const payload = new Condition().setSeverity('SNOMED:24484000').build();
+    expect(payload.severity.coding[0].system).toBe('http://snomed.info/sct');
   });
 });
