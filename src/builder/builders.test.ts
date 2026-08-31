@@ -4,6 +4,32 @@ import { EndpointBuilder } from './Endpoint';
 import { PurificationDecisionBuilder } from './PurificationDecision';
 import { MedicationStatementBuilder } from './MedicationStatement';
 import { TaskBuilder } from './Task';
+import { ActivityDefinition } from './ActivityDefinition';
+import { CapabilityStatement } from './CapabilityStatement';
+import { CatalogEntry } from './CatalogEntry';
+import { DeviceMetric } from './DeviceMetric';
+import { DocumentManifest } from './DocumentManifest';
+import { EnrollmentResponse } from './EnrollmentResponse';
+import { ExplanationOfBenefit } from './ExplanationOfBenefit';
+import { HealthcareService } from './HealthcareService';
+import { InsurancePlan } from './InsurancePlan';
+import { MedicationKnowledge } from './MedicationKnowledge';
+import { MedicinalProduct } from './MedicinalProduct';
+import { MedicinalProductAuthorization } from './MedicinalProductAuthorization';
+import { MedicinalProductContraindication } from './MedicinalProductContraindication';
+import { MedicinalProductIndication } from './MedicinalProductIndication';
+import { MedicinalProductIngredient } from './MedicinalProductIngredient';
+import { MedicinalProductInteraction } from './MedicinalProductInteraction';
+import { MedicinalProductManufactured } from './MedicinalProductManufactured';
+import { MedicinalProductPackaged } from './MedicinalProductPackaged';
+import { MedicinalProductPharmaceutical } from './MedicinalProductPharmaceutical';
+import { MedicinalProductUndesirableEffect } from './MedicinalProductUndesirableEffect';
+import { ObservationDefinition } from './ObservationDefinition';
+import { OrganizationAffiliation } from './OrganizationAffiliation';
+import { ResearchStudy } from './ResearchStudy';
+import { ResourceGuide } from './ResourceGuide';
+import { SpecimenDefinition } from './SpecimenDefinition';
+import { SubstanceReferenceInformation } from './SubstanceReferenceInformation';
 
 describe('BillingStatusBuilder', () => {
   it('sets resourceType', () => {
@@ -330,5 +356,56 @@ describe('TaskBuilder', () => {
     expect(res.status).toBe('requested');
     expect(res.for.reference).toBe('Patient/100000030009');
     expect(res.input[0].valueString).toBe('Pasien stabil');
+  });
+});
+
+
+describe('Phase 6 — FHIR R4 non-SATUSEHAT resources', () => {
+  const cases: Array<[string, new () => any]> = [
+    [ActivityDefinition, 'ActivityDefinition'],
+    [CapabilityStatement, 'CapabilityStatement'],
+    [CatalogEntry, 'CatalogEntry'],
+    [DeviceMetric, 'DeviceMetric'],
+    [DocumentManifest, 'DocumentManifest'],
+    [EnrollmentResponse, 'EnrollmentResponse'],
+    [ExplanationOfBenefit, 'ExplanationOfBenefit'],
+    [HealthcareService, 'HealthcareService'],
+    [InsurancePlan, 'InsurancePlan'],
+    [MedicationKnowledge, 'MedicationKnowledge'],
+    [MedicinalProduct, 'MedicinalProduct'],
+    [MedicinalProductAuthorization, 'MedicinalProductAuthorization'],
+    [MedicinalProductContraindication, 'MedicinalProductContraindication'],
+    [MedicinalProductIndication, 'MedicinalProductIndication'],
+    [MedicinalProductIngredient, 'MedicinalProductIngredient'],
+    [MedicinalProductInteraction, 'MedicinalProductInteraction'],
+    [MedicinalProductManufactured, 'MedicinalProductManufactured'],
+    [MedicinalProductPackaged, 'MedicinalProductPackaged'],
+    [MedicinalProductPharmaceutical, 'MedicinalProductPharmaceutical'],
+    [MedicinalProductUndesirableEffect, 'MedicinalProductUndesirableEffect'],
+    [ObservationDefinition, 'ObservationDefinition'],
+    [OrganizationAffiliation, 'OrganizationAffiliation'],
+    [ResearchStudy, 'ResearchStudy'],
+    [ResourceGuide, 'ResourceGuide'],
+    [SpecimenDefinition, 'SpecimenDefinition'],
+    [SubstanceReferenceInformation, 'SubstanceReferenceInformation'],
+  ];
+
+  it.each(cases)('%s builds valid payload', (Builder, resourceType) => {
+    const payload = new Builder()
+      .setId(`ph6-${resourceType.toLowerCase()}`)
+      .setStatus('active')
+      .build();
+    expect(payload.resourceType).toBe(resourceType);
+    expect(payload.id).toBe(`ph6-${resourceType.toLowerCase()}`);
+    expect(payload.status).toBe('active');
+  });
+
+  it('OrganizationAffiliation has typed fields', () => {
+    const payload = new OrganizationAffiliation()
+      .setOrganization('org-1', 'RSCM')
+      .setCode('http://terminology.hl7.org/CodeSystem/organization-role', 'provider', 'Provider')
+      .build();
+    expect(payload.organization.reference).toBe('org-1');
+    expect(payload.code.coding[0].code).toBe('provider');
   });
 });
