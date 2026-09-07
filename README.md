@@ -202,6 +202,48 @@ TerminologyResolver.expandArray(['ICD10:A00', 'ICD10:J18.9']);
 
 ---
 
+### TerminologyClient — SmarTerm (terminology.ivanmd.id)
+
+`TerminologyClient` menghubungkan aplikasi ke **SmarTerm** — layanan kamus terpadu
+terminologi kesehatan Indonesia (ICD-10, ICD-9-CM, SNOMED CT, LOINC, KPTL, KFA
+obat/alkes/BZA). Berguna saat aplikasi TIDAK ingin menyimpan dataset nasional
+lokal — cukup panggil REST API untuk search / validate / resolve FHIR code.
+
+```env
+TERMINOLOGY_BASE_URL=https://terminology.ivanmd.id      # opsional
+# Auth — pilih SALAH SATU:
+TERMINOLOGY_API_TOKEN=your_pat                           # 1) Sanctum PAT (statis)
+TERMINOLOGY_CLIENT_ID=your_oidc_client                   # 2) OIDC client_credentials
+TERMINOLOGY_CLIENT_SECRET=your_oidc_secret               #    ke auth.ivanmd.id (auto refresh)
+TERMINOLOGY_TOKEN_URL=https://auth.ivanmd.id/oauth/token #    default
+```
+
+```typescript
+import { TerminologyClient } from '@ivanwilliammd/satusehat-integration';
+
+// PAT statis (atau kosongkan kalau pakai env OIDC → auto-fetch + cache + refresh)
+const term = new TerminologyClient({ baseUrl: 'https://terminology.ivanmd.id', token: 'sanctum-pat-...' });
+
+// Fluent chaining — istilah bebas RS → kode resmi
+const result = await term.query('pemasangan kateter').on('kptl').limit(10).get();
+const result = await term.query('demam berdarah').category('diagnosis').first().get();
+const result = await term.query('93004944').asCode().get();     // validasi kode, sistem ditebak (93→kfa)
+const result = await term.query('91001834').on('kfa_bza').asCode().get(); // paksa sistem
+
+// Atau method langsung:
+const result = await term.search('demam berdarah', 'diagnosis', 10);  // unified
+const alkes  = await term.searchSystem('kfa_alkes', 'termometer', 5); // per sistem
+const ok     = await term.validate('snomed', '44054006');             // { valid, display, active }
+const cond   = await term.resolveCondition('E11', 'icd10', 'encounter-diagnosis');
+const med    = await term.resolveMedication('93004944');              // KFA obat
+const kptl   = await term.kptlCombine('10026', ['OR032', 'PD002']);   // KPTL multi-layer
+const map    = await term.map('icd10', 'snomed', 'E11');              // lintas terminologi
+```
+
+Error: status HTTP `>= 400` melempar `Error('TerminologyClient HTTP <status>')`.
+
+---
+
 ## Usage Examples
 
 ### Patient

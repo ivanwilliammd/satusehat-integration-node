@@ -377,3 +377,6 @@ export class TerminologyDB {
     );
   }
 }
+
+export { TerminologyClient, TerminologyQueryBuilder, guessSystemFromCode } from './TerminologyClient';
+export type { TerminologyClientConfig, TerminologySystem, TerminologyEnvelope } from './TerminologyClient';
