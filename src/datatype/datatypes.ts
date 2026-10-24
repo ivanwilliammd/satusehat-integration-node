@@ -75,8 +75,17 @@ export class HumanName implements DataType {
   suffix: string[] = [];
   period?: Period = undefined;
 
+  /**
+   * Menerima DUA bentuk, karena keduanya sudah dipakai di luar:
+   *   new HumanName('Doe', ['John'], 'official')           // posisional (kode lama)
+   *   new HumanName({ family: 'Doe', given: ['John'] })    // objek (contoh di README)
+   *
+   * Sebelumnya bentuk objek "berhasil" tetapi menyimpan objeknya sebagai `family`,
+   * sehingga keluarannya `{"family":{"family":"Doe",...}}` — payload rusak yang baru
+   * ketahuan saat dikirim ke SATUSEHAT.
+   */
   constructor(
-    family?: string,
+    family?: string | Partial<HumanName>,
     given: string[] = [],
     use?: string,
     text?: string,
@@ -84,6 +93,10 @@ export class HumanName implements DataType {
     suffix: string[] = [],
     period?: Period
   ) {
+    if (family !== null && typeof family === 'object') {
+      Object.assign(this, family);
+      return;
+    }
     this.family = family;
     this.given = given;
     this.use = use;
