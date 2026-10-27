@@ -80,7 +80,9 @@ const name: HumanName = {
 
 ### PayloadBuilder Pattern (`src/builder/`)
 
-Fluent builder for each FHIR resource. Each builder exposes chainable methods and returns the resource payload via `toJSON()`.
+Fluent builder for each FHIR resource. Each builder exposes chainable methods and returns the resource payload via `build()`.
+DataType (value object) memakai `toJSON()`; builder memakai `build()` — dua nama berbeda, jangan tertukar.
+`BundleBuilder` menerima keduanya (`build()` = alias `toJSON()`).
 
 ```typescript
 import { PatientBuilder, HumanName } from '@ivanwilliammd/satusehat-integration';
@@ -91,7 +93,7 @@ const patient = new PatientBuilder()
     .setGender('male')
     .setBirthDate('1990-01-15');
 
-const payload = patient.toJSON();
+const payload = patient.build();
 ```
 
 ---
@@ -258,7 +260,7 @@ const patient = new PatientBuilder()
     .setBirthDate('1990-01-15')
     .addTelecom({ system: 'phone', value: '081234567890', use: 'mobile' });
 
-const payload = patient.toJSON();
+const payload = patient.build();
 console.log(JSON.stringify(payload, null, 2));
 ```
 
@@ -275,7 +277,7 @@ const claim = new ClaimBuilder()
     .addItem(1, 'PROCID001', 150000, 'IDR')
     .setTotal(150000, 'IDR');
 
-const payload = claim.toJSON();
+const payload = claim.build();
 ```
 
 ---

@@ -26,6 +26,11 @@ export class BundleBuilder {
   getResourceType(): string { return 'Bundle'; }
   toJSON(): any { return this.data; }
 
+  /** Alias `build()` supaya seragam dengan 142 builder lain (dan dengan PHP `BuilderBundle`).
+   *  Sebelumnya `new BundleBuilder().build()` melempar "build is not a function" — satu-satunya
+   *  builder di paket ini yang tidak punya `build()`. */
+  build(): any { return this.toJSON(); }
+
   setType(type: string): this {
     this.data['type'] = type;
     return this;

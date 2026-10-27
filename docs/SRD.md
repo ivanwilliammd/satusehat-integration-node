@@ -78,14 +78,30 @@ Menyebut paket ini setara PHP adalah klaim yang tidak didukung kode.
 ## 7. Uji
 
 ```bash
-npm install          # belum dijalankan di mesin ini
-npm test             # vitest
+npm install          # 200 paket, 17 detik (better-sqlite3 terpasang tanpa kompilasi manual)
+npm test -- --run    # vitest
 npm run build        # tsc — gerbang tipe, bukan hanya lint
 ```
 
-**Keadaan nyata 2026-10-27:** `node_modules` **tidak ada** di mesin ini (`ls node_modules | wc -l` → 0),
-sedangkan `better-sqlite3` adalah dependensi native. Karena itu `npm test` **belum pernah dijalankan**
-dan TIDAK boleh diklaim hijau. Yang bisa diukur tanpa dependensi: 3 berkas uji, 75 blok `it`/`test`.
+**Hasil terukur 2026-10-27 (pertama kali suite ini benar-benar dijalankan):**
+
+| Perintah | Hasil |
+|---|---|
+| `npm install` | 200 paket, 17 d |
+| `npm test -- --run` | **386 uji, 4 berkas, 0 gagal** (3,4 d) |
+| `npm run build` (tsc) | keluar 0, `dist/` terbentuk |
+
+Sebelum siklus ini angka baseline-nya 101 uji (`builders.test.ts` 91, `terminology_client.test.ts` 4,
+`index.test.ts` 6). Tambahan 285 uji berasal dari `src/barrel_builders.test.ts` yang memeriksa
+**seluruh** 142 berkas builder, bukan sampel: satu asersi "kelas ada di barrel", satu asersi
+"`build()` memberi `resourceType` sesuai nama berkas".
+
+Uji itu langsung menemukan satu cacat nyata: **`BundleBuilder` satu-satunya builder tanpa `build()`**
+(hanya `toJSON()`), sehingga `new BundleBuilder().build()` melempar `build is not a function`.
+Diperbaiki dengan alias `build()` yang memanggil `toJSON()` (bentuk lama tetap jalan).
+README punya cacat sejenis: seluruh contoh builder memakai `.toJSON()`, padahal 142 builder memakai
+`build()` — konsumen yang menyalin contoh README akan gagal. README dikoreksi pada commit yang sama.
+
 Gerbang tipe wajib `npm run build` (tsc) — lint saja tidak membuktikan tipe, dan kegagalan tipe
 memblokir deploy sama seperti di repo Vercel.
 
@@ -98,6 +114,12 @@ memblokir deploy sama seperti di repo Vercel.
   nyatakan resmi SDK ini "payload builder only" di README + PRD. Keduanya keputusan pemilik produk;
   jangan diam-diam dianggap sudah ada.
 - **T-03** Galat `TerminologyClient` belum bertipe; pemanggil tidak bisa membedakan jaringan vs 4xx.
-- **T-04** `node_modules` tidak pernah dipasang di mesin ini → uji tidak pernah jalan. Perlu satu
-  putaran `npm install && npm test` untuk mengubah status "belum diukur" menjadi angka.
-- **Berikutnya (butir antrean):** SRD sama untuk `-python` dan `-go`, lalu perbaiki manifest di ketiga repo.
+- **T-04** ~~`node_modules` tidak pernah dipasang → uji tidak pernah jalan.~~ **SELESAI 2026-10-27**:
+  `npm install` + `npm test` jalan, 386 uji hijau (angka di §7).
+- **T-05** `build()` vs `toJSON()` sudah diseragamkan untuk `BundleBuilder` (alias), tetapi README dan
+  SRD perlu diperiksa ulang setiap kali resource baru ditambahkan — contoh di README adalah yang
+  dibaca pengguna npm, bukan kodenya.
+- **T-06** Uji barrel memeriksa `resourceType` dan keberadaan kelas; ia **tidak** memeriksa kelengkapan
+  medan tiap resource. Menambah pemeriksaan medan wajib per resource = pekerjaan terpisah.
+- **Berikutnya (butir antrean):** SRD `-go` sudah ada (`5898d78`); yang tersisa: koreksi klaim
+  "115 PayloadBuilder" di `satusehat-integration-python` (`pyproject.toml` + README → 140).
