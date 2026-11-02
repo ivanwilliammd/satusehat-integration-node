@@ -72,5 +72,14 @@ for p in daftar_modul("builder"):
         baris.append(f"export {{ {p.stem} as {p.stem}Builder }} from './builder/{p.stem}';")
         sudah.add(f"{p.stem}Builder")
 
+# Alias lama yang harus tetap ada walau berkasnya sudah diganti nama. Tanpa ini, pengguna
+# `List`/`ListBuilder` dari versi sebelumnya patah saat modulnya menjadi `ListResource`.
+LEGACY = {"ListResource": ["List", "ListBuilder"]}
+for stem, alias in LEGACY.items():
+    for a in alias:
+        if a not in sudah:
+            baris.append(f"export {{ {stem} as {a} }} from './builder/{stem}';")
+            sudah.add(a)
+
 (akar / "src/index.ts").write_text("\n".join(baris) + "\n", encoding="utf-8")
 print("src/index.ts:", len(baris), "baris")
