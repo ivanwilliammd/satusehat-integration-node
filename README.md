@@ -16,14 +16,17 @@
 `satusehat-integration` is an **open-source** Node.js SDK for integrating with **SATUSEHAT** — Indonesia's national health data platform powered by FHIR R4.
 
 Built on the official [SATUSEHAT Platform Guidelines](https://satusehat.kemkes.go.id/platform/docs). Ships with:
-- **115+ PayloadBuilder** classes — fluent builders for all FHIR R4 resources (Patient, Practitioner, Organization, Encounter, Observation, Procedure, etc.)
-- **50 DataType** interfaces — composable FHIR R4 value objects with `toJSON()` serialization
-- **TerminologyResolver** — castable terminology strings (`"ICD10:A00"`, `"LOINC:2951-2"`, `"SNOMED:38341003"`) directly to CodeableConcept
+- **142 PayloadBuilder** classes — fluent builders for all FHIR R4 resources (Patient, Practitioner, Organization, Encounter, Observation, Procedure, etc.)
+- **31 DataType** classes — composable FHIR R4 value objects with `toJSON()` serialization
+- **OAuth2Client & SSRequest** — HTTP client with automatic OAuth2 token caching/refresh on 401 and exponential backoff / `Retry-After` on 429 & 5xx
+- **SSResponse, BundleResponse & SSValidationError** — response wrappers with full 558 SATUSEHAT validation rule dictionary (`RULE_MAP`) and 14 response categories
+- **18 FHIR Resource Parsers** — `PatientParser`, `EncounterParser`, `ObservationParser`, `DiagnosticReportParser`, `PractitionerParser`, etc.
+- **TerminologyResolver & TerminologyClient** — castable terminology strings (`"ICD10:A00"`, `"LOINC:2951-2"`, `"SNOMED:38341003"`) and SmarTerm API client
 - **3 SATUSEHAT-specific** resources: BillingStatus (NON-FHIR JSON), PurificationDecision (NON-FHIR JSON), Endpoint (FHIR R4)
-- **Queue + Rate Limiter** — in-memory queue with configurable RPM rate limiting
-- **Vitest** test suite — all builders have comprehensive unit tests
+- **Full SQLite Queue + Worker + Monitor + Rate Limiter** — persistent `better-sqlite3` queue (`SqliteQueue`), `Worker`, `QueueMonitor`, `ErrorClassifier`, and `RateLimiter`
+- **Vitest** test suite — comprehensive unit tests across all modules
 
-Zero dependencies beyond TypeScript runtime. Works with any JS framework or plain Node.js.
+Works with any JS framework or plain Node.js.
 
 ---
 
@@ -70,11 +73,11 @@ Example — `HumanName`:
 ```typescript
 import { HumanName } from '@ivanwilliammd/satusehat-integration';
 
-const name: HumanName = {
+const name = new HumanName({
     family: 'Doe',
     given: ['John', 'Michael'],
     use: 'official',
-};
+});
 // name.toJSON() → { family: 'Doe', given: ['John', 'Michael'], use: 'official' }
 ```
 
@@ -89,7 +92,7 @@ import { PatientBuilder, HumanName } from '@ivanwilliammd/satusehat-integration'
 
 const patient = new PatientBuilder()
     .setId('12345678-1234-1234-1234-123456789012')
-    .addName({ family: 'Doe', given: ['John'], use: 'official' })
+    .addName(new HumanName({ family: 'Doe', given: ['John'], use: 'official' }))
     .setGender('male')
     .setBirthDate('1990-01-15');
 
@@ -100,7 +103,7 @@ const payload = patient.build();
 
 ## Supported FHIR Resources
 
-**115+ PayloadBuilder classes** covering all FHIR R4 resources used in SATUSEHAT interoperability, plus 3 SATUSEHAT-specific resources.
+**142 PayloadBuilder classes** covering all FHIR R4 resources used in SATUSEHAT interoperability, plus 3 SATUSEHAT-specific resources.
 
 ### SATUSEHAT Interoperability Resources (47)
 
@@ -147,46 +150,6 @@ const payload = patient.build();
 
 ⚡ = NON-FHIR JSON (SATUSEHAT-specific extension)
 
-### BillingStatus (NON-FHIR JSON)
-```typescript
-import { BillingStatusBuilder } from '@ivanwilliammd/satusehat-integration';
-
-const billing = new BillingStatusBuilder()
-  .setId('bs-001')
-  .addIdentifier('http://sys-ids.kemkes.go.id/billing/org-001', 'BILL-12345')
-  .setStatus('active')
-  .setInsurer('Organization/org-bpjs', 'BPJS Kesehatan')
-  .setSubject('100000030009', 'Budi Santoso')
-  .setRequest('cer-001');
-```
-
-### Endpoint (FHIR R4)
-```typescript
-import { EndpointBuilder } from '@ivanwilliammd/satusehat-integration';
-
-const endpoint = new EndpointBuilder()
-  .setId('ep-001')
-  .setStatus('active')
-  .setConnectionType('ihe-xcpd', 'IHE XCPD')
-  .setName('SATUSEHAT FHIR Endpoint')
-  .setManagingOrganization('Organization/org-ihs')
-  .setAddress('https://satusehat-api.example.com/fhir/r4');
-```
-
-### PurificationDecision (NON-FHIR JSON)
-```typescript
-import { PurificationDecisionBuilder } from '@ivanwilliammd/satusehat-integration';
-
-const pd = new PurificationDecisionBuilder()
-  .setId('pd-001')
-  .addIdentifier('http://sys-ids.kemkes.go.id/purification/org-001', 'PD-12345')
-  .setStatus('approved', 'Approved')
-  .setInsurer('Organization/org-bpjs', 'BPJS Kesehatan')
-  .setProvider('Organization/hos-001', 'Rumah Sakit Sehat')
-  .setClaimResponse('cr-001')
-  .setCreated('2024-01-15T10:35:00+00:00');
-```
-
 ### TerminologyResolver — castable codes
 ```typescript
 import { TerminologyResolver } from '@ivanwilliammd/satusehat-integration';
@@ -208,76 +171,75 @@ TerminologyResolver.expandArray(['ICD10:A00', 'ICD10:J18.9']);
 
 `TerminologyClient` menghubungkan aplikasi ke **SmarTerm** — layanan kamus terpadu
 terminologi kesehatan Indonesia (ICD-10, ICD-9-CM, SNOMED CT, LOINC, KPTL, KFA
-obat/alkes/BZA). Berguna saat aplikasi TIDAK ingin menyimpan dataset nasional
-lokal — cukup panggil REST API untuk search / validate / resolve FHIR code.
-
-```env
-TERMINOLOGY_BASE_URL=https://terminology.ivanmd.id      # opsional
-# Auth — pilih SALAH SATU:
-TERMINOLOGY_API_TOKEN=your_pat                           # 1) Sanctum PAT (statis)
-TERMINOLOGY_CLIENT_ID=your_oidc_client                   # 2) OIDC client_credentials
-TERMINOLOGY_CLIENT_SECRET=your_oidc_secret               #    ke auth.ivanmd.id (auto refresh)
-TERMINOLOGY_TOKEN_URL=https://auth.ivanmd.id/oauth/token #    default
-```
+obat/alkes/BZA).
 
 ```typescript
 import { TerminologyClient } from '@ivanwilliammd/satusehat-integration';
 
-// PAT statis (atau kosongkan kalau pakai env OIDC → auto-fetch + cache + refresh)
 const term = new TerminologyClient({ baseUrl: 'https://terminology.ivanmd.id', token: 'sanctum-pat-...' });
-
-// Fluent chaining — istilah bebas RS → kode resmi
 const result = await term.query('pemasangan kateter').on('kptl').limit(10).get();
-const result = await term.query('demam berdarah').category('diagnosis').first().get();
-const result = await term.query('93004944').asCode().get();     // validasi kode, sistem ditebak (93→kfa)
-const result = await term.query('91001834').on('kfa_bza').asCode().get(); // paksa sistem
-
-// Atau method langsung:
-const result = await term.search('demam berdarah', 'diagnosis', 10);  // unified
-const alkes  = await term.searchSystem('kfa_alkes', 'termometer', 5); // per sistem
-const ok     = await term.validate('snomed', '44054006');             // { valid, display, active }
-const cond   = await term.resolveCondition('E11', 'icd10', 'encounter-diagnosis');
-const med    = await term.resolveMedication('93004944');              // KFA obat
-const kptl   = await term.kptlCombine('10026', ['OR032', 'PD002']);   // KPTL multi-layer
-const map    = await term.map('icd10', 'snomed', 'E11');              // lintas terminologi
 ```
-
-Error: status HTTP `>= 400` melempar `Error('TerminologyClient HTTP <status>')`.
 
 ---
 
-## Usage Examples
-
-### Patient
+### Sending FHIR Requests (`OAuth2Client`, `SSRequest`, `SSResponse`, `BundleResponse`, `SSValidationError`)
 
 ```typescript
-import { PatientBuilder } from '@ivanwilliammd/satusehat-integration';
+import {
+  OAuth2Client,
+  SSRequest,
+  BundleResponse,
+  SSValidationError,
+  EncounterParser,
+} from '@ivanwilliammd/satusehat-integration';
 
-const patient = new PatientBuilder()
-    .setId('12345678-1234-1234-1234-123456789012')
-    .setName({ family: 'Doe', given: ['John'], use: 'official' })
-    .setGender('male')
-    .setBirthDate('1990-01-15')
-    .addTelecom({ system: 'phone', value: '081234567890', use: 'mobile' });
+const oauth = new OAuth2Client({
+  env: 'DEV',
+  clientId: process.env.CLIENTID_DEV,
+  clientSecret: process.env.CLIENTSECRET_DEV,
+  organizationId: process.env.ORGID_DEV,
+});
 
-const payload = patient.build();
-console.log(JSON.stringify(payload, null, 2));
+const request = new SSRequest(oauth);
+const res = await request.post('Encounter', encounterPayload);
+
+if (res.isSuccess()) {
+  console.log('Created Encounter ID:', res.getResourceId());
+  const parser = new EncounterParser(res.getBody());
+  console.log('Subject:', parser.getSubjectReference());
+} else {
+  const validation = SSValidationError.fromResponse(res);
+  console.error(validation.getSummary());
+}
+
+// Transaction Bundle response parsing
+const bundleRes = await request.postBundle('Bundle', bundlePayload);
+const br = new BundleResponse(bundleRes.getHttpCode(), bundleRes.getBody(), bundlePayload.entry);
+console.log('Created IDs map:', br.idMap());
 ```
 
-### Claim (BPJS Klaim)
+### Persistent SQLite Queue & Worker (`SqliteQueue`, `Worker`, `QueueMonitor`)
 
 ```typescript
-import { ClaimBuilder } from '@ivanwilliammd/satusehat-integration';
+import { SqliteQueue, Worker, QueueMonitor, RateLimiter } from '@ivanwilliammd/satusehat-integration';
 
-const claim = new ClaimBuilder()
-    .setStatus('active')
-    .setUse('claim')
-    .setType('institutional')
-    .setPatient('pat-123', 'enc-456')
-    .addItem(1, 'PROCID001', 150000, 'IDR')
-    .setTotal(150000, 'IDR');
+const queue = new SqliteQueue('./satusehat_queue.sqlite');
+queue.enqueue('POST', 'Observation', 'Observation', observationPayload);
 
-const payload = claim.build();
+const worker = new Worker(
+  queue,
+  {
+    client_id: process.env.CLIENTID_DEV!,
+    client_secret: process.env.CLIENTSECRET_DEV!,
+    base_url: 'https://api-satusehat-dev.dto.kemkes.go.id',
+    fhir_url: 'https://api-satusehat-dev.dto.kemkes.go.id/fhir-r4/v1',
+  },
+  new RateLimiter(300)
+);
+
+const result = await worker.process(50);
+const monitor = new QueueMonitor(queue);
+console.log(monitor.healthCheck());
 ```
 
 ---
@@ -292,21 +254,6 @@ const payload = claim.build();
 | [Builders](https://github.com/ivanwilliammd/satusehat-integration/wiki/Builders) | Builder usage guide |
 | [Resources](https://github.com/ivanwilliammd/satusehat-integration/wiki/Resources) | All FHIR resources |
 | [Claim Module](https://github.com/ivanwilliammd/satusehat-integration/wiki/Claim-Module) | BPJS Klaim integration |
-
----
-
-## External Resources
-
-- [HL7 FHIR R4 Specification](https://hl7.org/fhir/R4/)
-- [SATUSEHAT Platform Docs](https://satusehat.kemkes.go.id/platform/docs)
-- [Main PHP SDK](https://github.com/ivanwilliammd/satusehat-integration)
-- [SATUSEHAT Sandbox API](https://api-satusehat-dev.dto.kemkes.go.id)
-
----
-
-## Contributing
-
-Contributions are welcome. Please ensure tests pass and follow existing code conventions.
 
 ---
 

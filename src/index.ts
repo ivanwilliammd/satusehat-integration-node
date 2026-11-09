@@ -8,7 +8,7 @@
 // --- datatype (base + semua DataType) ---
 export * from './datatype';
 
-// --- terminologi, antrean, konfigurasi ---
+// --- terminologi, ssrequest, ssresponse, parser, antrean, konfigurasi ---
 export * from './terminology/index';
 export * from './terminology/Cvx';
 export * from './terminology/FhirR4term';
@@ -24,13 +24,41 @@ export * from './terminology/KptlKamar';
 export * from './terminology/KptlModifier';
 export * from './terminology/Loinc';
 export * from './terminology/LoincAnswer';
+export * from './terminology/resolver';
 export * from './terminology/Snomedct';
 export * from './terminology/TerminologyClient';
 export * from './terminology/Ucum';
-export * from './terminology/resolver';
-export * from './queue/rate_limiter';
-export * from './queue/monitor';
+export * from './ssrequest/OAuth2Client';
+export * from './ssrequest/SSRequest';
+export * from './ssresponse/BundleResponse';
+export * from './ssresponse/SSResponse';
+export * from './ssresponse/SSValidationError';
+export * from './parser/DeviceParser';
+export * from './parser/DiagnosticReportParser';
+export * from './parser/DocumentReferenceParser';
+export * from './parser/EncounterParser';
+export * from './parser/GenomicStudyParser';
+export * from './parser/GroupParser';
+export * from './parser/LocationParser';
+export * from './parser/MolecularSequenceParser';
+export * from './parser/ObservationParser';
+export * from './parser/OrganizationParser';
+export * from './parser/PatientParser';
+export * from './parser/PractitionerParser';
+export * from './parser/ProcedureParser';
+export * from './parser/RelatedPersonParser';
+export * from './parser/RiskAssessmentParser';
+export * from './parser/ServiceRequestParser';
+export * from './parser/SpecimenParser';
+export * from './parser/TaskParser';
 export * from './queue/error_classifier';
+export * from './queue/monitor';
+export * from './queue/queue_exception';
+export * from './queue/queue_interface';
+export * from './queue/queue_result';
+export * from './queue/rate_limiter';
+export * from './queue/sqlite_queue';
+export * from './queue/worker';
 export { default as konfigurasi } from './config';
 
 // --- builder (143 resource) ---

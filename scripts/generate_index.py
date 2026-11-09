@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """Bangun src/index.ts dari isi direktori src/.
 
-Kenapa digenerate: 143 builder + belasan kelas terminologi. Daftar yang ditulis tangan
-tertinggal setiap kali ada resource baru, dan yang hilang tidak menimbulkan galat — hanya
-`undefined` saat dipakai.
+Kenapa digenerate: 143 builder + belasan kelas terminologi, ssrequest, ssresponse,
+parser, dan queue. Daftar yang ditulis tangan tertinggal setiap kali ada resource baru,
+dan yang hilang tidak menimbulkan galat — hanya `undefined` saat dipakai.
 
 Nama ekspor dibaca dari berkasnya, bukan dari nama berkas: di repo ini sebagian berkas
 mengekspor `Patient`, sebagian `PatientBuilder`. Menebak dari nama berkas menghasilkan
@@ -44,19 +44,30 @@ def ekspor_file(p: pathlib.Path):
     return pola.findall(p.read_text(encoding="utf-8"))
 
 
-# datatype + terminologi + antrean + konfigurasi lebih dulu: builder memakai DataType.
+# datatype + terminologi + ssrequest + ssresponse + parser + antrean + konfigurasi lebih dulu: builder memakai DataType.
 baris.append("// --- datatype (base + semua DataType) ---")
 baris.append("export * from './datatype';")
 baris.append("")
-baris.append("// --- terminologi, antrean, konfigurasi ---")
+baris.append("// --- terminologi, ssrequest, ssresponse, parser, antrean, konfigurasi ---")
 baris.append("export * from './terminology/index';")
 # Tabel terminologi + resolver + klien tinggal di berkas terpisah; `terminology/index.ts`
 # hanya memuat TerminologyDB. Tanpa loop ini, `TerminologyResolver` (dipakai README) dan
 # seluruh kelas tabel tidak pernah ikut terekspor dari akar paket.
 for p in daftar_modul("terminology"):
     baris.append(f"export * from './terminology/{p.stem}';")
-for q in ("queue/rate_limiter", "queue/monitor", "queue/error_classifier"):
-    baris.append(f"export * from './{q}';")
+
+for p in daftar_modul("ssrequest"):
+    baris.append(f"export * from './ssrequest/{p.stem}';")
+
+for p in daftar_modul("ssresponse"):
+    baris.append(f"export * from './ssresponse/{p.stem}';")
+
+for p in daftar_modul("parser"):
+    baris.append(f"export * from './parser/{p.stem}';")
+
+for p in daftar_modul("queue"):
+    baris.append(f"export * from './queue/{p.stem}';")
+
 # config diekspor sebagai default saja: `TerminologyConfig` di dalamnya bertabrakan dengan
 # yang sudah diekspor terminology/index, dan dua antarmuka bernama sama membuat build gagal.
 baris.append("export { default as konfigurasi } from './config';")
