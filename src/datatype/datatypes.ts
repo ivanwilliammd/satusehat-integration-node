@@ -891,3 +891,85 @@ export class TriggerDefinition implements DataType {
     });
   }
 }
+
+// ─── SampledData ─────────────────────────────────────────────────────────────
+// FHIR R4 SampledData: periodic sampled values (waveforms, continuous monitoring).
+
+export class SampledData implements DataType {
+  origin?: Quantity = undefined;
+  period?: number = undefined;
+  factor?: number = undefined;
+  lowerLimit?: number = undefined;
+  upperLimit?: number = undefined;
+  dimensions?: number = undefined;
+  data?: string = undefined;
+
+  constructor(
+    origin?: Quantity,
+    period?: number,
+    factor?: number,
+    lowerLimit?: number,
+    upperLimit?: number,
+    dimensions?: number,
+    data?: string
+  ) {
+    this.origin = origin;
+    this.period = period;
+    this.factor = factor;
+    this.lowerLimit = lowerLimit;
+    this.upperLimit = upperLimit;
+    this.dimensions = dimensions;
+    this.data = data;
+  }
+
+  toArray(): any {
+    return filterPresent({
+      origin: nestedToArray(this.origin),
+      period: this.period,
+      factor: this.factor,
+      lowerLimit: this.lowerLimit,
+      upperLimit: this.upperLimit,
+      dimensions: this.dimensions,
+      data: this.data,
+    });
+  }
+}
+
+// ─── ParameterComponent ──────────────────────────────────────────────────────
+// FHIR R4 Parameters.parameter. `valueKey` names the value[x] variant
+// (valueString, valueQuantity, ...). FHIR has no bare `value` key.
+
+export class ParameterComponent implements DataType {
+  name?: string = undefined;
+  valueKey?: string = undefined;
+  value?: any = undefined;
+  resource?: any = undefined;
+  part?: ParameterComponent[] = undefined;
+
+  constructor(
+    name?: string,
+    valueKey?: string,
+    value?: any,
+    resource?: any,
+    part?: ParameterComponent[]
+  ) {
+    this.name = name;
+    this.valueKey = valueKey;
+    this.value = value;
+    this.resource = resource;
+    this.part = part;
+  }
+
+  toArray(): any {
+    const hasil: Record<string, any> = {};
+    if (this.name) hasil.name = this.name;
+    if (this.valueKey && this.value !== undefined && this.value !== null) {
+      hasil[this.valueKey] = nestedToArray(this.value);
+    }
+    if (this.resource !== undefined && this.resource !== null) {
+      hasil.resource = nestedToArray(this.resource);
+    }
+    if (this.part && this.part.length) hasil.part = nestedToArray(this.part);
+    return hasil;
+  }
+}
