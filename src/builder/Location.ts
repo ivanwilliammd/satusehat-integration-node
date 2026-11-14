@@ -25,7 +25,12 @@ export class Location {
     return this;
   }
   setDescription(description: string): this { this.data['description'] = description; return this; }
-  setType(type: CodeableConcept): this { this.data['type'] = type.toArray(); return this; }
+  setType(type: CodeableConcept): this {
+    // FHIR R4: location.type 0..* — setiap panggilan menambah, bukan menimpa.
+    this.data['type'] = this.data['type'] || [];
+    this.data['type'].push(type.toArray());
+    return this;
+  }
   addTelecom(telecom: ContactPoint): this {
     this.data['telecom'] = this.data['telecom'] || [];
     this.data['telecom'].push(telecom.toArray());

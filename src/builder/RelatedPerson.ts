@@ -35,7 +35,8 @@ export class RelatedPerson {
     this.data['relationship'] = this.data['relationship'] || [];
     if (typeof relationship === 'string') {
       this.data['relationship'].push({
-        coding: [{ system: 'http://terminology.hl7.org/CodeSystem/v2-0131', code: relationship, display: display ?? relationship }],
+        // Kanon menulis display: null bila tidak diberikan; menyalin kode ke display adalah karangan.
+        coding: [{ system: 'http://terminology.hl7.org/CodeSystem/v2-0131', code: relationship, display: display ?? null }],
       });
     } else {
       this.data['relationship'].push(relationship.toArray());
@@ -70,7 +71,7 @@ export class RelatedPerson {
   addCommunication(language: CodeableConcept | string, preferred = true): this {
     this.data['communication'] = this.data['communication'] || [];
     const lang = typeof language === 'string'
-      ? { coding: [{ system: 'http://terminology.hl7.org/CodeSystem/v3-Language', code: language, display: language }] }
+      ? { coding: [{ system: 'urn:ietf:bcp:47', code: language }] }
       : language.toArray();
     this.data['communication'].push({ language: lang, preferred });
     return this;
@@ -80,7 +81,10 @@ export class RelatedPerson {
     if (valueType !== undefined) {
       extension['value' + valueType.charAt(0).toUpperCase() + valueType.slice(1)] = value;
     } else {
-      extension['valueString'] = typeof value === 'string' ? value : value;
+      // Kanon memilih tipe dari nilai: boolean → valueBoolean, angka → valueInteger, sisanya valueString.
+      if (typeof value === 'boolean') extension['valueBoolean'] = value;
+      else if (typeof value === 'number') extension['valueInteger'] = value;
+      else extension['valueString'] = value;
     }
     this.data['extension'] = this.data['extension'] || [];
     this.data['extension'].push(extension);
