@@ -16,6 +16,12 @@ export class Procedure {
     this.data['identifier'].push(identifier.toArray());
     return this;
   }
+  addBasedOn(basedOn: Reference): this {
+    this.data['basedOn'] = this.data['basedOn'] || [];
+    this.data['basedOn'].push(basedOn.toArray());
+    return this;
+  }
+
   setStatus(status: string): this { this.data['status'] = status; return this; }
   setCategory(category: CodeableConcept): this { this.data['category'] = category.toArray(); return this; }
   setCode(code: CodeableConcept): this { this.data['code'] = code.toArray(); return this; }
@@ -34,6 +40,18 @@ export class Procedure {
     this.data['performer'].push(performer);
     return this;
   }
+  addReasonCode(reasonCode: CodeableConcept): this {
+    this.data['reasonCode'] = this.data['reasonCode'] || [];
+    this.data['reasonCode'].push(reasonCode.toArray());
+    return this;
+  }
+
+  addReasonReference(reasonReference: Reference): this {
+    this.data['reasonReference'] = this.data['reasonReference'] || [];
+    this.data['reasonReference'].push(reasonReference.toArray());
+    return this;
+  }
+
   setOutcome(outcome: CodeableConcept): this { this.data['outcome'] = outcome.toArray(); return this; }
   addReport(report: Reference): this {
     this.data['report'] = this.data['report'] || [];
