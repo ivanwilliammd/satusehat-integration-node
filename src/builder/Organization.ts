@@ -23,7 +23,12 @@ export class Organization {
     this.data['alias'].push(alias);
     return this;
   }
-  setType(type: CodeableConcept): this { this.data['type'] = type.toArray(); return this; }
+  setType(type: CodeableConcept): this {
+    // FHIR R4: organization.type 0..* — setiap panggilan menambah, bukan menimpa.
+    this.data['type'] = this.data['type'] || [];
+    this.data['type'].push(type.toArray());
+    return this;
+  }
   addTelecom(telecom: ContactPoint): this {
     this.data['telecom'] = this.data['telecom'] || [];
     this.data['telecom'].push(telecom.toArray());
