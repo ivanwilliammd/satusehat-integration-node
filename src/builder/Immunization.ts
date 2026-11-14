@@ -54,9 +54,16 @@ export class Immunization {
   setLotNumber(lotNumber: string): this { this.data['lotNumber'] = lotNumber; return this; }
   setRecorded(dateTime: string): this { this.data['recorded'] = dateTime; return this; }
   setPrimarySource(primarySource: boolean): this { this.data['primarySource'] = primarySource; return this; }
-  addProtocolApplied(doseNumberPositiveInt: number, series?: CodeableConcept): this {
+  addProtocolApplied(
+    doseNumberPositiveInt: number,
+    series?: CodeableConcept,
+    seriesDosesPositiveInt?: number,
+  ): this {
+    // FHIR R4: protocolApplied.series adalah CodeableConcept, seriesDoses[x] elemen terpisah.
+    // Versi lama menulis seriesDosesPositiveInt = 1 tiap kali series diberikan.
     const row: Record<string, any> = { doseNumberPositiveInt };
-    if (series !== undefined) row['seriesDosesPositiveInt'] = 1;
+    if (series !== undefined) row['series'] = series.toArray();
+    if (seriesDosesPositiveInt !== undefined) row['seriesDosesPositiveInt'] = seriesDosesPositiveInt;
     this.data['protocolApplied'] = this.data['protocolApplied'] || [];
     this.data['protocolApplied'].push(row);
     return this;
