@@ -75,7 +75,7 @@ export class Specimen {
     this.data['extension'].push({ url: 'https://fhir.kemkes.go.id/r4/StructureDefinition/TransportedTime', valueDateTime: dateTime });
     return this;
   }
-  addTransportedPerson(name: string, telecom: string[] = []): this {
+  addTransportedPerson(name: string, telecom: (string | Record<string, any>)[] = []): this {
     this.data['extension'] = this.data['extension'] || [];
     this.data['extension'].push({ url: 'https://fhir.kemkes.go.id/r4/StructureDefinition/TransportedPerson', valueContactDetail: { name, telecom } });
     return this;

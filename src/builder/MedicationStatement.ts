@@ -147,3 +147,6 @@ export class MedicationStatementBuilder {
     return this;
   }
 }
+
+/** Nama kanon (tanpa akhiran Builder) untuk pemanggil baru. */
+export class MedicationStatement extends MedicationStatementBuilder {}
