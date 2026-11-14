@@ -55,9 +55,10 @@ export class ClinicalImpression {
     this.data['supportingInfo'].push(supportingInfo.toArray());
     return this;
   }
-  addNote(note: Annotation): this {
+  addNote(note: Annotation | string): this {
     this.data['note'] = this.data['note'] || [];
-    this.data['note'].push(note.toArray());
+    // Kanon PHP menerima Annotation|string; string menjadi {text}.
+    this.data['note'].push(typeof note === 'string' ? { text: note } : note.toArray());
     return this;
   }
 }

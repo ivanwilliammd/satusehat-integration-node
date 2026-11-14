@@ -28,9 +28,10 @@ export class Device {
   setOwner(owner: Reference): this { this.data['owner'] = owner.toArray(); return this; }
   setLocation(location: Reference): this { this.data['location'] = location.toArray(); return this; }
   setSerialNumber(value: string): this { this.data['serialNumber'] = value; return this; }
-  addNote(note: Annotation): this {
+  addNote(note: Annotation | string): this {
     this.data['note'] = this.data['note'] || [];
-    this.data['note'].push(note.toArray());
+    // Kanon PHP menerima Annotation|string; string menjadi {text}.
+    this.data['note'].push(typeof note === 'string' ? { text: note } : note.toArray());
     return this;
   }
 }

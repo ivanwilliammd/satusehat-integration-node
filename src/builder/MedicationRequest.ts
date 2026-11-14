@@ -42,7 +42,9 @@ export class MedicationRequest {
   }
   addDosageInstruction(dosage: Dosage): this {
     this.data['dosageInstruction'] = this.data['dosageInstruction'] || [];
-    this.data['dosageInstruction'].push(dosage.toArray());
+    this.data['dosageInstruction'].push(
+      (dosage as any).toArray ? (dosage as any).toArray() : dosage,
+    );
     return this;
   }
   setDispenseRequest(validityPeriod?: Period, numberOfRepeatsAllowed?: number, quantity?: Quantity, expectedSupplyDuration?: Duration, performer?: CodeableConcept): this {
