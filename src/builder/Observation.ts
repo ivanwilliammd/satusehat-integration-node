@@ -56,9 +56,10 @@ export class Observation {
     this.data['interpretation'].push(interpretation.toArray());
     return this;
   }
-  addNote(note: Annotation): this {
+  addNote(note: Annotation | string): this {
+    // Kanon PHP menerima Annotation|string; string menjadi {text}.
     this.data['note'] = this.data['note'] || [];
-    this.data['note'].push(note.toArray());
+    this.data['note'].push(typeof note === 'string' ? { text: note } : note.toArray());
     return this;
   }
   addBodySite(bodySite: CodeableConcept): this {
