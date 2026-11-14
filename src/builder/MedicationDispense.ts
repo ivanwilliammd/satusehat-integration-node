@@ -135,3 +135,6 @@ export class MedicationDispense {
 
   addContained(resource: Record<string, any>): this { this.push('contained', resource); return this; }
 }
+
+/** Nama lama dipertahankan supaya pemanggil dan uji yang sudah ada tetap jalan. */
+export class MedicationDispenseBuilder extends MedicationDispense {}
