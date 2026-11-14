@@ -1,3 +1,4 @@
+import { Identifier } from '../datatype/datatypes';
 /** Endpoint FHIR R4 Resource Builder */
 export class EndpointBuilder {
   private data: Record<string, any> = { resourceType: 'Endpoint' };
@@ -16,8 +17,12 @@ export class EndpointBuilder {
 
   setId(id: string): this { this.set('id', id); return this; }
 
-  addIdentifier(system: string, value: string): this {
-    this.push('identifier', { system, value });
+  addIdentifier(system: Identifier | string, value?: string): this {
+    // Kanon menerima Identifier utuh atau pasangan (system, value).
+    const entry = typeof system === 'string' ? { system, value } : system.toArray();
+    const daftar = Array.isArray((this as any).data['identifier']) ? (this as any).data['identifier'] : [];
+    daftar.push(entry);
+    this.set('identifier', daftar);
     return this;
   }
 

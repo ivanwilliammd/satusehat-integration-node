@@ -25,7 +25,9 @@ export class HealthcareService {
   setName(value: string): this { this.data['name'] = value; return this; }
 
   setType(system: string, code: string, display: string = ''): this {
-    this.data['type'] = { coding: [{ system, code, display }] };
+    // FHIR R4: healthcareService.type 0..* — setiap panggilan menambah, bukan menimpa.
+    this.data['type'] = this.data['type'] || [];
+    this.data['type'].push({ coding: [{ system, code, display }] });
     return this;
   }
 
