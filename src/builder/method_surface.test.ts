@@ -21,7 +21,7 @@ const DIPERBOLEHKAN = new Set([
 ]);
 
 /** Batas atas method yang belum punya pasangan. WAJIB turun, tidak boleh naik. */
-const BATAS = 7;
+const BATAS = 0;
 
 function berkasTs(resource: string): string {
   return join(TS_DIR, `${resource === 'List' ? 'ListResource' : resource}.ts`);
