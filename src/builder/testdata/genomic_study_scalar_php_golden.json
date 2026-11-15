@@ -1,0 +1,115 @@
+{
+  "analysis": [
+    {
+      "identifier": [
+        {
+          "system": "http://sys.id/gs",
+          "value": "AN-1"
+        }
+      ]
+    }
+  ],
+  "basedOn": [
+    {
+      "reference": "ServiceRequest/sr-1"
+    },
+    {
+      "reference": "ServiceRequest/sr-2"
+    }
+  ],
+  "description": "Analisis exome pasien",
+  "encounter": {
+    "reference": "Encounter/enc-1"
+  },
+  "id": "gs-1",
+  "identifier": [
+    {
+      "system": "http://sys.id/ni",
+      "value": "NI-700"
+    }
+  ],
+  "interpreter": [
+    {
+      "reference": "Practitioner/1000000003"
+    }
+  ],
+  "meta": {
+    "profile": [
+      "https://fhir.kemkes.go.id/r4/StructureDefinition/GenomicStudy"
+    ]
+  },
+  "note": [
+    {
+      "text": "Sampel diterima 08.00"
+    }
+  ],
+  "performer": [
+    {
+      "actor": {
+        "reference": "Practitioner/1000000004"
+      },
+      "role": {
+        "coding": [
+          {
+            "code": "PERF",
+            "display": "Performer",
+            "system": "http://terminology.hl7.org/3.1.0/CodeSystem-v3-ParticipationType.html"
+          }
+        ]
+      }
+    },
+    {
+      "actor": {
+        "reference": "Organization/1000000001"
+      },
+      "role": {
+        "coding": [
+          {
+            "code": "ORG",
+            "display": "Performer",
+            "system": "http://terminology.hl7.org/3.1.0/CodeSystem-v3-ParticipationType.html"
+          }
+        ]
+      }
+    }
+  ],
+  "reason": [
+    {
+      "concept": {
+        "coding": [
+          {
+            "code": "404684003",
+            "display": "Clinical finding",
+            "system": "http://snomed.info/sct"
+          }
+        ],
+        "text": "Curiga sindrom genetik"
+      }
+    }
+  ],
+  "referrer": {
+    "reference": "Practitioner/1000000002"
+  },
+  "resourceType": "GenomicStudy",
+  "startDate": "2026-01-05",
+  "status": "available",
+  "subject": {
+    "display": "Budi Santoso",
+    "reference": "Patient/1000000001"
+  },
+  "type": [
+    {
+      "coding": [
+        {
+          "code": "LA26806-2",
+          "display": "Whole exome sequencing",
+          "system": "http://loinc.org"
+        }
+      ],
+      "text": "WES"
+    },
+    {
+      "text": "Germline"
+    }
+  ]
+}
