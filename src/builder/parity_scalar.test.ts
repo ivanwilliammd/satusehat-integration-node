@@ -8,6 +8,7 @@ import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 import { Account } from './Account';
 import { ChargeItem } from './ChargeItem';
+import { ImagingStudy } from './ImagingStudy';
 import { Invoice } from './Invoice';
 import { RiskAssessment } from './RiskAssessment';
 
@@ -141,5 +142,51 @@ describe('RiskAssessment parity', () => {
     b.addPrediction({ text: 'A' }, 0.1);
     b.addPrediction({ text: 'B' }, 0.2);
     expect(b.build()['prediction']).toHaveLength(2);
+  });
+});
+
+describe('ImagingStudy parity', () => {
+  const DICOM = 'http://dicom.nema.org/resources/ontology/DCM';
+
+  function isi(b: ImagingStudy): ImagingStudy {
+    b.setId('img-1');
+    b.addIdentifier('http://sys.id/accession', 'ACC-77');
+    b.setStatus('available');
+    b.addModality(DICOM, 'CT', 'Computed Tomography');
+    b.addModality(DICOM, 'MR', 'Magnetic Resonance');
+    b.setSubject('Patient/1000000001');
+    b.setEncounter('Encounter/enc-1');
+    b.setStarted('2026-01-05T08:00:00+07:00');
+    b.setEnded('2026-01-05T08:30:00+07:00');
+    b.setLocation('Location/loc-1');
+    b.addReferrer('Practitioner/1000000002');
+    b.addReferrer('Practitioner/1000000003');
+    b.addPartOf('ServiceRequest/sr-1');
+    b.addSeries('1.2.840.113619.2.1', DICOM, 'CT', 'Computed Tomography', 'available', 'Potongan toraks', 1);
+    b.addSeries('1.2.840.113619.2.2', DICOM, 'MR', 'Magnetic Resonance', null, 'Potongan kepala', 2);
+    b.setSeriesStarted(1, '2026-01-05T09:00:00+07:00');
+    b.setSeriesBodySite(0, 'http://snomed.info/sct', '51185008', 'Toraks');
+    b.addSeriesInstance(0, '1.2.840.113619.2.1.1', DICOM, '1.2.840.10008.5.1.4.1.1.2', 'CT Image Storage');
+    b.addSeriesInstance(0, '1.2.840.113619.2.1.2', DICOM, '1.2.840.10008.5.1.4.1.1.2', 'CT Image Storage');
+    b.addSeriesInstanceNumber(0, 0, 1);
+    b.addSeriesInstanceNumber(0, 1, 2);
+    return b;
+  }
+
+  it('sama dengan golden PHP, termasuk instance bersarang dan nomor instance', () => {
+    expect(isi(new ImagingStudy()).build()).toEqual(golden('imaging_study'));
+  });
+
+  it('addReferrer menimpa meski namanya add — quirk PHP yang sama', () => {
+    const hasil = isi(new ImagingStudy()).build();
+    expect(hasil['referrer']).toEqual({ reference: 'Practitioner/1000000003' });
+  });
+
+  it('bodySite dibungkus coding, modality tidak', () => {
+    const hasil = isi(new ImagingStudy()).build();
+    expect(hasil['modality'][0]['system']).toBe(DICOM);
+    expect(hasil['series'][0]['bodySite']).toEqual({
+      coding: [{ system: 'http://snomed.info/sct', code: '51185008', display: 'Toraks' }],
+    });
   });
 });

@@ -1,0 +1,95 @@
+{
+  "encounter": {
+    "reference": "Encounter/enc-1"
+  },
+  "ended": "2026-01-05T08:30:00+07:00",
+  "id": "img-1",
+  "identifier": [
+    {
+      "system": "http://sys.id/accession",
+      "value": "ACC-77"
+    }
+  ],
+  "location": {
+    "reference": "Location/loc-1"
+  },
+  "modality": [
+    {
+      "code": "CT",
+      "display": "Computed Tomography",
+      "system": "http://dicom.nema.org/resources/ontology/DCM"
+    },
+    {
+      "code": "MR",
+      "display": "Magnetic Resonance",
+      "system": "http://dicom.nema.org/resources/ontology/DCM"
+    }
+  ],
+  "partOf": [
+    {
+      "reference": "ServiceRequest/sr-1"
+    }
+  ],
+  "referrer": {
+    "reference": "Practitioner/1000000003"
+  },
+  "resourceType": "ImagingStudy",
+  "series": [
+    {
+      "bodySite": {
+        "coding": [
+          {
+            "code": "51185008",
+            "display": "Toraks",
+            "system": "http://snomed.info/sct"
+          }
+        ]
+      },
+      "description": "Potongan toraks",
+      "instance": [
+        {
+          "number": 1,
+          "sopClass": {
+            "code": "1.2.840.10008.5.1.4.1.1.2",
+            "display": "CT Image Storage",
+            "system": "http://dicom.nema.org/resources/ontology/DCM"
+          },
+          "uid": "1.2.840.113619.2.1.1"
+        },
+        {
+          "number": 2,
+          "sopClass": {
+            "code": "1.2.840.10008.5.1.4.1.1.2",
+            "display": "CT Image Storage",
+            "system": "http://dicom.nema.org/resources/ontology/DCM"
+          },
+          "uid": "1.2.840.113619.2.1.2"
+        }
+      ],
+      "modality": {
+        "code": "CT",
+        "display": "Computed Tomography",
+        "system": "http://dicom.nema.org/resources/ontology/DCM"
+      },
+      "number": 1,
+      "status": "available",
+      "uid": "1.2.840.113619.2.1"
+    },
+    {
+      "description": "Potongan kepala",
+      "modality": {
+        "code": "MR",
+        "display": "Magnetic Resonance",
+        "system": "http://dicom.nema.org/resources/ontology/DCM"
+      },
+      "number": 2,
+      "started": "2026-01-05T09:00:00+07:00",
+      "uid": "1.2.840.113619.2.2"
+    }
+  ],
+  "started": "2026-01-05T08:00:00+07:00",
+  "status": "available",
+  "subject": {
+    "reference": "Patient/1000000001"
+  }
+}
