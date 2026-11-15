@@ -1,5 +1,6 @@
 /** Substance FHIR R4 Resource Builder */
 import { CodeableConcept } from '../datatype/datatypes';
+import { konsep, rujuk } from './datatypeInput';
 
 export class SubstanceBuilder {
   private data: Record<string, any> = { resourceType: 'Substance' };
@@ -18,10 +19,10 @@ export class SubstanceBuilder {
   setStatus(status: string): this { this.data['status'] = status; return this; }
   addCategory(cc: CodeableConcept): this {
     if (!this.data['category']) this.data['category'] = [];
-    (this.data['category'] as any[]).push((cc as any).toArray());
+    (this.data['category'] as any[]).push(konsep(cc));
     return this;
   }
-  setCode(cc: CodeableConcept): this { this.data['code'] = (cc as any).toArray(); return this; }
+  setCode(cc: any, code?: string, display?: string): this { this.data['code'] = konsep(cc, code, display); return this; }
   setDescription(desc: string): this { this.data['description'] = desc; return this; }
 }
 

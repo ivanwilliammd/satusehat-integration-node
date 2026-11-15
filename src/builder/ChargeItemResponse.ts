@@ -1,5 +1,6 @@
 /** ChargeItemResponse FHIR R4 Resource Builder */
 import { CodeableConcept, Reference } from '../datatype/datatypes';
+import { konsep, rujuk } from './datatypeInput';
 
 export class ChargeItemResponse {
   private data: Record<string, any> = { resourceType: 'ChargeItemResponse' };
@@ -19,8 +20,8 @@ export class ChargeItemResponse {
   setStatus(status: string): this { this.data['status'] = status; return this; }
   setChargeItem(reference: string): this { this.data['chargeItem'] = { reference }; return this; }
   setRequest(reference: string): this { this.data['request'] = { reference }; return this; }
-  setOutcome(cc: CodeableConcept): this { this.data['outcome'] = (cc as any).toArray(); return this; }
+  setOutcome(cc: any, code?: string, display?: string): this { this.data['outcome'] = konsep(cc, code, display); return this; }
   setDescription(desc: string): this { this.data['description'] = desc; return this; }
   setCreated(dt: string): this { this.data['created'] = dt; return this; }
-  setRequestor(ref: Reference): this { this.data['requestor'] = (ref as any).toArray(); return this; }
+  setRequestor(ref: any): this { this.data['requestor'] = rujuk(ref); return this; }
 }

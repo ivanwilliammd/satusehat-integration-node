@@ -1,5 +1,6 @@
 /** ChargeItemDefinition FHIR R4 Resource Builder */
 import { CodeableConcept } from '../datatype/datatypes';
+import { konsep, rujuk } from './datatypeInput';
 
 export class ChargeItemDefinition {
   private data: Record<string, any> = { resourceType: 'ChargeItemDefinition' };
@@ -19,5 +20,5 @@ export class ChargeItemDefinition {
   setDate(date: string): this { this.data['date'] = date; return this; }
   setPublisher(publisher: string): this { this.data['publisher'] = publisher; return this; }
   setDescription(description: string): this { this.data['description'] = description; return this; }
-  setCode(code: CodeableConcept): this { this.data['code'] = (code as any).toArray(); return this; }
+  setCode(code: any, kode?: string, display?: string): this { this.data['code'] = konsep(code, kode, display); return this; }
 }

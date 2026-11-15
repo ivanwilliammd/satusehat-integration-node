@@ -1,5 +1,6 @@
 /** PaymentNotice FHIR R4 Resource Builder */
 import { CodeableConcept, Money, Reference } from '../datatype/datatypes';
+import { konsep, rujuk } from './datatypeInput';
 
 export class PaymentNotice {
   private data: Record<string, any> = { resourceType: 'PaymentNotice' };
@@ -14,6 +15,6 @@ export class PaymentNotice {
   setRequest(reference: string): this { this.data['request'] = { reference }; return this; }
   setResponse(reference: string): this { this.data['response'] = { reference }; return this; }
   setCreated(dt: string): this { this.data['created'] = dt; return this; }
-  setProvider(ref: Reference): this { this.data['provider'] = (ref as any).toArray(); return this; }
-  setAmount(money: Money): this { this.data['amount'] = (money as any).toArray(); return this; }
+  setProvider(ref: any): this { this.data['provider'] = rujuk(ref); return this; }
+  setAmount(money: any): this { this.data['amount'] = typeof money?.toArray === 'function' ? money.toArray() : money; return this; }
 }

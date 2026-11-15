@@ -1,5 +1,6 @@
 /** CareTeam FHIR R4 Resource Builder — mirrors PayloadBuilderCareTeam in the PHP SDK. */
 import { CodeableConcept, Reference } from '../datatype/datatypes';
+import { konsep, rujuk } from './datatypeInput';
 
 export class CareTeam {
   private data: Record<string, any> = { resourceType: 'CareTeam' };
@@ -32,21 +33,23 @@ export class CareTeam {
 
   setStatus(status: string): this { this.set('status', status); return this; }
 
-  setCode(code: CodeableConcept | { system: string; code: string; display: string }): this {
-    this.set('code', 'toArray' in code ? code.toArray() : { coding: [{ system: code.system, code: code.code, display: code.display }] });
+  /** PHP menerima (system, code, display). Objek datatype tetap diterima. */
+  setCode(code: any, kode?: string, display?: string): this {
+    if (typeof code === 'string') {
+      this.set('code', { coding: [{ system: code, code: kode ?? '', display: display ?? '' }] });
+      return this;
+    }
+    this.set('code', konsep(code));
     return this;
   }
 
   setSubject(reference: string | Reference, display?: string): this {
-    if (typeof reference !== 'string') { this.set('subject', reference.toArray()); return this; }
-    const ref: Record<string, any> = { reference };
-    if (display !== undefined) ref.display = display;
-    this.set('subject', ref);
+    this.set('subject', rujuk(reference, display));
     return this;
   }
 
   setEncounter(reference: string | Reference): this {
-    this.set('encounter', typeof reference === 'string' ? { reference } : reference.toArray());
+    this.set('encounter', rujuk(reference));
     return this;
   }
 

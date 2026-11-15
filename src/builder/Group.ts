@@ -10,7 +10,12 @@ export class GroupBuilder {
     );
   }
 
-  setMetaProfile(profile: string): this { this.data['meta/profile'] = [profile]; return this; }
+  /** PHP menulis lewat jalur `meta/profile`; kunci bertitik miring tidak boleh jadi nama kunci literal. */
+  setMetaProfile(profile: string): this {
+    const meta = (this.data['meta'] ??= {});
+    meta.profile = [profile];
+    return this;
+  }
   setId(id: string): this { this.data['id'] = id; return this; }
   addIdentifier(identifier: Identifier | string, value?: string): this {
     if (!this.data['identifier']) this.data['identifier'] = [];

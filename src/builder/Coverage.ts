@@ -1,5 +1,6 @@
 /** Coverage FHIR R4 Resource Builder — mirrors PayloadBuilderCoverage in the PHP SDK. */
 import { CodeableConcept, Identifier, Reference } from '../datatype/datatypes';
+import { ident, konsep, rujuk } from './datatypeInput';
 
 export class Coverage {
   private data: Record<string, any> = { resourceType: 'Coverage' };
@@ -13,68 +14,58 @@ export class Coverage {
 
   setId(id: string): this { this.set('id', id); return this; }
 
-  addIdentifier(identifier: Identifier | { system: string; value: string }): this {
-    const nilai = 'toArray' in identifier ? identifier.toArray() : identifier;
-    this.push('identifier', nilai);
+  addIdentifier(identifier: Identifier | { system: string; value: string } | string, value?: string): this {
+    this.push('identifier', ident(identifier, value));
     return this;
   }
 
   setStatus(status: string): this { this.set('status', status); return this; }
 
-  /** PHP selalu menulis display walau kosong. */
-  setType(type: CodeableConcept | { system: string; code: string; display?: string }): this {
-    if ('toArray' in type) {
-      this.set('type', type.toArray());
-    } else {
-      this.set('type', { coding: [{ system: type.system, code: type.code, display: type.display ?? '' }] });
+  /** PHP menerima (system, code, display) dan selalu menulis display walau kosong. */
+  setType(type: any, code?: string, display?: string): this {
+    if (typeof type === 'string') {
+      this.set('type', { coding: [{ system: type, code: code ?? '', display: display ?? '' }] });
+      return this;
     }
+    this.set('type', konsep(type, code, display));
     return this;
   }
 
   setPolicyHolder(reference: string | Reference): this {
-    this.set('policyHolder', typeof reference === 'string' ? { reference } : reference.toArray());
+    this.set('policyHolder', rujuk(reference));
     return this;
   }
 
   setSubscriber(reference: string | Reference): this {
-    this.set('subscriber', typeof reference === 'string' ? { reference } : reference.toArray());
+    this.set('subscriber', rujuk(reference));
     return this;
   }
 
   setSubscriberId(value: string): this { this.set('subscriberId', value); return this; }
 
   setBeneficiary(reference: string | Reference): this {
-    this.set('beneficiary', typeof reference === 'string' ? { reference } : reference.toArray());
+    this.set('beneficiary', rujuk(reference));
     return this;
   }
 
   setDependent(value: string): this { this.set('dependent', value); return this; }
 
-  setRelationship(relationship: { system: string; code: string } | CodeableConcept): this {
-    if ('toArray' in relationship) {
-      this.set('relationship', relationship.toArray());
-    } else {
-      this.set('relationship', { coding: [{ system: relationship.system, code: relationship.code }] });
+  setRelationship(relationship: any, code?: string): this {
+    if (typeof relationship === 'string') {
+      this.set('relationship', { coding: [{ system: relationship, code: code ?? '' }] });
+      return this;
     }
+    this.set('relationship', konsep(relationship));
     return this;
   }
 
   addPayor(reference: string | Reference, display?: string): this {
-    const ref = typeof reference === 'string' ? { reference } : reference.toArray();
-    if (display) ref.display = display;
-    this.push('payor', ref);
+    this.push('payor', rujuk(reference, display));
     return this;
   }
 
-  addClass(
-    type: { system: string; code: string } | CodeableConcept,
-    value: string,
-    name?: string,
-  ): this {
-    const row: Record<string, any> = {
-      type: 'toArray' in type ? type.toArray() : { coding: [{ system: type.system, code: type.code }] },
-      value,
-    };
+  addClass(type: any, value: string, name?: string): this {
+    const row: Record<string, any> = { type: konsep(type), value };
     if (name) row.name = name;
     this.push('class', row);
     return this;

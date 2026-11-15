@@ -1,5 +1,6 @@
 /** AdverseEvent FHIR R4 Resource Builder */
 import { CodeableConcept, Reference } from '../datatype/datatypes';
+import { konsep, rujuk } from './datatypeInput';
 
 export class AdverseEventBuilder {
   private data: Record<string, any> = { resourceType: 'AdverseEvent' };
@@ -12,12 +13,12 @@ export class AdverseEventBuilder {
 
   setId(id: string): this { this.data['id'] = id; return this; }
   setStatus(status: string): this { this.data['status'] = status; return this; }
-  setEventParticipant(actor: Reference): this { this.data['eventParticipant'] = (actor as any).toArray(); return this; }
-  setSubject(ref: Reference): this { this.data['subject'] = (ref as any).toArray(); return this; }
-  setEncounter(ref: Reference): this { this.data['encounter'] = (ref as any).toArray(); return this; }
+  setEventParticipant(actor: any): this { this.data['eventParticipant'] = rujuk(actor); return this; }
+  setSubject(ref: any): this { this.data['subject'] = rujuk(ref); return this; }
+  setEncounter(ref: any): this { this.data['encounter'] = rujuk(ref); return this; }
   setDate(dt: string): this { this.data['date'] = dt; return this; }
-  setSeriousness(cc: CodeableConcept): this { this.data['seriousness'] = (cc as any).toArray(); return this; }
-  setOutcome(cc: CodeableConcept): this { this.data['outcome'] = (cc as any).toArray(); return this; }
+  setSeriousness(cc: any, code?: string, display?: string): this { this.data['seriousness'] = konsep(cc, code, display); return this; }
+  setOutcome(cc: any, code?: string, display?: string): this { this.data['outcome'] = konsep(cc, code, display); return this; }
 }
 
 /** Nama kanon `AdverseEvent`: seragam dengan modul lain. `AdverseEventBuilder` dipertahankan untuk pemanggil lama. */
