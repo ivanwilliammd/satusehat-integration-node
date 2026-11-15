@@ -44,3 +44,6 @@ export class AuditEventBuilder {
     return this;
   }
 }
+
+/** Nama kanon: seragam dengan 141 modul lain. `AuditEventBuilder` dipertahankan untuk pemanggil lama. */
+export { AuditEventBuilder as AuditEvent };

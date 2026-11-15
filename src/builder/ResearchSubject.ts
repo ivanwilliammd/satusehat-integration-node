@@ -44,3 +44,6 @@ export class ResearchSubjectBuilder {
     return this;
   }
 }
+
+/** Nama kanon: seragam dengan 141 modul lain. `ResearchSubjectBuilder` dipertahankan untuk pemanggil lama. */
+export { ResearchSubjectBuilder as ResearchSubject };

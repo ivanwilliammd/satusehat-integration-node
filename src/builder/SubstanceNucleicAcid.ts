@@ -44,3 +44,6 @@ export class SubstanceNucleicAcidBuilder {
     return this;
   }
 }
+
+/** Nama kanon: seragam dengan 141 modul lain. `SubstanceNucleicAcidBuilder` dipertahankan untuk pemanggil lama. */
+export { SubstanceNucleicAcidBuilder as SubstanceNucleicAcid };

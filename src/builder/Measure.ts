@@ -44,3 +44,6 @@ export class MeasureBuilder {
     return this;
   }
 }
+
+/** Nama kanon: seragam dengan 141 modul lain. `MeasureBuilder` dipertahankan untuk pemanggil lama. */
+export { MeasureBuilder as Measure };

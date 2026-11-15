@@ -44,3 +44,6 @@ export class ImagingSelectionBuilder {
     return this;
   }
 }
+
+/** Nama kanon: seragam dengan 141 modul lain. `ImagingSelectionBuilder` dipertahankan untuk pemanggil lama. */
+export { ImagingSelectionBuilder as ImagingSelection };

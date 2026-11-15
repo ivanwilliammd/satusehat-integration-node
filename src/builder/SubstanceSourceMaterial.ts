@@ -44,3 +44,6 @@ export class SubstanceSourceMaterialBuilder {
     return this;
   }
 }
+
+/** Nama kanon: seragam dengan 141 modul lain. `SubstanceSourceMaterialBuilder` dipertahankan untuk pemanggil lama. */
+export { SubstanceSourceMaterialBuilder as SubstanceSourceMaterial };

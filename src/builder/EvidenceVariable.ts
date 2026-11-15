@@ -44,3 +44,6 @@ export class EvidenceVariableBuilder {
     return this;
   }
 }
+
+/** Nama kanon: seragam dengan 141 modul lain. `EvidenceVariableBuilder` dipertahankan untuk pemanggil lama. */
+export { EvidenceVariableBuilder as EvidenceVariable };

@@ -44,3 +44,6 @@ export class VerificationResultBuilder {
     return this;
   }
 }
+
+/** Nama kanon: seragam dengan 141 modul lain. `VerificationResultBuilder` dipertahankan untuk pemanggil lama. */
+export { VerificationResultBuilder as VerificationResult };

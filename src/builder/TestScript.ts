@@ -44,3 +44,6 @@ export class TestScriptBuilder {
     return this;
   }
 }
+
+/** Nama kanon: seragam dengan 141 modul lain. `TestScriptBuilder` dipertahankan untuk pemanggil lama. */
+export { TestScriptBuilder as TestScript };

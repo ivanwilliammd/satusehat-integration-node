@@ -44,3 +44,6 @@ export class ImagingManifestBuilder {
     return this;
   }
 }
+
+/** Nama kanon: seragam dengan 141 modul lain. `ImagingManifestBuilder` dipertahankan untuk pemanggil lama. */
+export { ImagingManifestBuilder as ImagingManifest };

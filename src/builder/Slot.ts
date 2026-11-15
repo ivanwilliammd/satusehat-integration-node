@@ -44,3 +44,6 @@ export class SlotBuilder {
     return this;
   }
 }
+
+/** Nama kanon: seragam dengan 141 modul lain. `SlotBuilder` dipertahankan untuk pemanggil lama. */
+export { SlotBuilder as Slot };

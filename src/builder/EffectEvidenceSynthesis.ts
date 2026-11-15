@@ -44,3 +44,6 @@ export class EffectEvidenceSynthesisBuilder {
     return this;
   }
 }
+
+/** Nama kanon: seragam dengan 141 modul lain. `EffectEvidenceSynthesisBuilder` dipertahankan untuk pemanggil lama. */
+export { EffectEvidenceSynthesisBuilder as EffectEvidenceSynthesis };

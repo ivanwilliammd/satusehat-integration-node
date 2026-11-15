@@ -44,3 +44,6 @@ export class EvidenceBuilder {
     return this;
   }
 }
+
+/** Nama kanon: seragam dengan 141 modul lain. `EvidenceBuilder` dipertahankan untuk pemanggil lama. */
+export { EvidenceBuilder as Evidence };

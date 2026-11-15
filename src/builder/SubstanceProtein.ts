@@ -44,3 +44,6 @@ export class SubstanceProteinBuilder {
     return this;
   }
 }
+
+/** Nama kanon: seragam dengan 141 modul lain. `SubstanceProteinBuilder` dipertahankan untuk pemanggil lama. */
+export { SubstanceProteinBuilder as SubstanceProtein };

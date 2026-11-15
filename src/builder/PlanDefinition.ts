@@ -44,3 +44,6 @@ export class PlanDefinitionBuilder {
     return this;
   }
 }
+
+/** Nama kanon: seragam dengan 141 modul lain. `PlanDefinitionBuilder` dipertahankan untuk pemanggil lama. */
+export { PlanDefinitionBuilder as PlanDefinition };

@@ -44,3 +44,6 @@ export class GuidanceResponseBuilder {
     return this;
   }
 }
+
+/** Nama kanon: seragam dengan 141 modul lain. `GuidanceResponseBuilder` dipertahankan untuk pemanggil lama. */
+export { GuidanceResponseBuilder as GuidanceResponse };

@@ -44,3 +44,6 @@ export class DeviceDefinitionBuilder {
     return this;
   }
 }
+
+/** Nama kanon: seragam dengan 141 modul lain. `DeviceDefinitionBuilder` dipertahankan untuk pemanggil lama. */
+export { DeviceDefinitionBuilder as DeviceDefinition };

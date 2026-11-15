@@ -44,3 +44,6 @@ export class SearchParameterBuilder {
     return this;
   }
 }
+
+/** Nama kanon: seragam dengan 141 modul lain. `SearchParameterBuilder` dipertahankan untuk pemanggil lama. */
+export { SearchParameterBuilder as SearchParameter };

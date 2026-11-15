@@ -44,3 +44,6 @@ export class RiskEvidenceSynthesisBuilder {
     return this;
   }
 }
+
+/** Nama kanon: seragam dengan 141 modul lain. `RiskEvidenceSynthesisBuilder` dipertahankan untuk pemanggil lama. */
+export { RiskEvidenceSynthesisBuilder as RiskEvidenceSynthesis };

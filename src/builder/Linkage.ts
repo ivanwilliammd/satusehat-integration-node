@@ -44,3 +44,6 @@ export class LinkageBuilder {
     return this;
   }
 }
+
+/** Nama kanon: seragam dengan 141 modul lain. `LinkageBuilder` dipertahankan untuk pemanggil lama. */
+export { LinkageBuilder as Linkage };

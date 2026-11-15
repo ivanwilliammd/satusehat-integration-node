@@ -44,3 +44,6 @@ export class BasicBuilder {
     return this;
   }
 }
+
+/** Nama kanon: seragam dengan 141 modul lain. `BasicBuilder` dipertahankan untuk pemanggil lama. */
+export { BasicBuilder as Basic };

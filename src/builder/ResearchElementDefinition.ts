@@ -44,3 +44,6 @@ export class ResearchElementDefinitionBuilder {
     return this;
   }
 }
+
+/** Nama kanon: seragam dengan 141 modul lain. `ResearchElementDefinitionBuilder` dipertahankan untuk pemanggil lama. */
+export { ResearchElementDefinitionBuilder as ResearchElementDefinition };

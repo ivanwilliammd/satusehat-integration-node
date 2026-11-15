@@ -44,3 +44,6 @@ export class OperationOutcomeBuilder {
     return this;
   }
 }
+
+/** Nama kanon: seragam dengan 141 modul lain. `OperationOutcomeBuilder` dipertahankan untuk pemanggil lama. */
+export { OperationOutcomeBuilder as OperationOutcome };

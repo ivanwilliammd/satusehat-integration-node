@@ -44,3 +44,6 @@ export class ImmunizationEvaluationBuilder {
     return this;
   }
 }
+
+/** Nama kanon: seragam dengan 141 modul lain. `ImmunizationEvaluationBuilder` dipertahankan untuk pemanggil lama. */
+export { ImmunizationEvaluationBuilder as ImmunizationEvaluation };

@@ -44,3 +44,6 @@ export class QuestionnaireBuilder {
     return this;
   }
 }
+
+/** Nama kanon: seragam dengan 141 modul lain. `QuestionnaireBuilder` dipertahankan untuk pemanggil lama. */
+export { QuestionnaireBuilder as Questionnaire };

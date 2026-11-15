@@ -44,3 +44,6 @@ export class ExampleScenarioBuilder {
     return this;
   }
 }
+
+/** Nama kanon: seragam dengan 141 modul lain. `ExampleScenarioBuilder` dipertahankan untuk pemanggil lama. */
+export { ExampleScenarioBuilder as ExampleScenario };

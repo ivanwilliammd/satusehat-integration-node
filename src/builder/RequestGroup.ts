@@ -44,3 +44,6 @@ export class RequestGroupBuilder {
     return this;
   }
 }
+
+/** Nama kanon: seragam dengan 141 modul lain. `RequestGroupBuilder` dipertahankan untuk pemanggil lama. */
+export { RequestGroupBuilder as RequestGroup };

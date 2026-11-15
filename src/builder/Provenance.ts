@@ -44,3 +44,6 @@ export class ProvenanceBuilder {
     return this;
   }
 }
+
+/** Nama kanon: seragam dengan 141 modul lain. `ProvenanceBuilder` dipertahankan untuk pemanggil lama. */
+export { ProvenanceBuilder as Provenance };

@@ -44,3 +44,6 @@ export class MeasureReportBuilder {
     return this;
   }
 }
+
+/** Nama kanon: seragam dengan 141 modul lain. `MeasureReportBuilder` dipertahankan untuk pemanggil lama. */
+export { MeasureReportBuilder as MeasureReport };

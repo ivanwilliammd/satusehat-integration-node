@@ -44,3 +44,6 @@ export class EnrollmentRequestBuilder {
     return this;
   }
 }
+
+/** Nama kanon: seragam dengan 141 modul lain. `EnrollmentRequestBuilder` dipertahankan untuk pemanggil lama. */
+export { EnrollmentRequestBuilder as EnrollmentRequest };

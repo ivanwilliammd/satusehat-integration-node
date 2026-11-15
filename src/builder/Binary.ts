@@ -44,3 +44,6 @@ export class BinaryBuilder {
     return this;
   }
 }
+
+/** Nama kanon: seragam dengan 141 modul lain. `BinaryBuilder` dipertahankan untuk pemanggil lama. */
+export { BinaryBuilder as Binary };

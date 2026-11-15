@@ -44,3 +44,6 @@ export class TestReportBuilder {
     return this;
   }
 }
+
+/** Nama kanon: seragam dengan 141 modul lain. `TestReportBuilder` dipertahankan untuk pemanggil lama. */
+export { TestReportBuilder as TestReport };

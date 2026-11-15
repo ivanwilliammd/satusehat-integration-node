@@ -44,3 +44,6 @@ export class MessageDefinitionBuilder {
     return this;
   }
 }
+
+/** Nama kanon: seragam dengan 141 modul lain. `MessageDefinitionBuilder` dipertahankan untuk pemanggil lama. */
+export { MessageDefinitionBuilder as MessageDefinition };

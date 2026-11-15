@@ -44,3 +44,6 @@ export class EventDefinitionBuilder {
     return this;
   }
 }
+
+/** Nama kanon: seragam dengan 141 modul lain. `EventDefinitionBuilder` dipertahankan untuk pemanggil lama. */
+export { EventDefinitionBuilder as EventDefinition };

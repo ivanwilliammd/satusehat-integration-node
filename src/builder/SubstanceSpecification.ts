@@ -44,3 +44,6 @@ export class SubstanceSpecificationBuilder {
     return this;
   }
 }
+
+/** Nama kanon: seragam dengan 141 modul lain. `SubstanceSpecificationBuilder` dipertahankan untuk pemanggil lama. */
+export { SubstanceSpecificationBuilder as SubstanceSpecification };

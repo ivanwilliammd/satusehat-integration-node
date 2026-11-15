@@ -44,3 +44,6 @@ export class LibraryBuilder {
     return this;
   }
 }
+
+/** Nama kanon: seragam dengan 141 modul lain. `LibraryBuilder` dipertahankan untuk pemanggil lama. */
+export { LibraryBuilder as Library };

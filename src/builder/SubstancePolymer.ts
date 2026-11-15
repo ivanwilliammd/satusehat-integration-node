@@ -44,3 +44,6 @@ export class SubstancePolymerBuilder {
     return this;
   }
 }
+
+/** Nama kanon: seragam dengan 141 modul lain. `SubstancePolymerBuilder` dipertahankan untuk pemanggil lama. */
+export { SubstancePolymerBuilder as SubstancePolymer };

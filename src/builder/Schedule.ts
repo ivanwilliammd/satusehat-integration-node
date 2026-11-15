@@ -44,3 +44,6 @@ export class ScheduleBuilder {
     return this;
   }
 }
+
+/** Nama kanon: seragam dengan 141 modul lain. `ScheduleBuilder` dipertahankan untuk pemanggil lama. */
+export { ScheduleBuilder as Schedule };
