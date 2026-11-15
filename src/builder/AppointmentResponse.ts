@@ -15,3 +15,6 @@ export class AppointmentResponseBuilder {
   setParticipantStatus(status: string): this { this.data['participantStatus'] = status; return this; }
   setActor(ref: Reference): this { this.data['actor'] = (ref as any).toArray(); return this; }
 }
+
+/** Nama kanon `AppointmentResponse`: seragam dengan modul lain. `AppointmentResponseBuilder` dipertahankan untuk pemanggil lama. */
+export { AppointmentResponseBuilder as AppointmentResponse };

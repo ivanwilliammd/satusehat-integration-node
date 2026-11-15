@@ -44,3 +44,6 @@ export class ConsentBuilder {
     return this;
   }
 }
+
+/** Nama kanon `Consent`: seragam dengan modul lain. `ConsentBuilder` dipertahankan untuk pemanggil lama. */
+export { ConsentBuilder as Consent };

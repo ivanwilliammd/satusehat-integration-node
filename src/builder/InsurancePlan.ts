@@ -25,7 +25,10 @@ export class InsurancePlan {
   setName(value: string): this { this.data['name'] = value; return this; }
 
   setType(system: string, code: string, display: string = ''): this {
-    this.data['type'] = { coding: [{ system, code, display }] };
+    // FHIR R4: InsurancePlan.type 0..*. Menimpa berarti plan medical+dental
+    // kehilangan satu tipe tanpa keluhan, dan itu pernah terjadi di port Go.
+    this.data['type'] = this.data['type'] || [];
+    this.data['type'].push({ coding: [{ system, code, display }] });
     return this;
   }
 

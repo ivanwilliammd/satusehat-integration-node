@@ -72,3 +72,6 @@ export class GroupBuilder {
     return this;
   }
 }
+
+/** Nama kanon `Group`: seragam dengan modul lain. `GroupBuilder` dipertahankan untuk pemanggil lama. */
+export { GroupBuilder as Group };

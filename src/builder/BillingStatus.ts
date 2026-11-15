@@ -47,3 +47,6 @@ export class BillingStatusBuilder {
     return this;
   }
 }
+
+/** Nama kanon `BillingStatus`: seragam dengan modul lain. `BillingStatusBuilder` dipertahankan untuk pemanggil lama. */
+export { BillingStatusBuilder as BillingStatus };

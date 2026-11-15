@@ -44,3 +44,6 @@ export class DetectedIssueBuilder {
     return this;
   }
 }
+
+/** Nama kanon `DetectedIssue`: seragam dengan modul lain. `DetectedIssueBuilder` dipertahankan untuk pemanggil lama. */
+export { DetectedIssueBuilder as DetectedIssue };

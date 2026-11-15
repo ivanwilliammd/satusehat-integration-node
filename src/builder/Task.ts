@@ -164,3 +164,6 @@ export class TaskBuilder {
     return this;
   }
 }
+
+/** Nama kanon `Task`: seragam dengan modul lain. `TaskBuilder` dipertahankan untuk pemanggil lama. */
+export { TaskBuilder as Task };

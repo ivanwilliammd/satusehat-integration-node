@@ -24,3 +24,6 @@ export class AppointmentBuilder {
   setEnd(end: string): this { this.data['end'] = end; return this; }
   setDurationMinutes(minutes: number): this { this.data['minutesDuration'] = minutes; return this; }
 }
+
+/** Nama kanon `Appointment`: seragam dengan modul lain. `AppointmentBuilder` dipertahankan untuk pemanggil lama. */
+export { AppointmentBuilder as Appointment };

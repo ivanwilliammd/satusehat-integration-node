@@ -119,3 +119,6 @@ export class BundleBuilder {
     return errors;
   }
 }
+
+/** Nama kanon `Bundle`: seragam dengan modul lain. `BundleBuilder` dipertahankan untuk pemanggil lama. */
+export { BundleBuilder as Bundle };

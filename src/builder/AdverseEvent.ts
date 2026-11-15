@@ -19,3 +19,6 @@ export class AdverseEventBuilder {
   setSeriousness(cc: CodeableConcept): this { this.data['seriousness'] = (cc as any).toArray(); return this; }
   setOutcome(cc: CodeableConcept): this { this.data['outcome'] = (cc as any).toArray(); return this; }
 }
+
+/** Nama kanon `AdverseEvent`: seragam dengan modul lain. `AdverseEventBuilder` dipertahankan untuk pemanggil lama. */
+export { AdverseEventBuilder as AdverseEvent };

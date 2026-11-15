@@ -44,3 +44,6 @@ export class CommunicationRequestBuilder {
     return this;
   }
 }
+
+/** Nama kanon `CommunicationRequest`: seragam dengan modul lain. `CommunicationRequestBuilder` dipertahankan untuk pemanggil lama. */
+export { CommunicationRequestBuilder as CommunicationRequest };

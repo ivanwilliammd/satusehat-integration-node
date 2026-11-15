@@ -48,3 +48,6 @@ export class PurificationDecisionBuilder {
 
   setCreated(created: string): this { this.set('created', created); return this; }
 }
+
+/** Nama kanon `PurificationDecision`: seragam dengan modul lain. `PurificationDecisionBuilder` dipertahankan untuk pemanggil lama. */
+export { PurificationDecisionBuilder as PurificationDecision };

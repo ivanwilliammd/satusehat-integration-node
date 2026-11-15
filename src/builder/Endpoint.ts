@@ -73,3 +73,6 @@ export class EndpointBuilder {
     return this;
   }
 }
+
+/** Nama kanon `Endpoint`: seragam dengan modul lain. `EndpointBuilder` dipertahankan untuk pemanggil lama. */
+export { EndpointBuilder as Endpoint };

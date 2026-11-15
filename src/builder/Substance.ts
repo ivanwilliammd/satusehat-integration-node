@@ -24,3 +24,6 @@ export class SubstanceBuilder {
   setCode(cc: CodeableConcept): this { this.data['code'] = (cc as any).toArray(); return this; }
   setDescription(desc: string): this { this.data['description'] = desc; return this; }
 }
+
+/** Nama kanon `Substance`: seragam dengan modul lain. `SubstanceBuilder` dipertahankan untuk pemanggil lama. */
+export { SubstanceBuilder as Substance };

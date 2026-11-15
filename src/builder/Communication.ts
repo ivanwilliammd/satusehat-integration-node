@@ -44,3 +44,6 @@ export class CommunicationBuilder {
     return this;
   }
 }
+
+/** Nama kanon `Communication`: seragam dengan modul lain. `CommunicationBuilder` dipertahankan untuk pemanggil lama. */
+export { CommunicationBuilder as Communication };
