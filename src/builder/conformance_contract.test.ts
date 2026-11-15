@@ -15,6 +15,22 @@ const berkasKasus = existsSync(BUILDER_DIR)
   ? readdirSync(BUILDER_DIR).filter((f) => f.endsWith('.input.json')).sort()
   : [];
 
+/**
+ * Materialiser datatype: builder TypeScript memanggil `arg.toArray()`, jadi objek dari spec
+ * dibungkus dengan toArray() yang mengembalikan isinya sendiri (tanpa fungsi, tanpa $type).
+ * Ini meniru kelas di src/datatype tanpa harus menebak konstruktornya satu per satu.
+ */
+function materialise(nilai: any): any {
+  if (Array.isArray(nilai)) return nilai.map(materialise);
+  if (nilai && typeof nilai === 'object') {
+    const bersih = tanpaTipe(nilai);
+    const isi: Record<string, any> = {};
+    for (const [k, v] of Object.entries(bersih)) isi[k] = v;
+    return { ...isi, toArray: () => isi };
+  }
+  return nilai;
+}
+
 /** Buang penanda $type; builder TypeScript menerima objek polos. */
 function tanpaTipe(nilai: any): any {
   if (Array.isArray(nilai)) return nilai.map(tanpaTipe);
@@ -42,7 +58,7 @@ describe.skipIf(berkasKasus.length === 0)('kontrak satusehat-conformance', () =>
       const Ctor = kelasBuilder(spec.resource);
       const builder = new Ctor();
       for (const panggilan of spec.calls) {
-        builder[panggilan.method](...(panggilan.args ?? []).map(tanpaTipe));
+        builder[panggilan.method](...(panggilan.args ?? []).map(materialise));
       }
       expect(builder.build()).toEqual(harapan);
     });
