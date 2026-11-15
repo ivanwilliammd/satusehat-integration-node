@@ -1,23 +1,23 @@
 /**
  * Permukaan method kanon PHP vs TypeScript — uji RATCHET.
  *
- * Uji golden menjaga perilaku resource yang sudah diporting. Uji ini menjaga
- * PERMUKAAN: berapa method kanon yang belum punya pasangan di kelas TypeScript.
+ * Daftar method kanon dibaca dari `contracts/php_method_surface.json` yang ikut ter-commit,
+ * bukan dari checkout repo PHP. Alasannya konkret: uji sebelumnya membaca
+ * /home/openclaw/... dan GAGAL di CI (berkas tidak ada), tetapi kegagalannya tertutup oleh
+ * `|| echo "No test files found"` di workflow — CI hijau sementara satu berkas uji merah.
  *
- * Angkanya harus TURUN, tidak boleh naik. Setiap kali satu resource dilengkapi,
- * turunkan BATAS. Kalau kanon menambah method tanpa diporting, uji ini gagal —
- * bukan hijau palsu seperti hitungan "141 resource punya berkas".
+ * Angka kekurangan hanya boleh TURUN. Setiap kali satu resource dilengkapi, turunkan BATAS.
  */
-import { readFileSync, readdirSync, existsSync } from 'node:fs';
+import { readFileSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
 
-const PHP_DIR = '/home/openclaw/projects/satusehat-integration/src/Builder';
+const KONTRAK = join(__dirname, '..', '..', 'contracts', 'php_method_surface.json');
 const TS_DIR = join(__dirname);
 
 /** Method kanon yang memang tidak diporting, beserta alasannya. */
 const DIPERBOLEHKAN = new Set([
-  'Bundle.json', // mengembalikan string JSON, bukan payload
+  'Bundle.json', // mengembalikan string JSON, bukan payload; TS memakai getResourceType/toJSON
 ]);
 
 /** Batas atas method yang belum punya pasangan. WAJIB turun, tidak boleh naik. */
@@ -28,19 +28,16 @@ function berkasTs(resource: string): string {
 }
 
 function kekurangan(): string[] {
+  const kontrak: Record<string, string[]> = JSON.parse(readFileSync(KONTRAK, 'utf8'));
   const hasil: string[] = [];
-  for (const berkas of readdirSync(PHP_DIR).filter((f) => f.startsWith('PayloadBuilder') && f.endsWith('.php'))) {
-    const teks = readFileSync(join(PHP_DIR, berkas), 'utf8');
-    const resource = /resourceType\s*=\s*'([^']+)'/.exec(teks)![1];
+  for (const [resource, methods] of Object.entries(kontrak)) {
     const target = berkasTs(resource);
     if (!existsSync(target)) {
       hasil.push(`${resource}: berkas TypeScript tidak ada`);
       continue;
     }
     const isi = readFileSync(target, 'utf8');
-    for (const m of teks.matchAll(/public function (\w+)\(/g)) {
-      const method = m[1];
-      if (method === '__construct' || method === 'build') continue;
+    for (const method of methods) {
       if (DIPERBOLEHKAN.has(`${resource}.${method}`)) continue;
       if (!isi.includes(`${method}(`)) hasil.push(`${resource}.${method}`);
     }
