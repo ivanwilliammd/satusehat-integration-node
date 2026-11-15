@@ -55,7 +55,8 @@ export class Coverage {
       this.set('relationship', { coding: [{ system: relationship, code: code ?? '' }] });
       return this;
     }
-    this.set('relationship', konsep(relationship));
+    // R4: relationship adalah CodeableConcept; objek polos dibungkus coding.
+    this.set('relationship', Array.isArray(relationship?.coding) ? relationship : { coding: [relationship] });
     return this;
   }
 
@@ -65,7 +66,10 @@ export class Coverage {
   }
 
   addClass(type: any, value: string, name?: string): this {
-    const row: Record<string, any> = { type: konsep(type), value };
+    // R4: class.type adalah CodeableConcept. Objek polos {system,code} dulu ditulis apa
+    // adanya, sehingga payload tidak sah R4 (system/code di tingkat elemen, tanpa coding).
+    const tipe = typeof type?.toArray === 'function' ? type.toArray() : Array.isArray(type?.coding) ? type : { coding: [type] };
+    const row: Record<string, any> = { type: tipe, value };
     if (name) row.name = name;
     this.push('class', row);
     return this;

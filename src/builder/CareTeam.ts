@@ -39,7 +39,9 @@ export class CareTeam {
       this.set('code', { coding: [{ system: code, code: kode ?? '', display: display ?? '' }] });
       return this;
     }
-    this.set('code', konsep(code));
+    // R4: code adalah CodeableConcept; objek polos {system,code} harus dibungkus coding.
+    const tipe = typeof code?.toArray === 'function' ? code.toArray() : Array.isArray(code?.coding) ? code : { coding: [code] };
+    this.set('code', tipe);
     return this;
   }
 

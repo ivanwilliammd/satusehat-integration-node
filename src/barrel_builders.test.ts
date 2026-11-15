@@ -21,6 +21,15 @@ import * as barrel from './index';
 const PENGECUALIAN_RESOURCE_TYPE: Record<string, string> = {
   BillingStatus: 'BillingStatus',
   PurificationDecision: 'PurificationDecision',
+  // Nama berkas/kelas "ListResource" hanya agar tidak bertabrakan dengan tipe bawaan JS;
+  // resource FHIR-nya tetap "List".
+  ListResource: 'List',
+};
+
+/** Builder yang build()-nya menuntut elemen wajib R4 lebih dulu. */
+const BUTUH_SETUP: Record<string, (b: any) => any> = {
+  // R4: coordinateSystem 1..1. Kuncinya nama KELAS, bukan nama resource.
+  MolecularSequenceBuilder: (b) => b.setCoordinateSystem(0),
 };
 
 const AKAR_BUILDER = path.join(process.cwd(), 'src', 'builder');
@@ -28,6 +37,8 @@ const AKAR_BUILDER = path.join(process.cwd(), 'src', 'builder');
 const berkasBuilder = fs
   .readdirSync(AKAR_BUILDER)
   .filter((f) => f.endsWith('.ts') && !f.endsWith('.test.ts') && f !== 'index.ts')
+  // Berkas bantu seperti datatypeInput.ts tidak mengekspor kelas builder.
+  .filter((f) => /export\s+class\s+\w+/.test(fs.readFileSync(path.join(AKAR_BUILDER, f), 'utf8')))
   .sort();
 
 describe('barrel builder: setiap berkas terwakili di src/index.ts', () => {
@@ -54,7 +65,8 @@ describe('barrel builder: setiap berkas terwakili di src/index.ts', () => {
       const kelas = namaKelas(berkas);
       const Ctor = (barrel as unknown as Record<string, new () => { build(): Record<string, unknown> }>)[kelas];
       expect(typeof Ctor, `${kelas} bukan konstruktor di barrel`).toBe('function');
-      const payload = new Ctor().build();
+      const instance = BUTUH_SETUP[kelas] ? BUTUH_SETUP[kelas](new Ctor()) : new Ctor();
+      const payload = instance.build();
       const harap = PENGECUALIAN_RESOURCE_TYPE[kelas] ?? berkas.replace(/\.ts$/, '');
       expect(payload.resourceType).toBe(harap);
     });

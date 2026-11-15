@@ -7,6 +7,8 @@ import { ListResource } from './ListResource';
 describe('ListResource', () => {
   it('builds a ListResource payload', () => {
     const payload = new ListResource().build();
-    expect(payload.resourceType).toBe('ListResource');
+    // Resource FHIR-nya bernama "List"; "ListResource" hanya nama berkas/kelas agar tidak
+    // bertabrakan dengan tipe bawaan JavaScript.
+    expect(payload.resourceType).toBe('List');
   });
 });

@@ -6,7 +6,8 @@ import { MolecularSequence } from './MolecularSequence';
 
 describe('MolecularSequence', () => {
   it('builds a MolecularSequence payload', () => {
-    const payload = new MolecularSequence().build();
+    // R4: coordinateSystem 1..1, jadi builder menolak build() tanpanya.
+    const payload = new MolecularSequence().setCoordinateSystem(0).build();
     expect(payload.resourceType).toBe('MolecularSequence');
   });
 });
