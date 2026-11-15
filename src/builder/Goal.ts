@@ -49,4 +49,9 @@ export class Goal {
       Object.entries(this.data).filter(([, v]) => v !== null && v !== undefined && !(Array.isArray(v) && v.length === 0))
     );
   }
+
+  setStartAge(age: any): this {
+    this.data['startAge'] = typeof age?.toArray === 'function' ? age.toArray() : age;
+    return this;
+  }
 }

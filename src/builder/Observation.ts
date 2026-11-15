@@ -104,4 +104,9 @@ export class Observation {
     this.data['extension'].push(extension);
     return this;
   }
+
+  setEffectiveTiming(timing: any): this {
+    this.data['effectiveTiming'] = typeof timing?.toArray === 'function' ? timing.toArray() : timing;
+    return this;
+  }
 }

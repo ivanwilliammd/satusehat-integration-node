@@ -19,4 +19,17 @@ export class ListResource {
       Object.entries(this.data).filter(([, v]) => v !== null && v !== undefined && !(Array.isArray(v) && v.length === 0))
     );
   }
+
+  addIdentifier(system: string, value: string, use: string | null = null, typeCode: string | null = null, typeDisplay: string | null = null): this {
+    const ident: Record<string, any> = { system, value };
+    if (use !== null) ident['use'] = use;
+    if (typeCode !== null) {
+      ident['type'] = { coding: [{ system: 'http://terminology.hl7.org/CodeSystem/v2-0203', code: typeCode, display: typeDisplay ?? typeCode }] };
+    }
+    if (!Array.isArray(this.data['identifier'])) this.data['identifier'] = [];
+    this.data['identifier'].push(ident);
+    return this;
+  }
+
+  setDate(date: string): this { this.data['date'] = date; return this; }
 }

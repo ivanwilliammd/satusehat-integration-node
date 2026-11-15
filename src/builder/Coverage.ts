@@ -91,4 +91,19 @@ export class Coverage {
       Object.entries(this.data).filter(([, v]) => v !== null && v !== undefined && !(Array.isArray(v) && v.length === 0))
     );
   }
+
+  setClass(typeSystem: string, typeCode: string, value: string, name = ''): this {
+    const kelas: Record<string, any> = { type: { coding: [{ system: typeSystem, code: typeCode }] }, value };
+    if (name) kelas['name'] = name;
+    if (!Array.isArray(this.data['class'])) this.data['class'] = [];
+    this.data['class'].push(kelas);
+    return this;
+  }
+
+  /** R4: value[x] adalah Money, jadi nilai dan mata uang berada di dalam valueMoney. */
+  setCostToBeneficiary(value: number, code = 'IDR'): this {
+    if (!Array.isArray(this.data['costToBeneficiary'])) this.data['costToBeneficiary'] = [];
+    this.data['costToBeneficiary'].push({ valueMoney: { value, currency: code } });
+    return this;
+  }
 }

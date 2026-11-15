@@ -57,4 +57,13 @@ export class DocumentReference {
       Object.entries(this.data).filter(([, v]) => v !== null && v !== undefined && !(Array.isArray(v) && v.length === 0))
     );
   }
+
+  addExtension(url: string, value: any, valueType: string | null = null): this {
+    const extension: Record<string, any> = { url };
+    if (valueType !== null) extension[`value${valueType[0].toUpperCase()}${valueType.slice(1)}`] = value;
+    else extension['valueString'] = value;
+    if (!Array.isArray(this.data['extension'])) this.data['extension'] = [];
+    this.data['extension'].push(extension);
+    return this;
+  }
 }

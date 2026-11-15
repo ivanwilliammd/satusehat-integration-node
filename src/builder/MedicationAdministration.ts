@@ -118,6 +118,12 @@ export class MedicationAdministration {
     this.push('extension', { url, [`value${valueType}`]: value });
     return this;
   }
+
+  addContained(resource: Record<string, any>): this {
+    if (!Array.isArray(this.data['contained'])) this.data['contained'] = [];
+    this.data['contained'].push(resource);
+    return this;
+  }
 }
 
 /** Nama lama dipertahankan supaya pemanggil dan uji yang sudah ada tetap jalan. */

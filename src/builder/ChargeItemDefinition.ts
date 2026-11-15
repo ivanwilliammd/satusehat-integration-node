@@ -21,4 +21,33 @@ export class ChargeItemDefinition {
   setPublisher(publisher: string): this { this.data['publisher'] = publisher; return this; }
   setDescription(description: string): this { this.data['description'] = description; return this; }
   setCode(code: any, kode?: string, display?: string): this { this.data['code'] = konsep(code, kode, display); return this; }
+
+  addIdentifier(system: string, value: string): this {
+    if (!Array.isArray(this.data['identifier'])) this.data['identifier'] = [];
+    this.data['identifier'].push({ system, value });
+    return this;
+  }
+
+  /** Quirk kanon: `display` dan `timingDateTime` ditulis di tingkat instance, bukan di dalam Reference. */
+  addInstance(reference: string | null = null, display: string | null = null, timingDateTime: string | null = null): this {
+    const instance: Record<string, any> = {};
+    if (reference) instance['reference'] = { reference };
+    if (display !== null) instance['display'] = display;
+    if (timingDateTime !== null) instance['timingDateTime'] = timingDateTime;
+    if (!Array.isArray(this.data['instance'])) this.data['instance'] = [];
+    this.data['instance'].push(instance);
+    return this;
+  }
+
+  addProperty(codeSystem: string, codeValue: string, valueString: string): this {
+    if (!Array.isArray(this.data['property'])) this.data['property'] = [];
+    this.data['property'].push({ code: { coding: [{ system: codeSystem, code: codeValue }] }, valueString });
+    return this;
+  }
+
+  /** Meniru `'applies' . ucfirst(...)`: membentuk appliesDateTime, appliesAge, dst. */
+  addApplies(appliesType: string, value: any): this {
+    this.data[`applies${appliesType[0].toUpperCase()}${appliesType.slice(1)}`] = value;
+    return this;
+  }
 }

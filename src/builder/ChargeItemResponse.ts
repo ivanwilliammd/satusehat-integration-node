@@ -24,4 +24,32 @@ export class ChargeItemResponse {
   setDescription(desc: string): this { this.data['description'] = desc; return this; }
   setCreated(dt: string): this { this.data['created'] = dt; return this; }
   setRequestor(ref: any): this { this.data['requestor'] = rujuk(ref); return this; }
+
+  setPartOf(reference: string): this {
+    if (!Array.isArray(this.data['partOf'])) this.data['partOf'] = [];
+    this.data['partOf'].push({ reference });
+    return this;
+  }
+
+  addOutcomeInfo(system: string, code: string, display = ''): this {
+    if (!Array.isArray(this.data['outcomeInfo'])) this.data['outcomeInfo'] = [];
+    this.data['outcomeInfo'].push({ code: { coding: [{ system, code, display }] } });
+    return this;
+  }
+
+  addError(system: string, code: string, display = ''): this {
+    if (!Array.isArray(this.data['error'])) this.data['error'] = [];
+    this.data['error'].push({ code: { coding: [{ system, code, display }] } });
+    return this;
+  }
+
+  addCostCenterChargeItemResponse(reference: string, display = ''): this {
+    const response: Record<string, any> = { costCenter: { reference } };
+    if (display) response['costCenter']['display'] = display;
+    if (!Array.isArray(this.data['costCenter'])) this.data['costCenter'] = [];
+    this.data['costCenter'].push(response);
+    return this;
+  }
+
+  setResponseDate(date: string): this { this.data['responseDate'] = date; return this; }
 }

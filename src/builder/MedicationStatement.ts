@@ -146,6 +146,11 @@ export class MedicationStatementBuilder {
     this.push('extension', ext);
     return this;
   }
+
+  setEffectivePeriod(period: any): this {
+    this.data['effectivePeriod'] = typeof period?.toArray === 'function' ? period.toArray() : period;
+    return this;
+  }
 }
 
 /** Nama kanon (tanpa akhiran Builder) untuk pemanggil baru. */

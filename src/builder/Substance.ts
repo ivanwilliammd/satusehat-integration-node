@@ -24,6 +24,10 @@ export class SubstanceBuilder {
   }
   setCode(cc: any, code?: string, display?: string): this { this.data['code'] = konsep(cc, code, display); return this; }
   setDescription(desc: string): this { this.data['description'] = desc; return this; }
+
+  setId(id: string): this { this.data['id'] = id; return this; }
+
+  setText(status: string, div: string): this { this.data['text'] = { status, div }; return this; }
 }
 
 /** Nama kanon `Substance`: seragam dengan modul lain. `SubstanceBuilder` dipertahankan untuk pemanggil lama. */

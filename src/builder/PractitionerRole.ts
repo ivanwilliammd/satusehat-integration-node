@@ -78,4 +78,6 @@ export class PractitionerRole {
     this.data['extension'].push(extension);
     return this;
   }
+
+  addAvailabilityExceptions(text: string): this { this.data['availabilityExceptions'] = text; return this; }
 }
