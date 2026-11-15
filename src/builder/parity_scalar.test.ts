@@ -10,6 +10,7 @@ import { Account } from './Account';
 import { ChargeItem } from './ChargeItem';
 import { ImagingStudy } from './ImagingStudy';
 import { Invoice } from './Invoice';
+import { MolecularSequence } from './MolecularSequence';
 import { RiskAssessment } from './RiskAssessment';
 
 const golden = (nama: string) =>
@@ -188,5 +189,48 @@ describe('ImagingStudy parity', () => {
     expect(hasil['series'][0]['bodySite']).toEqual({
       coding: [{ system: 'http://snomed.info/sct', code: '51185008', display: 'Toraks' }],
     });
+  });
+});
+
+describe('MolecularSequence parity', () => {
+  function isi(b: MolecularSequence): MolecularSequence {
+    b.setId('ms-1');
+    b.setText('generated', '<div>Urutan EGFR</div>');
+    b.setType('dna');
+    b.setCoordinateSystem(0);
+    b.setPatient('Patient/1000000001', 'Budi Santoso');
+    b.setSpecimen('Specimen/spec-1');
+    b.setDevice('Device/dev-1');
+    b.setPerformer('Organization/1000000001');
+    b.setReferenceSeq(
+      {
+        coding: [
+          { system: 'http://www.ncbi.nlm.nih.gov/nuccore', code: 'NM_005228.5', display: 'EGFR transcript' },
+        ],
+        text: 'EGFR',
+      },
+      'watson',
+      100,
+      200,
+      'sense'
+    );
+    b.addVariant(101, 101, 'T', 'G', 'Observation/obs-9');
+    b.addVariant(150, 152, 'del', 'AGA');
+    return b;
+  }
+
+  it('sama dengan golden PHP, termasuk referenceSeq dan dua variant', () => {
+    expect(isi(new MolecularSequence()).build()).toEqual(golden('molecular_sequence'));
+  });
+
+  it('build() menolak tanpa coordinateSystem', () => {
+    const b = new MolecularSequence();
+    b.setId('ms-2');
+    expect(() => b.build()).toThrow(/coordinateSystem is required/);
+  });
+
+  it('setType hanya menerima aa, dna, rna', () => {
+    const b = new MolecularSequence();
+    expect(() => b.setType('protein')).toThrow(/Invalid type/);
   });
 });

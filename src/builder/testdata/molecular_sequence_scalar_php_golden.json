@@ -1,0 +1,56 @@
+{
+  "coordinateSystem": 0,
+  "device": {
+    "reference": "Device/dev-1"
+  },
+  "id": "ms-1",
+  "patient": {
+    "display": "Budi Santoso",
+    "reference": "Patient/1000000001"
+  },
+  "performer": {
+    "reference": "Organization/1000000001"
+  },
+  "referenceSeq": {
+    "orientation": "sense",
+    "referenceSeqId": {
+      "coding": [
+        {
+          "code": "NM_005228.5",
+          "display": "EGFR transcript",
+          "system": "http://www.ncbi.nlm.nih.gov/nuccore"
+        }
+      ],
+      "text": "EGFR"
+    },
+    "strand": "watson",
+    "windowEnd": 200,
+    "windowStart": 100
+  },
+  "resourceType": "MolecularSequence",
+  "specimen": {
+    "reference": "Specimen/spec-1"
+  },
+  "text": {
+    "div": "<div>Urutan EGFR</div>",
+    "status": "generated"
+  },
+  "type": "dna",
+  "variant": [
+    {
+      "end": 101,
+      "observedAllele": "T",
+      "referenceAllele": "G",
+      "start": 101,
+      "variantPointer": {
+        "reference": "Observation/obs-9"
+      }
+    },
+    {
+      "end": 152,
+      "observedAllele": "del",
+      "referenceAllele": "AGA",
+      "start": 150
+    }
+  ]
+}
