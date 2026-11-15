@@ -1,0 +1,11 @@
+{
+  "encounter": {
+    "reference": "Patient/1000000001"
+  },
+  "id": "adverse_event-1",
+  "resourceType": "AdverseEvent",
+  "status": "active",
+  "subject": {
+    "reference": "Patient/1000000001"
+  }
+}

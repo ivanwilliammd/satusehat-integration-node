@@ -1,0 +1,13 @@
+{
+  "code": {
+    "coding": [
+      {
+        "code": "C1",
+        "display": "Tampilan",
+        "system": "http://sys.id/ni"
+      }
+    ]
+  },
+  "resourceType": "Substance",
+  "status": "active"
+}

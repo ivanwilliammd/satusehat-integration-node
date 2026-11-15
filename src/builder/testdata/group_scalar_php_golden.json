@@ -1,0 +1,14 @@
+{
+  "active": true,
+  "actual": true,
+  "id": "group-1",
+  "meta": {
+    "profile": [
+      "Nilai"
+    ]
+  },
+  "name": "Nilai",
+  "quantity": 1,
+  "resourceType": "Group",
+  "type": "Nilai"
+}

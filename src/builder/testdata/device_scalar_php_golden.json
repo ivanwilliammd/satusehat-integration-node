@@ -1,0 +1,13 @@
+{
+  "deviceName": [
+    {
+      "name": "Nilai",
+      "type": "user-friendly-name"
+    }
+  ],
+  "id": "device-1",
+  "manufacturer": "Nilai",
+  "resourceType": "Device",
+  "serialNumber": "Nilai",
+  "status": "active"
+}

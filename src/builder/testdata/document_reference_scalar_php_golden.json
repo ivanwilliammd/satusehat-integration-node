@@ -1,0 +1,12 @@
+{
+  "context": [
+    "A1",
+    "A2"
+  ],
+  "date": "2026-01-05",
+  "description": "Nilai",
+  "docStatus": "active",
+  "id": "document_reference-1",
+  "resourceType": "DocumentReference",
+  "status": "active"
+}

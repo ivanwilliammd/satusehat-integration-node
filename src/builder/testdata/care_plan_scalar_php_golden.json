@@ -1,0 +1,16 @@
+{
+  "activity": [
+    {
+      "detail": [
+        "A1",
+        "A2"
+      ]
+    }
+  ],
+  "description": "Nilai",
+  "id": "care_plan-1",
+  "intent": "Nilai",
+  "resourceType": "CarePlan",
+  "status": "active",
+  "title": "Nilai"
+}

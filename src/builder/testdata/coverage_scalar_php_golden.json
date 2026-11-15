@@ -1,0 +1,49 @@
+{
+  "beneficiary": {
+    "reference": "Patient/1000000001"
+  },
+  "dependent": "Nilai",
+  "id": "coverage-1",
+  "identifier": [
+    {
+      "system": "http://sys.id/ni",
+      "value": "Nilai"
+    }
+  ],
+  "network": "Nilai",
+  "order": 1,
+  "payor": [
+    {
+      "reference": "Patient/1000000001"
+    }
+  ],
+  "period": {
+    "start": "2026-01-05"
+  },
+  "policyHolder": {
+    "reference": "Patient/1000000001"
+  },
+  "relationship": {
+    "coding": [
+      {
+        "code": "C1",
+        "system": "http://sys.id/ni"
+      }
+    ]
+  },
+  "resourceType": "Coverage",
+  "status": "active",
+  "subscriber": {
+    "reference": "Patient/1000000001"
+  },
+  "subscriberId": "Nilai",
+  "type": {
+    "coding": [
+      {
+        "code": "C1",
+        "display": "",
+        "system": "http://sys.id/ni"
+      }
+    ]
+  }
+}

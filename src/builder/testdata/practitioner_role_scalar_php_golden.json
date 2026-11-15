@@ -1,0 +1,13 @@
+{
+  "active": true,
+  "availableTime": [
+    {
+      "daysOfWeek": [
+        "A1",
+        "A2"
+      ]
+    }
+  ],
+  "id": "practitioner_role-1",
+  "resourceType": "PractitionerRole"
+}

@@ -1,0 +1,5 @@
+{
+  "id": "appointment-1",
+  "resourceType": "Appointment",
+  "status": "active"
+}

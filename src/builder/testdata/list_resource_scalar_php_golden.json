@@ -1,0 +1,19 @@
+{
+  "code": {
+    "coding": [
+      {
+        "code": "C1",
+        "display": "Tampilan",
+        "system": "http://sys.id/ni"
+      }
+    ]
+  },
+  "id": "list_resource-1",
+  "mode": "Nilai",
+  "resourceType": "List",
+  "status": "active",
+  "subject": {
+    "reference": "Patient/1000000001"
+  },
+  "title": "Nilai"
+}

@@ -1,0 +1,31 @@
+{
+  "chargeItem": {
+    "reference": "Patient/1000000001"
+  },
+  "created": "2026-01-05",
+  "description": "Nilai",
+  "id": "charge_item_response-1",
+  "identifier": [
+    {
+      "system": "http://sys.id/ni",
+      "value": "Nilai"
+    }
+  ],
+  "outcome": {
+    "coding": [
+      {
+        "code": "C1",
+        "display": "",
+        "system": "http://sys.id/ni"
+      }
+    ]
+  },
+  "request": {
+    "reference": "Patient/1000000001"
+  },
+  "requestor": {
+    "reference": "Patient/1000000001"
+  },
+  "resourceType": "ChargeItemResponse",
+  "status": "active"
+}

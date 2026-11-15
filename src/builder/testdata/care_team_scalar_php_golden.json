@@ -1,0 +1,26 @@
+{
+  "code": {
+    "coding": [
+      {
+        "code": "C1",
+        "display": "Tampilan",
+        "system": "http://sys.id/ni"
+      }
+    ]
+  },
+  "encounter": {
+    "reference": "Patient/1000000001"
+  },
+  "id": "care_team-1",
+  "identifier": [
+    {
+      "system": "http://sys.id/ni",
+      "value": "Nilai"
+    }
+  ],
+  "resourceType": "CareTeam",
+  "status": "active",
+  "subject": {
+    "reference": "Patient/1000000001"
+  }
+}

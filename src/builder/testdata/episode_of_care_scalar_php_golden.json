@@ -1,0 +1,13 @@
+{
+  "id": "episode_of_care-1",
+  "resourceType": "EpisodeOfCare",
+  "status": "active",
+  "statusHistory": [
+    {
+      "period": {
+        "start": "2026-01-05"
+      },
+      "status": "active"
+    }
+  ]
+}

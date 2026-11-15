@@ -1,0 +1,13 @@
+{
+  "date": "2026-01-05",
+  "id": "composition-1",
+  "resourceType": "Composition",
+  "section": [
+    [
+      "A1",
+      "A2"
+    ]
+  ],
+  "status": "active",
+  "title": "Nilai"
+}

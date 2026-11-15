@@ -1,0 +1,21 @@
+{
+  "code": {
+    "coding": [
+      {
+        "code": "C1",
+        "display": "",
+        "system": "http://sys.id/ni"
+      }
+    ]
+  },
+  "date": "2026-01-05",
+  "description": "Nilai",
+  "id": "charge_item_definition-1",
+  "name": "Nilai",
+  "publisher": "Nilai",
+  "resourceType": "ChargeItemDefinition",
+  "status": "active",
+  "title": "Nilai",
+  "url": "http://example.org/x",
+  "version": "Nilai"
+}

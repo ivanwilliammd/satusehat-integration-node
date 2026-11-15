@@ -1,0 +1,13 @@
+{
+  "date": "2026-01-05",
+  "effectiveDateTime": "2026-01-05",
+  "id": "clinical_impression-1",
+  "investigation": [
+    [
+      "A1",
+      "A2"
+    ]
+  ],
+  "resourceType": "ClinicalImpression",
+  "status": "active"
+}

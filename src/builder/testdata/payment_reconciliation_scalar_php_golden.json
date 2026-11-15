@@ -1,0 +1,90 @@
+{
+  "created": "2026-01-05",
+  "detail": [
+    {
+      "type": {
+        "coding": [
+          {
+            "code": "C1",
+            "system": "http://sys.id/ni"
+          }
+        ]
+      }
+    }
+  ],
+  "disposition": "Nilai",
+  "id": "payment_reconciliation-1",
+  "identifier": [
+    {
+      "system": "http://sys.id/ni",
+      "value": "Nilai"
+    }
+  ],
+  "insurer": {
+    "reference": "Patient/1000000001"
+  },
+  "outcome": {
+    "coding": [
+      {
+        "code": "C1",
+        "display": "",
+        "system": "http://sys.id/ni"
+      }
+    ]
+  },
+  "outcomeCode": [
+    {
+      "coding": [
+        {
+          "code": "C1",
+          "display": "",
+          "system": "http://sys.id/ni"
+        }
+      ]
+    }
+  ],
+  "paymentAmount": {
+    "currency": "IDR",
+    "value": 1.5
+  },
+  "paymentDate": "2026-01-05",
+  "paymentIdentifier": {
+    "system": "http://sys.id/ni",
+    "value": "Nilai"
+  },
+  "period": {
+    "start": "2026-01-05"
+  },
+  "processNote": [
+    {
+      "text": "Nilai"
+    }
+  ],
+  "request": {
+    "reference": "Patient/1000000001"
+  },
+  "requestMatchDate": "2026-01-05",
+  "requestProvider": {
+    "reference": "Patient/1000000001"
+  },
+  "requestor": [
+    {
+      "reference": "Patient/1000000001"
+    }
+  ],
+  "resourceType": "PaymentReconciliation",
+  "status": "active",
+  "totalAmount": {
+    "currency": "IDR",
+    "value": 1.5
+  },
+  "type": {
+    "coding": [
+      {
+        "code": "C1",
+        "display": "",
+        "system": "http://sys.id/ni"
+      }
+    ]
+  }
+}
