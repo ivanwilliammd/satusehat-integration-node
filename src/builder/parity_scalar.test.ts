@@ -9,6 +9,7 @@ import { describe, expect, it } from 'vitest';
 import { Account } from './Account';
 import { ChargeItem } from './ChargeItem';
 import { Invoice } from './Invoice';
+import { RiskAssessment } from './RiskAssessment';
 
 const golden = (nama: string) =>
   JSON.parse(readFileSync(new URL(`./testdata/${nama}_scalar_php_golden.json`, import.meta.url), 'utf8'));
@@ -108,5 +109,37 @@ describe('Invoice parity', () => {
     const isi = b.build();
     expect(isi['subject']).toEqual({ reference: 'Patient/1000000001' });
     expect(isi['customer']).toBeUndefined();
+  });
+});
+
+describe('RiskAssessment parity', () => {
+  it('sama dengan golden PHP, dua prediction dan extension bertipe', () => {
+    const b = new RiskAssessment();
+    b.setId('ra-1');
+    b.addIdentifier('http://sys.id/ni', 'NI-400');
+    b.setStatus('final');
+    b.setCode({ text: 'Risiko sepsis' });
+    b.setSubject('Patient/1000000001', 'Budi Santoso');
+    b.setEncounter('Encounter/enc-1');
+    b.setOccurrenceDateTime('2026-01-05T08:00:00+07:00');
+    b.setCondition('Condition/cond-1');
+    b.setPerformer('Practitioner/1000000002');
+    b.addReasonReference('Observation/obs-1');
+    b.addReasonReference('Observation/obs-2');
+    b.addBasis('Observation/obs-3');
+    const outcome = { coding: [{ system: 'http://snomed.info/sct', code: '91302008', display: 'Sepsis' }], text: 'Sepsis' };
+    b.addPrediction(outcome, 0.72, { text: 'Tinggi' }, 2.5);
+    b.addPrediction(outcome, 0.31);
+    b.setMitigation('Antibiotik empiris dalam 1 jam');
+    b.addNote('Dinilai ulang 6 jam');
+    b.addExtension('https://fhir.kemkes.go.id/r4/StructureDefinition/risk-source', 'skor-qsofa', 'String');
+    expect(b.build()).toEqual(golden('risk_assessment'));
+  });
+
+  it('prediction menumpuk, bukan menimpa', () => {
+    const b = new RiskAssessment();
+    b.addPrediction({ text: 'A' }, 0.1);
+    b.addPrediction({ text: 'B' }, 0.2);
+    expect(b.build()['prediction']).toHaveLength(2);
   });
 });

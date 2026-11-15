@@ -1,0 +1,85 @@
+{
+  "basis": [
+    {
+      "reference": "Observation/obs-3"
+    }
+  ],
+  "code": {
+    "text": "Risiko sepsis"
+  },
+  "condition": {
+    "reference": "Condition/cond-1"
+  },
+  "encounter": {
+    "reference": "Encounter/enc-1"
+  },
+  "extension": [
+    {
+      "url": "https://fhir.kemkes.go.id/r4/StructureDefinition/risk-source",
+      "valueString": "skor-qsofa"
+    }
+  ],
+  "id": "ra-1",
+  "identifier": [
+    {
+      "system": "http://sys.id/ni",
+      "value": "NI-400"
+    }
+  ],
+  "mitigation": "Antibiotik empiris dalam 1 jam",
+  "note": [
+    {
+      "text": "Dinilai ulang 6 jam"
+    }
+  ],
+  "occurrenceDateTime": "2026-01-05T08:00:00+07:00",
+  "performer": {
+    "reference": "Practitioner/1000000002"
+  },
+  "prediction": [
+    {
+      "outcome": {
+        "coding": [
+          {
+            "code": "91302008",
+            "display": "Sepsis",
+            "system": "http://snomed.info/sct"
+          }
+        ],
+        "text": "Sepsis"
+      },
+      "probabilityDecimal": 0.72,
+      "qualitativeRisk": {
+        "text": "Tinggi"
+      },
+      "relativeRisk": 2.5
+    },
+    {
+      "outcome": {
+        "coding": [
+          {
+            "code": "91302008",
+            "display": "Sepsis",
+            "system": "http://snomed.info/sct"
+          }
+        ],
+        "text": "Sepsis"
+      },
+      "probabilityDecimal": 0.31
+    }
+  ],
+  "reasonReference": [
+    {
+      "reference": "Observation/obs-1"
+    },
+    {
+      "reference": "Observation/obs-2"
+    }
+  ],
+  "resourceType": "RiskAssessment",
+  "status": "final",
+  "subject": {
+    "display": "Budi Santoso",
+    "reference": "Patient/1000000001"
+  }
+}
