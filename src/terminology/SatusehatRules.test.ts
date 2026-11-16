@@ -1,3 +1,5 @@
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
 // Uji aturan wajib SATUSEHAT. Sumbernya data/satusehat/required-rules.json, bukan ingatan: uji terakhir
 // memastikan konstanta tidak menyimpang dari berkas dan setiap butir menyebut sumber dokumentasinya.
 import { describe, expect, it } from 'vitest';
@@ -112,5 +114,30 @@ describe('SatusehatRules', () => {
     expect(kode('Encounter')).toEqual([...ENCOUNTER_STATUS]);
     expect(kode('Observation')).toEqual([...OBSERVATION_STATUS]);
     expect(kode('Procedure')).toEqual([...PROCEDURE_STATUS]);
+  });
+
+  // Sidik jari berkas aturan. Kelima port memakai berkas yang sama; kalau berkas ini
+  // bergeser tanpa uji ikut berubah, kelima port memvalidasi hal berbeda tanpa ada yang
+  // tahu. Pengganti murah untuk pemeriksa lintas-repo (scripts/check-rules-drift.sh).
+  it('sidik jari berkas aturan tidak bergeser', () => {
+    const mentah = readFileSync(
+      join(__dirname, '..', 'data', 'satusehat', 'required-rules.json'),
+      'utf8',
+    );
+    expect(mentah.length, 'jumlah byte berkas aturan berubah').toBe(5849);
+
+    const harap: Record<string, number> = {
+      Condition: 3,
+      DiagnosticReport: 4,
+      Encounter: 2,
+      Immunization: 4,
+      MedicationRequest: 3,
+      Observation: 4,
+      Patient: 2,
+      Procedure: 4,
+    };
+    for (const [resource, jumlah] of Object.entries(harap)) {
+      expect(aturanWajib()[resource].length, `jumlah butir ${resource} berubah`).toBe(jumlah);
+    }
   });
 });
