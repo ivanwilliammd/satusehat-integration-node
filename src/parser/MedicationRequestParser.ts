@@ -75,4 +75,44 @@ export class MedicationRequestParser {
   getDispenseRequest(): any {
     return this.payload['dispenseRequest'] ?? null;
   }
+
+  getId(): any {
+    return this.payload?.['id'] ?? null;
+  }
+
+  getMedicationCodeableConcept(): any {
+    return this.payload?.['medicationCodeableConcept'] ?? null;
+  }
+
+  getRecorder(): any {
+    return this.payload?.['recorder'] ?? null;
+  }
+
+  getReasonCode(): any {
+    return this.payload?.['reasonCode'] ?? null;
+  }
+
+  getReasonReference(): any {
+    return this.payload?.['reasonReference'] ?? null;
+  }
+
+  getSubstitution(): any {
+    return this.payload?.['substitution'] ?? null;
+  }
+
+  getPriorPrescription(): any {
+    return this.payload?.['priorPrescription'] ?? null;
+  }
+
+  getDetectedIssue(): any {
+    return this.payload?.['detectedIssue'] ?? null;
+  }
+
+  getEventHistory(): any {
+    return this.payload?.['eventHistory'] ?? null;
+  }
+
+  getExtension(): any {
+    return this.payload?.['extension'] ?? null;
+  }
 }

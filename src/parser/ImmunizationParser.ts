@@ -83,4 +83,20 @@ export class ImmunizationParser {
   getProtocolApplied(): any {
     return this.payload['protocolApplied'] ?? null;
   }
+
+  getMeta(): any {
+    return this.payload?.['meta'] ?? null;
+  }
+
+  getId(): any {
+    return this.payload?.['id'] ?? null;
+  }
+
+  getIdentifier(): any {
+    return this.payload?.['identifier'] ?? null;
+  }
+
+  getExtension(): any {
+    return this.payload?.['extension'] ?? null;
+  }
 }

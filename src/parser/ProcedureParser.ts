@@ -97,4 +97,76 @@ export class ProcedureParser {
     }
     return value;
   }
+
+  getId(): any {
+    return this.procedure?.['id'] ?? null;
+  }
+
+  getIdentifier(): any {
+    return this.procedure?.['identifier'] ?? null;
+  }
+
+  getPerformedDateTime(): any {
+    return this.procedure?.['performedDateTime'] ?? null;
+  }
+
+  getPerformedString(): any {
+    return this.procedure?.['performedString'] ?? null;
+  }
+
+  getPerformedAge(): any {
+    return this.procedure?.['performedAge'] ?? null;
+  }
+
+  getPerformedRange(): any {
+    return this.procedure?.['performedRange'] ?? null;
+  }
+
+  getPerformer(): any {
+    return this.procedure?.['performer'] ?? null;
+  }
+
+  getReasonCode(): any {
+    return this.procedure?.['reasonCode'] ?? null;
+  }
+
+  getReasonReference(): any {
+    return this.procedure?.['reasonReference'] ?? null;
+  }
+
+  getOutcome(): any {
+    return this.procedure?.['outcome'] ?? null;
+  }
+
+  getReport(): any {
+    return this.procedure?.['report'] ?? null;
+  }
+
+  getFollowUp(): any {
+    return this.procedure?.['followUp'] ?? null;
+  }
+
+  getNote(): any {
+    return this.procedure?.['note'] ?? null;
+  }
+
+  getFocalDevice(): any {
+    return this.procedure?.['focalDevice'] ?? null;
+  }
+
+  getUsedReference(): any {
+    return this.procedure?.['usedReference'] ?? null;
+  }
+
+  getUsedCode(): any {
+    return this.procedure?.['usedCode'] ?? null;
+  }
+
+  getBodySite(): any {
+    return this.procedure?.['bodySite'] ?? null;
+  }
+
+  getExtension(): any {
+    return this.procedure?.['extension'] ?? null;
+  }
 }

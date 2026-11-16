@@ -51,4 +51,8 @@ export class QuestionnaireResponseParser {
   getItem(): any {
     return this.payload['item'] ?? null;
   }
+
+  getId(): any {
+    return this.payload?.['id'] ?? null;
+  }
 }

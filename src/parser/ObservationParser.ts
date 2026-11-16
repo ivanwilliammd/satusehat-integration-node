@@ -114,4 +114,80 @@ export class ObservationParser {
     }
     return value;
   }
+
+  getId(): any {
+    return this.observation?.['id'] ?? null;
+  }
+
+  getIdentifier(): any {
+    return this.observation?.['identifier'] ?? null;
+  }
+
+  getCategory(): any {
+    return this.observation?.['category'] ?? null;
+  }
+
+  getEffectivePeriod(): any {
+    return this.observation?.['effectivePeriod'] ?? null;
+  }
+
+  getEffectiveInstant(): any {
+    return this.observation?.['effectiveInstant'] ?? null;
+  }
+
+  getValueBoolean(): any {
+    return this.observation?.['valueBoolean'] ?? null;
+  }
+
+  getValueInteger(): any {
+    return this.observation?.['valueInteger'] ?? null;
+  }
+
+  getValueRange(): any {
+    return this.observation?.['valueRange'] ?? null;
+  }
+
+  getValueRatio(): any {
+    return this.observation?.['valueRatio'] ?? null;
+  }
+
+  getValueTime(): any {
+    return this.observation?.['valueTime'] ?? null;
+  }
+
+  getValueDateTime(): any {
+    return this.observation?.['valueDateTime'] ?? null;
+  }
+
+  getValuePeriod(): any {
+    return this.observation?.['valuePeriod'] ?? null;
+  }
+
+  getInterpretation(): any {
+    return this.observation?.['interpretation'] ?? null;
+  }
+
+  getBodySite(): any {
+    return this.observation?.['bodySite'] ?? null;
+  }
+
+  getDevice(): any {
+    return this.observation?.['device'] ?? null;
+  }
+
+  getReferenceRange(): any {
+    return this.observation?.['referenceRange'] ?? null;
+  }
+
+  getComponent(): any {
+    return this.observation?.['component'] ?? null;
+  }
+
+  getExtension(): any {
+    return this.observation?.['extension'] ?? null;
+  }
+
+  getEffectiveTiming(): any {
+    return this.observation?.['effectiveTiming'] ?? null;
+  }
 }

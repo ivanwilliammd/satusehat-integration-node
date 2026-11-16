@@ -79,4 +79,32 @@ export class ClaimResponseParser {
   getPayment(): any {
     return this.payload['payment'] ?? null;
   }
+
+  getId(): any {
+    return this.payload?.['id'] ?? null;
+  }
+
+  getSubType(): any {
+    return this.payload?.['subType'] ?? null;
+  }
+
+  getDisposition(): any {
+    return this.payload?.['disposition'] ?? null;
+  }
+
+  getPreAuthRef(): any {
+    return this.payload?.['preAuthRef'] ?? null;
+  }
+
+  getAddItem(): any {
+    return this.payload?.['addItem'] ?? null;
+  }
+
+  getError(): any {
+    return this.payload?.['error'] ?? null;
+  }
+
+  getCoverage(): any {
+    return this.payload?.['coverage'] ?? null;
+  }
 }

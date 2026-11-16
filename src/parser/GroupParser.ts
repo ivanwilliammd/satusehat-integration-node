@@ -40,4 +40,24 @@ export class GroupParser {
   getMembers(): any {
     return this.group['member'] ?? null;
   }
+
+  getMeta(): any {
+    return this.group?.['meta'] ?? null;
+  }
+
+  getId(): any {
+    return this.group?.['id'] ?? null;
+  }
+
+  getIdentifier(): any {
+    return this.group?.['identifier'] ?? null;
+  }
+
+  getMember(): any {
+    return this.group?.['member'] ?? null;
+  }
+
+  getExtension(): any {
+    return this.group?.['extension'] ?? null;
+  }
 }

@@ -55,4 +55,32 @@ export class AllergyIntoleranceParser {
   getRecorder(): any {
     return this.payload['recorder'] ?? null;
   }
+
+  getType(): any {
+    return this.payload?.['type'] ?? null;
+  }
+
+  getCriticality(): any {
+    return this.payload?.['criticality'] ?? null;
+  }
+
+  getOnsetDateTime(): any {
+    return this.payload?.['onsetDateTime'] ?? null;
+  }
+
+  getAsserter(): any {
+    return this.payload?.['asserter'] ?? null;
+  }
+
+  getLastOccurrence(): any {
+    return this.payload?.['lastOccurrence'] ?? null;
+  }
+
+  getNote(): any {
+    return this.payload?.['note'] ?? null;
+  }
+
+  getReaction(): any {
+    return this.payload?.['reaction'] ?? null;
+  }
 }

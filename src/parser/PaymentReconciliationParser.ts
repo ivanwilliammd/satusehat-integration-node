@@ -63,4 +63,44 @@ export class PaymentReconciliationParser {
   getProcessNote(): any {
     return this.payload['processNote'] ?? null;
   }
+
+  getId(): any {
+    return this.payload?.['id'] ?? null;
+  }
+
+  getIdentifier(): any {
+    return this.payload?.['identifier'] ?? null;
+  }
+
+  getType(): any {
+    return this.payload?.['type'] ?? null;
+  }
+
+  getRequest(): any {
+    return this.payload?.['request'] ?? null;
+  }
+
+  getRequestProvider(): any {
+    return this.payload?.['requestProvider'] ?? null;
+  }
+
+  getInsurer(): any {
+    return this.payload?.['insurer'] ?? null;
+  }
+
+  getRequestMatchDate(): any {
+    return this.payload?.['requestMatchDate'] ?? null;
+  }
+
+  getOutcomeCode(): any {
+    return this.payload?.['outcomeCode'] ?? null;
+  }
+
+  getPaymentIdentifier(): any {
+    return this.payload?.['paymentIdentifier'] ?? null;
+  }
+
+  getTotalAmount(): any {
+    return this.payload?.['totalAmount'] ?? null;
+  }
 }

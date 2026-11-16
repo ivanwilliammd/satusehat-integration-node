@@ -75,4 +75,28 @@ export class ClinicalImpressionParser {
   getPrognosisCodeableConcept(): any {
     return this.payload['prognosisCodeableConcept'] ?? null;
   }
+
+  getId(): any {
+    return this.payload?.['id'] ?? null;
+  }
+
+  getEffectivePeriod(): any {
+    return this.payload?.['effectivePeriod'] ?? null;
+  }
+
+  getPreviousOpinion(): any {
+    return this.payload?.['previousOpinion'] ?? null;
+  }
+
+  getPrognosisReference(): any {
+    return this.payload?.['prognosisReference'] ?? null;
+  }
+
+  getSupportingInfo(): any {
+    return this.payload?.['supportingInfo'] ?? null;
+  }
+
+  getNote(): any {
+    return this.payload?.['note'] ?? null;
+  }
 }

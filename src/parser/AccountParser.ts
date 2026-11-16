@@ -51,4 +51,12 @@ export class AccountParser {
   getDescription(): any {
     return this.payload['description'] ?? null;
   }
+
+  getId(): any {
+    return this.payload?.['id'] ?? null;
+  }
+
+  getCoverage(): any {
+    return this.payload?.['coverage'] ?? null;
+  }
 }

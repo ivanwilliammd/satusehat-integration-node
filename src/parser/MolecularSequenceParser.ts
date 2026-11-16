@@ -47,4 +47,28 @@ export class MolecularSequenceParser {
     }
     return value;
   }
+
+  getId(): any {
+    return this.molecularSequence?.['id'] ?? null;
+  }
+
+  getPatient(): any {
+    return this.molecularSequence?.['patient'] ?? null;
+  }
+
+  getSpecimen(): any {
+    return this.molecularSequence?.['specimen'] ?? null;
+  }
+
+  getDevice(): any {
+    return this.molecularSequence?.['device'] ?? null;
+  }
+
+  getPerformer(): any {
+    return this.molecularSequence?.['performer'] ?? null;
+  }
+
+  getVariant(): any {
+    return this.molecularSequence?.['variant'] ?? null;
+  }
 }

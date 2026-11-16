@@ -55,4 +55,20 @@ export class CompositionParser {
   getSection(): any {
     return this.payload['section'] ?? null;
   }
+
+  getId(): any {
+    return this.payload?.['id'] ?? null;
+  }
+
+  getIdentifier(): any {
+    return this.payload?.['identifier'] ?? null;
+  }
+
+  getCategory(): any {
+    return this.payload?.['category'] ?? null;
+  }
+
+  getCustodian(): any {
+    return this.payload?.['custodian'] ?? null;
+  }
 }

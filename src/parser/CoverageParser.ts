@@ -51,4 +51,40 @@ export class CoverageParser {
   getExtension(): any {
     return this.payload['extension'] ?? null;
   }
+
+  getId(): any {
+    return this.payload?.['id'] ?? null;
+  }
+
+  getPolicyHolder(): any {
+    return this.payload?.['policyHolder'] ?? null;
+  }
+
+  getSubscriber(): any {
+    return this.payload?.['subscriber'] ?? null;
+  }
+
+  getDependent(): any {
+    return this.payload?.['dependent'] ?? null;
+  }
+
+  getRelationship(): any {
+    return this.payload?.['relationship'] ?? null;
+  }
+
+  getOrder(): any {
+    return this.payload?.['order'] ?? null;
+  }
+
+  getNetwork(): any {
+    return this.payload?.['network'] ?? null;
+  }
+
+  getCostToBeneficiary(): any {
+    return this.payload?.['costToBeneficiary'] ?? null;
+  }
+
+  getPeriod(): any {
+    return this.payload?.['period'] ?? null;
+  }
 }

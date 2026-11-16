@@ -52,4 +52,40 @@ export class PatientParser {
   getExtension(): any {
     return this.patient['extension'] ?? null;
   }
+
+  getMeta(): any {
+    return this.patient?.['meta'] ?? null;
+  }
+
+  getId(): any {
+    return this.patient?.['id'] ?? null;
+  }
+
+  getIdentifier(): any {
+    return this.patient?.['identifier'] ?? null;
+  }
+
+  getActive(): any {
+    return this.patient?.['active'] ?? null;
+  }
+
+  getDeceasedBoolean(): any {
+    return this.patient?.['deceasedBoolean'] ?? null;
+  }
+
+  getDeceasedDateTime(): any {
+    return this.patient?.['deceasedDateTime'] ?? null;
+  }
+
+  getMultipleBirthBoolean(): any {
+    return this.patient?.['multipleBirthBoolean'] ?? null;
+  }
+
+  getMultipleBirthInteger(): any {
+    return this.patient?.['multipleBirthInteger'] ?? null;
+  }
+
+  getContact(): any {
+    return this.patient?.['contact'] ?? null;
+  }
 }

@@ -112,4 +112,40 @@ export class EncounterParser {
     }
     return value;
   }
+
+  getId(): any {
+    return this.encounter?.['id'] ?? null;
+  }
+
+  getIdentifier(): any {
+    return this.encounter?.['identifier'] ?? null;
+  }
+
+  getClass(): any {
+    return this.encounter?.['class'] ?? null;
+  }
+
+  getType(): any {
+    return this.encounter?.['type'] ?? null;
+  }
+
+  getParticipant(): any {
+    return this.encounter?.['participant'] ?? null;
+  }
+
+  getLocation(): any {
+    return this.encounter?.['location'] ?? null;
+  }
+
+  getReasonCode(): any {
+    return this.encounter?.['reasonCode'] ?? null;
+  }
+
+  getReasonReference(): any {
+    return this.encounter?.['reasonReference'] ?? null;
+  }
+
+  getExtension(): any {
+    return this.encounter?.['extension'] ?? null;
+  }
 }

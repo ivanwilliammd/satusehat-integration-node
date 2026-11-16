@@ -96,4 +96,36 @@ export class DiagnosticReportParser {
     }
     return value;
   }
+
+  getId(): any {
+    return this.diagnosticReport?.['id'] ?? null;
+  }
+
+  getIdentifier(): any {
+    return this.diagnosticReport?.['identifier'] ?? null;
+  }
+
+  getCategory(): any {
+    return this.diagnosticReport?.['category'] ?? null;
+  }
+
+  getPerformer(): any {
+    return this.diagnosticReport?.['performer'] ?? null;
+  }
+
+  getResult(): any {
+    return this.diagnosticReport?.['result'] ?? null;
+  }
+
+  getSpecimen(): any {
+    return this.diagnosticReport?.['specimen'] ?? null;
+  }
+
+  getConclusionCode(): any {
+    return this.diagnosticReport?.['conclusionCode'] ?? null;
+  }
+
+  getExtension(): any {
+    return this.diagnosticReport?.['extension'] ?? null;
+  }
 }

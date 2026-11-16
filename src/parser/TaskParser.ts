@@ -67,4 +67,76 @@ export class TaskParser {
     }
     return value;
   }
+
+  getId(): any {
+    return this.task?.['id'] ?? null;
+  }
+
+  getIdentifier(): any {
+    return this.task?.['identifier'] ?? null;
+  }
+
+  getInstantiatesCanonical(): any {
+    return this.task?.['instantiatesCanonical'] ?? null;
+  }
+
+  getStatusReason(): any {
+    return this.task?.['statusReason'] ?? null;
+  }
+
+  getBusinessStatus(): any {
+    return this.task?.['businessStatus'] ?? null;
+  }
+
+  getCode(): any {
+    return this.task?.['code'] ?? null;
+  }
+
+  getFocus(): any {
+    return this.task?.['focus'] ?? null;
+  }
+
+  getExecutionPeriod(): any {
+    return this.task?.['executionPeriod'] ?? null;
+  }
+
+  getLastModified(): any {
+    return this.task?.['lastModified'] ?? null;
+  }
+
+  getOwner(): any {
+    return this.task?.['owner'] ?? null;
+  }
+
+  getLocation(): any {
+    return this.task?.['location'] ?? null;
+  }
+
+  getReasonCode(): any {
+    return this.task?.['reasonCode'] ?? null;
+  }
+
+  getReasonReference(): any {
+    return this.task?.['reasonReference'] ?? null;
+  }
+
+  getInput(): any {
+    return this.task?.['input'] ?? null;
+  }
+
+  getOutput(): any {
+    return this.task?.['output'] ?? null;
+  }
+
+  getRestriction(): any {
+    return this.task?.['restriction'] ?? null;
+  }
+
+  getNote(): any {
+    return this.task?.['note'] ?? null;
+  }
+
+  getExtension(): any {
+    return this.task?.['extension'] ?? null;
+  }
 }

@@ -67,4 +67,24 @@ export class CoverageEligibilityResponseParser {
   getExtension(): any {
     return this.payload['extension'] ?? null;
   }
+
+  getId(): any {
+    return this.payload?.['id'] ?? null;
+  }
+
+  getServicedDate(): any {
+    return this.payload?.['servicedDate'] ?? null;
+  }
+
+  getServicedPeriod(): any {
+    return this.payload?.['servicedPeriod'] ?? null;
+  }
+
+  getRequestProvider(): any {
+    return this.payload?.['requestProvider'] ?? null;
+  }
+
+  getCoverage(): any {
+    return this.payload?.['coverage'] ?? null;
+  }
 }

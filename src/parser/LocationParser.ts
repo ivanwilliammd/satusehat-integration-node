@@ -59,4 +59,32 @@ export class LocationParser {
     }
     return value;
   }
+
+  getId(): any {
+    return this.location?.['id'] ?? null;
+  }
+
+  getIdentifier(): any {
+    return this.location?.['identifier'] ?? null;
+  }
+
+  getAlias(): any {
+    return this.location?.['alias'] ?? null;
+  }
+
+  getDescription(): any {
+    return this.location?.['description'] ?? null;
+  }
+
+  getType(): any {
+    return this.location?.['type'] ?? null;
+  }
+
+  getEndpoint(): any {
+    return this.location?.['endpoint'] ?? null;
+  }
+
+  getExtension(): any {
+    return this.location?.['extension'] ?? null;
+  }
 }

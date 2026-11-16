@@ -59,4 +59,16 @@ export class EpisodeOfCareParser {
   getCareManager(): any {
     return this.payload['careManager'] ?? null;
   }
+
+  getReferralRequest(): any {
+    return this.payload?.['referralRequest'] ?? null;
+  }
+
+  getTeam(): any {
+    return this.payload?.['team'] ?? null;
+  }
+
+  getAccount(): any {
+    return this.payload?.['account'] ?? null;
+  }
 }

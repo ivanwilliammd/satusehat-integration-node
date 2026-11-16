@@ -75,4 +75,44 @@ export class ChargeItemResponseParser {
   getExcess(): any {
     return this.payload['excess'] ?? null;
   }
+
+  getRequest(): any {
+    return this.payload?.['request'] ?? null;
+  }
+
+  getOutcome(): any {
+    return this.payload?.['outcome'] ?? null;
+  }
+
+  getDescription(): any {
+    return this.payload?.['description'] ?? null;
+  }
+
+  getCreated(): any {
+    return this.payload?.['created'] ?? null;
+  }
+
+  getRequestor(): any {
+    return this.payload?.['requestor'] ?? null;
+  }
+
+  getPartOf(): any {
+    return this.payload?.['partOf'] ?? null;
+  }
+
+  getOutcomeInfo(): any {
+    return this.payload?.['outcomeInfo'] ?? null;
+  }
+
+  getError(): any {
+    return this.payload?.['error'] ?? null;
+  }
+
+  getCostCenter(): any {
+    return this.payload?.['costCenter'] ?? null;
+  }
+
+  getResponseDate(): any {
+    return this.payload?.['responseDate'] ?? null;
+  }
 }

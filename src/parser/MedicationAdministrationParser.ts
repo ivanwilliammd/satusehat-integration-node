@@ -63,4 +63,32 @@ export class MedicationAdministrationParser {
   getDosage(): any {
     return this.payload['dosage'] ?? null;
   }
+
+  getIdentifier(): any {
+    return this.payload?.['identifier'] ?? null;
+  }
+
+  getReasonReference(): any {
+    return this.payload?.['reasonReference'] ?? null;
+  }
+
+  getNote(): any {
+    return this.payload?.['note'] ?? null;
+  }
+
+  getExtension(): any {
+    return this.payload?.['extension'] ?? null;
+  }
+
+  getId(): any {
+    return this.payload?.['id'] ?? null;
+  }
+
+  getMedicationCodeableConcept(): any {
+    return this.payload?.['medicationCodeableConcept'] ?? null;
+  }
+
+  getEffectiveDateTime(): any {
+    return this.payload?.['effectiveDateTime'] ?? null;
+  }
 }

@@ -95,4 +95,36 @@ export class ClaimParser {
   getExtension(): any {
     return this.payload['extension'] ?? null;
   }
+
+  getId(): any {
+    return this.payload?.['id'] ?? null;
+  }
+
+  getSubType(): any {
+    return this.payload?.['subType'] ?? null;
+  }
+
+  getPriorityPayor(): any {
+    return this.payload?.['priorityPayor'] ?? null;
+  }
+
+  getPrescriber(): any {
+    return this.payload?.['prescriber'] ?? null;
+  }
+
+  getRelated(): any {
+    return this.payload?.['related'] ?? null;
+  }
+
+  getCoverage(): any {
+    return this.payload?.['coverage'] ?? null;
+  }
+
+  getItem(): any {
+    return this.payload?.['item'] ?? null;
+  }
+
+  getCareTeam(): any {
+    return this.payload?.['careTeam'] ?? null;
+  }
 }

@@ -55,4 +55,12 @@ export class DeviceUseStatementParser {
   getNote(): any {
     return this.payload['note'] ?? null;
   }
+
+  getCode(): any {
+    return this.payload?.['code'] ?? null;
+  }
+
+  getEncounter(): any {
+    return this.payload?.['encounter'] ?? null;
+  }
 }

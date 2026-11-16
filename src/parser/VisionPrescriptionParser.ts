@@ -47,4 +47,16 @@ export class VisionPrescriptionParser {
   getLensSpecification(): any {
     return this.payload['lensSpecification'] ?? null;
   }
+
+  getIdentifier(): any {
+    return this.payload?.['identifier'] ?? null;
+  }
+
+  getSubject(): any {
+    return this.payload?.['subject'] ?? null;
+  }
+
+  getCode(): any {
+    return this.payload?.['code'] ?? null;
+  }
 }

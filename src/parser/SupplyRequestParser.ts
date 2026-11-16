@@ -51,4 +51,16 @@ export class SupplyRequestParser {
   getReasonCode(): any {
     return this.payload['reasonCode'] ?? null;
   }
+
+  getSubject(): any {
+    return this.payload?.['subject'] ?? null;
+  }
+
+  getCode(): any {
+    return this.payload?.['code'] ?? null;
+  }
+
+  getEncounter(): any {
+    return this.payload?.['encounter'] ?? null;
+  }
 }

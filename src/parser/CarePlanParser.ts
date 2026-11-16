@@ -63,4 +63,28 @@ export class CarePlanParser {
   getActivity(): any {
     return this.payload['activity'] ?? null;
   }
+
+  getId(): any {
+    return this.payload?.['id'] ?? null;
+  }
+
+  getIdentifier(): any {
+    return this.payload?.['identifier'] ?? null;
+  }
+
+  getContributor(): any {
+    return this.payload?.['contributor'] ?? null;
+  }
+
+  getAddressee(): any {
+    return this.payload?.['addressee'] ?? null;
+  }
+
+  getSupportingInfo(): any {
+    return this.payload?.['supportingInfo'] ?? null;
+  }
+
+  getGoal(): any {
+    return this.payload?.['goal'] ?? null;
+  }
 }

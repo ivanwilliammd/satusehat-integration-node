@@ -73,4 +73,16 @@ export class PractitionerParser extends OAuth2Client {
   getCommunication(): any {
     return this.practitioner?.['communication'] ?? null;
   }
+
+  getIdentifier(): any {
+    return this.practitioner?.['identifier'] ?? null;
+  }
+
+  getQualification(): any {
+    return this.practitioner?.['qualification'] ?? null;
+  }
+
+  getExtension(): any {
+    return this.practitioner?.['extension'] ?? null;
+  }
 }

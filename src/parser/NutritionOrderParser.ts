@@ -47,4 +47,32 @@ export class NutritionOrderParser {
   getOralDiet(): any {
     return this.payload['oralDiet'] ?? null;
   }
+
+  getAllergyType(): any {
+    return this.payload?.['allergyType'] ?? null;
+  }
+
+  getFoodPreferenceModifier(): any {
+    return this.payload?.['foodPreferenceModifier'] ?? null;
+  }
+
+  getExcludeFoodModifier(): any {
+    return this.payload?.['excludeFoodModifier'] ?? null;
+  }
+
+  getSupplement(): any {
+    return this.payload?.['supplement'] ?? null;
+  }
+
+  getId(): any {
+    return this.payload?.['id'] ?? null;
+  }
+
+  getOrderer(): any {
+    return this.payload?.['orderer'] ?? null;
+  }
+
+  getEnteralFormula(): any {
+    return this.payload?.['enteralFormula'] ?? null;
+  }
 }

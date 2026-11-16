@@ -59,4 +59,44 @@ export class MedicationStatementParser {
   getContext(): any {
     return this.payload['context'] ?? null;
   }
+
+  getId(): any {
+    return this.payload?.['id'] ?? null;
+  }
+
+  getIdentifier(): any {
+    return this.payload?.['identifier'] ?? null;
+  }
+
+  getStatusReason(): any {
+    return this.payload?.['statusReason'] ?? null;
+  }
+
+  getMedicationCodeableConcept(): any {
+    return this.payload?.['medicationCodeableConcept'] ?? null;
+  }
+
+  getDerivedFrom(): any {
+    return this.payload?.['derivedFrom'] ?? null;
+  }
+
+  getReasonCode(): any {
+    return this.payload?.['reasonCode'] ?? null;
+  }
+
+  getReasonReference(): any {
+    return this.payload?.['reasonReference'] ?? null;
+  }
+
+  getNote(): any {
+    return this.payload?.['note'] ?? null;
+  }
+
+  getExtension(): any {
+    return this.payload?.['extension'] ?? null;
+  }
+
+  getEffectivePeriod(): any {
+    return this.payload?.['effectivePeriod'] ?? null;
+  }
 }

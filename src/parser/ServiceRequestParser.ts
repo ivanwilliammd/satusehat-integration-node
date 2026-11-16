@@ -107,4 +107,48 @@ export class ServiceRequestParser {
     }
     return value;
   }
+
+  getId(): any {
+    return this.serviceRequest?.['id'] ?? null;
+  }
+
+  getIdentifier(): any {
+    return this.serviceRequest?.['identifier'] ?? null;
+  }
+
+  getCategory(): any {
+    return this.serviceRequest?.['category'] ?? null;
+  }
+
+  getSubject(): any {
+    return this.serviceRequest?.['subject'] ?? null;
+  }
+
+  getEncounter(): any {
+    return this.serviceRequest?.['encounter'] ?? null;
+  }
+
+  getRequester(): any {
+    return this.serviceRequest?.['requester'] ?? null;
+  }
+
+  getPerformer(): any {
+    return this.serviceRequest?.['performer'] ?? null;
+  }
+
+  getReasonCode(): any {
+    return this.serviceRequest?.['reasonCode'] ?? null;
+  }
+
+  getSpecimen(): any {
+    return this.serviceRequest?.['specimen'] ?? null;
+  }
+
+  getNote(): any {
+    return this.serviceRequest?.['note'] ?? null;
+  }
+
+  getExtension(): any {
+    return this.serviceRequest?.['extension'] ?? null;
+  }
 }

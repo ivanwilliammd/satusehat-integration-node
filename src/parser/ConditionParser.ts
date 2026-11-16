@@ -51,4 +51,76 @@ export class ConditionParser {
   getRecordedDate(): any {
     return this.payload['recordedDate'] ?? null;
   }
+
+  getId(): any {
+    return this.payload?.['id'] ?? null;
+  }
+
+  getIdentifier(): any {
+    return this.payload?.['identifier'] ?? null;
+  }
+
+  getSeverity(): any {
+    return this.payload?.['severity'] ?? null;
+  }
+
+  getOnsetDateTime(): any {
+    return this.payload?.['onsetDateTime'] ?? null;
+  }
+
+  getOnsetAge(): any {
+    return this.payload?.['onsetAge'] ?? null;
+  }
+
+  getOnsetPeriod(): any {
+    return this.payload?.['onsetPeriod'] ?? null;
+  }
+
+  getOnsetRange(): any {
+    return this.payload?.['onsetRange'] ?? null;
+  }
+
+  getOnsetString(): any {
+    return this.payload?.['onsetString'] ?? null;
+  }
+
+  getAbatementDateTime(): any {
+    return this.payload?.['abatementDateTime'] ?? null;
+  }
+
+  getAbatementAge(): any {
+    return this.payload?.['abatementAge'] ?? null;
+  }
+
+  getAbatementPeriod(): any {
+    return this.payload?.['abatementPeriod'] ?? null;
+  }
+
+  getAbatementRange(): any {
+    return this.payload?.['abatementRange'] ?? null;
+  }
+
+  getAbatementString(): any {
+    return this.payload?.['abatementString'] ?? null;
+  }
+
+  getRecorder(): any {
+    return this.payload?.['recorder'] ?? null;
+  }
+
+  getAsserter(): any {
+    return this.payload?.['asserter'] ?? null;
+  }
+
+  getEvidence(): any {
+    return this.payload?.['evidence'] ?? null;
+  }
+
+  getNote(): any {
+    return this.payload?.['note'] ?? null;
+  }
+
+  getExtension(): any {
+    return this.payload?.['extension'] ?? null;
+  }
 }

@@ -79,4 +79,28 @@ export class RiskAssessmentParser {
     }
     return value;
   }
+
+  getId(): any {
+    return this.riskAssessment?.['id'] ?? null;
+  }
+
+  getIdentifier(): any {
+    return this.riskAssessment?.['identifier'] ?? null;
+  }
+
+  getReasonReference(): any {
+    return this.riskAssessment?.['reasonReference'] ?? null;
+  }
+
+  getPrediction(): any {
+    return this.riskAssessment?.['prediction'] ?? null;
+  }
+
+  getNote(): any {
+    return this.riskAssessment?.['note'] ?? null;
+  }
+
+  getExtension(): any {
+    return this.riskAssessment?.['extension'] ?? null;
+  }
 }

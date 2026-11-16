@@ -63,4 +63,24 @@ export class PaymentNoticeParser {
   getPaymentStatus(): any {
     return this.payload['paymentStatus'] ?? null;
   }
+
+  getIdentifier(): any {
+    return this.payload?.['identifier'] ?? null;
+  }
+
+  getId(): any {
+    return this.payload?.['id'] ?? null;
+  }
+
+  getStatusDate(): any {
+    return this.payload?.['statusDate'] ?? null;
+  }
+
+  getInsurer(): any {
+    return this.payload?.['insurer'] ?? null;
+  }
+
+  getPaymentReconciliation(): any {
+    return this.payload?.['paymentReconciliation'] ?? null;
+  }
 }

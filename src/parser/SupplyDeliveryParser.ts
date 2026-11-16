@@ -55,4 +55,16 @@ export class SupplyDeliveryParser {
   getReceiver(): any {
     return this.payload['receiver'] ?? null;
   }
+
+  getSubject(): any {
+    return this.payload?.['subject'] ?? null;
+  }
+
+  getCode(): any {
+    return this.payload?.['code'] ?? null;
+  }
+
+  getEncounter(): any {
+    return this.payload?.['encounter'] ?? null;
+  }
 }

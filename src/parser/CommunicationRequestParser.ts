@@ -43,4 +43,24 @@ export class CommunicationRequestParser {
   getRecipient(): any {
     return this.payload['recipient'] ?? null;
   }
+
+  getId(): any {
+    return this.payload?.['id'] ?? null;
+  }
+
+  getIdentifier(): any {
+    return this.payload?.['identifier'] ?? null;
+  }
+
+  getCode(): any {
+    return this.payload?.['code'] ?? null;
+  }
+
+  getSubject(): any {
+    return this.payload?.['subject'] ?? null;
+  }
+
+  getEncounter(): any {
+    return this.payload?.['encounter'] ?? null;
+  }
 }

@@ -47,4 +47,32 @@ export class InvoiceParser {
   getTotalNet(): any {
     return this.payload['totalNet'] ?? null;
   }
+
+  getId(): any {
+    return this.payload?.['id'] ?? null;
+  }
+
+  getIdentifier(): any {
+    return this.payload?.['identifier'] ?? null;
+  }
+
+  getCancelledReason(): any {
+    return this.payload?.['cancelledReason'] ?? null;
+  }
+
+  getType(): any {
+    return this.payload?.['type'] ?? null;
+  }
+
+  getParticipant(): any {
+    return this.payload?.['participant'] ?? null;
+  }
+
+  getPaymentTerms(): any {
+    return this.payload?.['paymentTerms'] ?? null;
+  }
+
+  getNote(): any {
+    return this.payload?.['note'] ?? null;
+  }
 }

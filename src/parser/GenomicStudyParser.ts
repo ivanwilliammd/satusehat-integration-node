@@ -60,4 +60,56 @@ export class GenomicStudyParser {
   getPerformers(): any {
     return this.genomicStudy['performer'] ?? null;
   }
+
+  getId(): any {
+    return this.genomicStudy?.['id'] ?? null;
+  }
+
+  getIdentifier(): any {
+    return this.genomicStudy?.['identifier'] ?? null;
+  }
+
+  getType(): any {
+    return this.genomicStudy?.['type'] ?? null;
+  }
+
+  getSubject(): any {
+    return this.genomicStudy?.['subject'] ?? null;
+  }
+
+  getEncounter(): any {
+    return this.genomicStudy?.['encounter'] ?? null;
+  }
+
+  getBasedOn(): any {
+    return this.genomicStudy?.['basedOn'] ?? null;
+  }
+
+  getReferrer(): any {
+    return this.genomicStudy?.['referrer'] ?? null;
+  }
+
+  getInterpreter(): any {
+    return this.genomicStudy?.['interpreter'] ?? null;
+  }
+
+  getReason(): any {
+    return this.genomicStudy?.['reason'] ?? null;
+  }
+
+  getNote(): any {
+    return this.genomicStudy?.['note'] ?? null;
+  }
+
+  getAnalysis(): any {
+    return this.genomicStudy?.['analysis'] ?? null;
+  }
+
+  getPerformer(): any {
+    return this.genomicStudy?.['performer'] ?? null;
+  }
+
+  getMeta(): any {
+    return this.genomicStudy?.['meta'] ?? null;
+  }
 }

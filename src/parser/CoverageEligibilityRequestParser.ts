@@ -75,4 +75,20 @@ export class CoverageEligibilityRequestParser {
   getContained(): any {
     return this.payload['contained'] ?? null;
   }
+
+  getId(): any {
+    return this.payload?.['id'] ?? null;
+  }
+
+  getServicedPeriod(): any {
+    return this.payload?.['servicedPeriod'] ?? null;
+  }
+
+  getCoverage(): any {
+    return this.payload?.['coverage'] ?? null;
+  }
+
+  getItem(): any {
+    return this.payload?.['item'] ?? null;
+  }
 }

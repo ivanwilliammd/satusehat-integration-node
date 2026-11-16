@@ -63,4 +63,24 @@ export class ImagingStudyParser {
   getSeries(): any {
     return this.payload['series'] ?? null;
   }
+
+  getEncounter(): any {
+    return this.payload?.['encounter'] ?? null;
+  }
+
+  getEnded(): any {
+    return this.payload?.['ended'] ?? null;
+  }
+
+  getLocation(): any {
+    return this.payload?.['location'] ?? null;
+  }
+
+  getReferrer(): any {
+    return this.payload?.['referrer'] ?? null;
+  }
+
+  getPartOf(): any {
+    return this.payload?.['partOf'] ?? null;
+  }
 }

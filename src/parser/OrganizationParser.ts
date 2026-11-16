@@ -43,4 +43,32 @@ export class OrganizationParser {
     }
     return value;
   }
+
+  getId(): any {
+    return this.organization?.['id'] ?? null;
+  }
+
+  getIdentifier(): any {
+    return this.organization?.['identifier'] ?? null;
+  }
+
+  getActive(): any {
+    return this.organization?.['active'] ?? null;
+  }
+
+  getAlias(): any {
+    return this.organization?.['alias'] ?? null;
+  }
+
+  getContact(): any {
+    return this.organization?.['contact'] ?? null;
+  }
+
+  getEndpoint(): any {
+    return this.organization?.['endpoint'] ?? null;
+  }
+
+  getExtension(): any {
+    return this.organization?.['extension'] ?? null;
+  }
 }

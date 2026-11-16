@@ -87,4 +87,28 @@ export class SpecimenParser {
     }
     return value;
   }
+
+  getId(): any {
+    return this.specimen?.['id'] ?? null;
+  }
+
+  getIdentifier(): any {
+    return this.specimen?.['identifier'] ?? null;
+  }
+
+  getCollection(): any {
+    return this.specimen?.['collection'] ?? null;
+  }
+
+  getRequest(): any {
+    return this.specimen?.['request'] ?? null;
+  }
+
+  getCondition(): any {
+    return this.specimen?.['condition'] ?? null;
+  }
+
+  getExtension(): any {
+    return this.specimen?.['extension'] ?? null;
+  }
 }

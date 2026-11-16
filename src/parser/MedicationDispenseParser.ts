@@ -79,4 +79,12 @@ export class MedicationDispenseParser {
   getDosageInstruction(): any {
     return this.payload['dosageInstruction'] ?? null;
   }
+
+  getId(): any {
+    return this.payload?.['id'] ?? null;
+  }
+
+  getSubstitution(): any {
+    return this.payload?.['substitution'] ?? null;
+  }
 }

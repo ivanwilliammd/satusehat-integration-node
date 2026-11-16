@@ -64,4 +64,44 @@ export class DocumentReferenceParser {
   getContext(): any {
     return this.documentReference['context'] ?? null;
   }
+
+  getId(): any {
+    return this.documentReference?.['id'] ?? null;
+  }
+
+  getIdentifier(): any {
+    return this.documentReference?.['identifier'] ?? null;
+  }
+
+  getType(): any {
+    return this.documentReference?.['type'] ?? null;
+  }
+
+  getCategory(): any {
+    return this.documentReference?.['category'] ?? null;
+  }
+
+  getSubject(): any {
+    return this.documentReference?.['subject'] ?? null;
+  }
+
+  getAuthor(): any {
+    return this.documentReference?.['author'] ?? null;
+  }
+
+  getCustodian(): any {
+    return this.documentReference?.['custodian'] ?? null;
+  }
+
+  getSecurityLabel(): any {
+    return this.documentReference?.['securityLabel'] ?? null;
+  }
+
+  getContent(): any {
+    return this.documentReference?.['content'] ?? null;
+  }
+
+  getExtension(): any {
+    return this.documentReference?.['extension'] ?? null;
+  }
 }

@@ -55,4 +55,8 @@ export class MedicationParser {
   getExtension(): any {
     return this.payload['extension'] ?? null;
   }
+
+  getId(): any {
+    return this.payload?.['id'] ?? null;
+  }
 }

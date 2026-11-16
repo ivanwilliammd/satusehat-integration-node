@@ -63,4 +63,32 @@ export class GoalParser {
   getOutcomeCode(): any {
     return this.payload['outcomeCode'] ?? null;
   }
+
+  getIdentifier(): any {
+    return this.payload?.['identifier'] ?? null;
+  }
+
+  getStartDateTime(): any {
+    return this.payload?.['startDateTime'] ?? null;
+  }
+
+  getStartPeriod(): any {
+    return this.payload?.['startPeriod'] ?? null;
+  }
+
+  getStatusReason(): any {
+    return this.payload?.['statusReason'] ?? null;
+  }
+
+  getNote(): any {
+    return this.payload?.['note'] ?? null;
+  }
+
+  getOutcomeReference(): any {
+    return this.payload?.['outcomeReference'] ?? null;
+  }
+
+  getStartAge(): any {
+    return this.payload?.['startAge'] ?? null;
+  }
 }

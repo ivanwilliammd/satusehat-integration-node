@@ -44,4 +44,40 @@ export class RelatedPersonParser {
   getCommunications(): any {
     return this.relatedPerson['communication'] ?? null;
   }
+
+  getId(): any {
+    return this.relatedPerson?.['id'] ?? null;
+  }
+
+  getIdentifier(): any {
+    return this.relatedPerson?.['identifier'] ?? null;
+  }
+
+  getPatient(): any {
+    return this.relatedPerson?.['patient'] ?? null;
+  }
+
+  getRelationship(): any {
+    return this.relatedPerson?.['relationship'] ?? null;
+  }
+
+  getName(): any {
+    return this.relatedPerson?.['name'] ?? null;
+  }
+
+  getTelecom(): any {
+    return this.relatedPerson?.['telecom'] ?? null;
+  }
+
+  getAddress(): any {
+    return this.relatedPerson?.['address'] ?? null;
+  }
+
+  getCommunication(): any {
+    return this.relatedPerson?.['communication'] ?? null;
+  }
+
+  getExtension(): any {
+    return this.relatedPerson?.['extension'] ?? null;
+  }
 }
