@@ -124,7 +124,9 @@ describe('SatusehatRules', () => {
       join(__dirname, '..', 'data', 'satusehat', 'required-rules.json'),
       'utf8',
     );
-    expect(mentah.length, 'jumlah byte berkas aturan berubah').toBe(5849);
+    // Checkout Windows memakai CRLF; hitung setelah normalisasi.
+    const dinormalisasi = mentah.replace(/\r\n/g, '\n');
+    expect(dinormalisasi.length, 'jumlah byte berkas aturan berubah').toBe(5849);
 
     const harap: Record<string, number> = {
       Condition: 3,
