@@ -2,6 +2,27 @@
 
 > **Open-source Node.js SDK for integrating with SATUSEHAT** — Indonesia's national health data platform powered by FHIR R4. Pure JavaScript/TypeScript, no framework dependency.
 
+## Status & cakupan (diukur, bukan diklaim)
+
+| Bagian | Jumlah | Bukti |
+| --- | --- | --- |
+| Builder | 141 resource | `src/builder` |
+| Method kanon | 1.405 (1.404 + `Bundle.json` yang sengaja tidak diporting) | `src/builder/method_surface.test.ts` |
+| Parser | 141 kelas | `src/parser`, `src/parser/parser_surface.test.ts` |
+| Namespace R5 | 141 builder | `src/r5/builder`, `src/r5/r5_namespace.test.ts` |
+| Golden | 189 | `src/.../testdata` |
+| Tes | 973 | `npx vitest run`, `tsc` bersih |
+
+R4 tetap acuan. Memakai R5 cukup ganti baris import:
+
+```ts
+import { PatientBuilder } from './builder/Patient';     // R4
+import { PatientBuilder } from './r5/builder/Patient';  // R5 — hanya baris ini
+```
+
+Kelas R5 adalah turunan langsung kelas R4; uji memastikan prototipe dan method-nya diwarisi apa
+adanya. Datatype di sini adalah `type` struktural, jadi tidak butuh lapisan R5 terpisah.
+
 [![Node.js](https://img.shields.io/badge/Node.js-20%2B-blue)](https://nodejs.org)
 [![FHIR R4](https://img.shields.io/badge/FHIR-R4-orange)](https://hl7.org/fhir/R4/)
 [![License](https://img.shields.io/badge/License-MIT-green)](LICENSE)
