@@ -380,3 +380,5 @@ export class TerminologyDB {
 
 export { TerminologyClient, TerminologyQueryBuilder, guessSystemFromCode } from './TerminologyClient';
 export type { TerminologyClientConfig, TerminologySystem, TerminologyEnvelope } from './TerminologyClient';
+
+export { violations as satusehatViolations, aturanWajib, ACT_CODE, ENCOUNTER_STATUS, OBSERVATION_STATUS, PROCEDURE_STATUS } from './SatusehatRules';
