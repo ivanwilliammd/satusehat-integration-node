@@ -2,6 +2,11 @@
 
 > **Open-source Node.js SDK for integrating with SATUSEHAT** — Indonesia's national health data platform powered by FHIR R4. Pure JavaScript/TypeScript, no framework dependency.
 
+[![npm](https://img.shields.io/npm/v/@ivanwilliammd/satusehat-integration?label=npm)](https://www.npmjs.com/package/@ivanwilliammd/satusehat-integration)
+[![downloads](https://img.shields.io/npm/dm/@ivanwilliammd/satusehat-integration)](https://www.npmjs.com/package/@ivanwilliammd/satusehat-integration)
+[![FHIR R4](https://img.shields.io/badge/FHIR-R4-orange)](https://hl7.org/fhir/R4/)
+[![License](https://img.shields.io/badge/License-MIT-green)](LICENSE)
+
 ## Status & cakupan (diukur, bukan diklaim)
 
 | Bagian | Jumlah | Bukti |
