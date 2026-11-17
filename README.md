@@ -12,7 +12,7 @@
 | Bagian | Jumlah | Bukti |
 | --- | --- | --- |
 | Builder | 141 resource | `src/builder` |
-| Method kanon | 1.405 (1.404 + `Bundle.json` yang sengaja tidak diporting) | `src/builder/method_surface.test.ts` |
+| Method builder | 1.405 | `src/builder/method_surface.test.ts` |
 | Parser | 141 kelas | `src/parser`, `src/parser/parser_surface.test.ts` |
 | Namespace R5 | 141 builder | `src/r5/builder`, `src/r5/r5_namespace.test.ts` |
 | Golden | 189 | `src/.../testdata` |
