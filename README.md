@@ -18,15 +18,16 @@
 | Golden | 189 | `src/.../testdata` |
 | Tes | 973 | `npx vitest run`, `tsc` bersih |
 
-R4 tetap acuan. Memakai R5 cukup ganti baris import:
+R4 remains the reference. Using R5 means changing one import line:
 
 ```ts
 import { PatientBuilder } from './builder/Patient';     // R4
-import { PatientBuilder } from './r5/builder/Patient';  // R5 — hanya baris ini
+import { PatientBuilder } from './r5/builder/Patient';  // R5 — this line only
 ```
 
-Kelas R5 adalah turunan langsung kelas R4; uji memastikan prototipe dan method-nya diwarisi apa
-adanya. Datatype di sini adalah `type` struktural, jadi tidak butuh lapisan R5 terpisah.
+Every R5 class extends its R4 class directly, and a test asserts that the prototype chain and the
+methods are inherited unchanged. Datatypes here are structural `type`s, so they need no separate R5
+layer.
 
 [![Node.js](https://img.shields.io/badge/Node.js-20%2B-blue)](https://nodejs.org)
 [![FHIR R4](https://img.shields.io/badge/FHIR-R4-orange)](https://hl7.org/fhir/R4/)
