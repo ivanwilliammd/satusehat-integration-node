@@ -1,79 +1,87 @@
-# SRD — satusehat-integration-node (SDK SATUSEHAT FHIR R4 · Node.js/TypeScript)
+# SRD — satusehat-integration-node (SATUSEHAT FHIR R4 SDK · Node.js/TypeScript)
 
-Status: v2.0 · 2026-11-09 · Pendamping: `docs/PRD-SDK-ECOSYSTEM.md` (repo PHP) + `README.md`
-Versi paket terpasang: **4.15.4** (`package.json`).
+Status: v2.1 · 2026-11-17 · Companions: `docs/PRD-SDK-ECOSYSTEM.md` (PHP repository) + `README.md`
+Installed package version: **4.19.0** (`package.json`).
 
-Seluruh angka di dokumen ini **diukur** dari checkout ini, bukan dari ingatan.
-Perintah pengukuran ditulis di sebelah setiap angka supaya bisa diulang saat kode berubah.
-Bila kode berubah, perbarui dokumen ini di commit yang sama.
+Every number in this document is **measured** from this checkout; the command that produces each
+number is written beside it so it can be repeated when the code changes. Canonical counts come from
+`scripts/parity-manifest.sh` in the PHP repository, which applies the same de-duplication rule to all
+five ports. When code changes, update this document in the same commit.
 
-## 1. Ruang Lingkup
+## 1. Scope
 
-Menjelaskan cara kerja internal SDK: lapisan, kontrak publik, kesetaraan 100% terhadap SDK PHP,
-pemetaan galat, aturan kompatibilitas, dan cara mengujinya. Tidak menjelaskan pemakaian SATUSEHAT
-(lihat `README.md`) dan tidak menjelaskan produk yang memakainya.
+How the SDK works internally: layers, public contract, capability parity with the PHP SDK, error
+mapping, compatibility rules, and how the suite is run. SATUSEHAT usage belongs in `README.md`; the
+products that consume this package are out of scope.
 
-## 2. Prinsip Arsitektur
+## 2. Architecture principles
 
-1. **Bangun dulu, kirim kemudian.** Pembangun payload (`src/builder`, `src/datatype`) terpisah dari
-   lapisan pengiriman HTTP (`src/ssrequest`, `src/ssresponse`, `src/queue`).
-2. **Barrel digenerate, bukan disunting tangan.** `src/index.ts` dihasilkan
-   `scripts/generate_index.py`; menambah resource atau modul berarti menjalankan ulang generator.
-3. **Rahasia hanya dari lingkungan.** Kredensial OAuth2 SATUSEHAT dan PAT/OIDC SmarTerm dibaca dari
-   konfigurasi pemanggil atau `process.env`; tidak ada kredensial di kode maupun log.
-4. **Satu perilaku, empat bahasa.** Seluruh komponen (`datatype`, `builder`, `terminology`,
-   `ssrequest`, `ssresponse`, `parser`, `queue`) setara dengan SDK PHP referensi.
+1. **Build first, send later.** Payload builders (`src/builder`, `src/datatype`) are separate from the
+   HTTP layer (`src/ssrequest`, `src/ssresponse`, `src/queue`).
+2. **Barrels are generated, never hand-edited.** `src/index.ts` is produced by
+   `scripts/generate_index.py`; adding a resource or module means re-running the generator.
+3. **Secrets come from the environment only.** SATUSEHAT OAuth2 credentials and SmarTerm PAT/OIDC
+   credentials are read from caller configuration or `process.env`; no credential is written to code
+   or to logs.
+4. **One behaviour, five languages.** The same payload shape, HTTP retry/refresh semantics, validation
+   rule set, and queue semantics as the other ports. Where a capability is missing, `docs/PARITY.md`
+   says so instead of implying parity.
 
-## 3. Inventaris Terukur
+## 3. Measured inventory
 
-| Bagian | Jumlah | Cara mengukur |
+| Item | Count | Measurement |
 |---|---|---|
-| Berkas builder | 143 | `ls src/builder/*.ts \| wc -l` |
-| Kelas builder diekspor | 142 | `grep -rhoE "export class [A-Za-z0-9_]+" src/builder/*.ts \| wc -l` |
-| Kelas DataType diekspor | 31 | idem pada `src/datatype/{datatype,datatypes}.ts` |
-| Berkas terminology | 20 | `ls src/terminology/*.ts \| wc -l` |
-| Berkas ssrequest | 3 | `OAuth2Client.ts`, `SSRequest.ts`, `index.ts` |
-| Berkas ssresponse | 4 | `SSResponse.ts`, `BundleResponse.ts`, `SSValidationError.ts` (558 aturan + 14 tipe), `index.ts` |
-| Berkas parser | 19 | 18 parser resource FHIR + `index.ts` |
-| Berkas queue | 9 | `error_classifier.ts`, `queue_exception.ts`, `queue_interface.ts`, `queue_result.ts`, `rate_limiter.ts`, `sqlite_queue.ts`, `monitor.ts`, `worker.ts`, `index.ts` |
+| Builder source files | 142 | `ls src/builder/*.ts \| grep -v .test.ts \| wc -l` |
+| Canonical builder classes | 141 | `scripts/parity-manifest.sh` (de-duplicates aliases) |
+| Datatype classes | 33 | `grep -rhoE "export class [A-Za-z0-9_]+" src/datatype/*.ts \| wc -l` |
+| Terminology modules | 22 | `scripts/parity-manifest.sh` |
+| `ssrequest` modules | 2 (+ index) | `OAuth2Client.ts`, `SSRequest.ts` |
+| `ssresponse` modules | 3 (+ index) | `SSResponse.ts`, `BundleResponse.ts`, `SSValidationError.ts` |
+| Parser files | 142 (+ index) | `ls src/parser/*.ts \| grep -v .test.ts \| wc -l` |
+| Queue modules | 8 (+ index) | `ls src/queue/*.ts \| grep -v .test.ts \| wc -l` |
+| R5 builder modules | 141 | `ls src/r5/builder/*.ts \| wc -l` |
+| Test files | 214 | `find src -name "*.test.ts" \| wc -l` |
+| Test cases | 1.279 | `vitest run` |
 
-## 4. Kontrak Publik
+## 4. Public contract
 
-- Titik masuk paket: `main: dist/index.js`, `types: dist/index.d.ts`, `files: [dist, README.md]`.
-- Ekspor berasal dari `src/index.ts` (digenerate): seluruh `datatype`, `terminology`, `ssrequest`,
-  `ssresponse`, `parser`, `queue`, dan `builder`.
-- `npm test` = `vitest`; `npm run build` = `tsc`; `prepack` memastikan `dist/index.js` dan
-  `dist/index.d.ts` benar-benar ada sebelum terbit.
+- Package entry points: `main: dist/index.js`, `types: dist/index.d.ts`, `files: [dist, README.md]`.
+- Exports come from the generated `src/index.ts`: all of `datatype`, `terminology`, `ssrequest`,
+  `ssresponse`, `parser`, `queue`, and `builder`.
+- `npm test` runs `vitest`; `npm run build` runs `tsc`; `prepack` asserts that `dist/index.js` and
+  `dist/index.d.ts` exist before publication.
 
-## 5. Kesetaraan terhadap SDK PHP (100% Feature Parity)
+## 5. Capability parity with the PHP SDK
 
-| Kemampuan | PHP | Node | Bukti di repo ini |
+| Capability | PHP | Node | Evidence in this repository |
 |---|---|---|---|
-| Bangun payload FHIR | 141 `PayloadBuilder*` | **142 kelas** | `src/builder/*.ts` |
-| Nilai bertipe (DataType) | 32 | **31** | `src/datatype` |
-| Kirim FHIR + retry/refresh token | `OAuth2Client`, `SSRequest` | **`OAuth2Client`, `SSRequest`** | `src/ssrequest/` |
-| Bungkus jawaban + validasi 558 aturan | `SSResponse`, `BundleResponse`, `SSValidationError` | **`SSResponse`, `BundleResponse`, `SSValidationError` (558 aturan + 14 tipe)** | `src/ssresponse/` |
-| Parser FHIR | 18 berkas | **18 berkas (`DeviceParser` .. `TaskParser`)** | `src/parser/` |
-| Antrean kirim (`Queue/*`) | 8 berkas | **8 berkas (`SqliteQueue`, `Worker`, `QueueMonitor`, `ErrorClassifier`, `RateLimiter`, `QueueInterface`, `QueueResult`, `QueueException`)** | `src/queue/` |
-| Klien terminology | 22 berkas | **20 berkas, `TerminologyClient` ber-PAT/OIDC** | `src/terminology/` |
+| Payload builders | 141 | 141 | `src/builder` |
+| Datatypes | 33 | 33 | `src/datatype` |
+| FHIR parsers | 142 | 142 | `src/parser` |
+| R5 namespace | 142 | 141 | `src/r5/builder` |
+| Queue modules | 8 | 8 | `src/queue` |
+| Terminology modules | 23 | 22 | `src/terminology` |
+| SATUSEHAT required rules | yes | yes | `src/data/satusehat/required-rules.json` + fingerprint test |
+| Non-standard SATUSEHAT objects | yes | yes | `src/terminology/SatusehatNonStandard.ts` |
+| R4 element guard (opt-in) | yes | yes | `src/conformance/R4ElementGuard.ts` |
 
-## 6. Pemetaan Galat (`SSRequest`, `SSValidationError`, `ErrorClassifier`, `TerminologyClient`)
+Differences that remain are listed with their reason in `docs/PARITY.md`; none of them is a missing
+capability.
 
-- **`SSRequest`**:
-  - **401** → bila `oauth2.isTokenAutoRefresh()` aktif, panggil `refreshToken()` dan ulangi permintaan dengan exponential backoff (`2^n` detik, maks 60 detik).
-  - **429** → baca header `Retry-After` (atau `2^n` detik) hingga `maxRetries`.
-  - **5xx** → exponential backoff `2^n` detik hingga `maxRetries`.
-- **`SSValidationError`**:
-  - Mengurai `OperationOutcome.issue[]`, mengekstrak `RuleNumber: <n>`, dan memetakannya ke 558 entri `RULE_MAP` serta 14 kategori `RESPONSE_TYPES`.
-- **`ErrorClassifier` & `SqliteQueue`**:
-  - Mengklasifikasikan HTTP status ke kategori (`success`, `unauthorized`, `rate_limited`, `server_error`, `validation_error`, dll.), menjadwalkan ulang kegagalan yang dapat dicoba ulang (`attempts^2 * 30` detik, maks 300 detik), atau memindahkan ke DLQ (`dlq`).
-- **`TerminologyClient`**:
-  - `timeout` bawaan **30 detik**, auto-refresh OIDC pada 401, dan melempar `Error("TerminologyClient HTTP <status>")` pada HTTP >= 400.
+## 6. Error mapping (`SSRequest`, `SSValidationError`, `ErrorClassifier`, `TerminologyClient`)
 
-## 7. Uji
+- **`SSRequest`**
+  - **401** → when `oauth2.isTokenAutoRefresh()` is enabled, call `refreshToken()` and retry with
+    exponential backoff (`2^n` seconds, capped at 60).
+  - **429** → read `Retry-After` first; fall back to exponential backoff.
+  - **5xx** → retry up to the configured attempt limit, then surface the last error.
+- **`SSValidationError`** maps SATUSEHAT rule codes (558 rules, 14 response types) to human-readable
+  messages; callers branch on `code`, never on message text.
+- **`ErrorClassifier`** decides whether a queue item is retryable or belongs in the dead-letter queue.
+- **`TerminologyClient`** treats `401` as a token problem: refresh once, then surface the error.
 
-```bash
-npm install
-npm test -- --run    # vitest
-npm run build        # tsc — gerbang tipe
-```
+## 7. Compatibility rules
+
+- Node 18+ (global `fetch`); no framework dependency.
+- The package ships TypeScript declarations; breaking type changes require a major version.
+- Adding a builder, parser, or queue module is a minor change; changing an exported signature is not.
