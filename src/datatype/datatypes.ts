@@ -1,5 +1,5 @@
 // SATUSEHAT Integration DataTypes — TypeScript equivalents of PHP DataType classes
-// Source: /home/openclaw/projects/satusehat-integration/src/DataType/
+// Mirrors the PHP DataType classes in satusehat-integration.
 
 // ─── Base ─────────────────────────────────────────────────────────────────────
 
