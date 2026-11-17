@@ -382,3 +382,4 @@ export { TerminologyClient, TerminologyQueryBuilder, guessSystemFromCode } from 
 export type { TerminologyClientConfig, TerminologySystem, TerminologyEnvelope } from './TerminologyClient';
 
 export { violations as satusehatViolations, aturanWajib, ACT_CODE, ENCOUNTER_STATUS, OBSERVATION_STATUS, PROCEDURE_STATUS } from './SatusehatRules';
+export * from './SatusehatNonStandard';

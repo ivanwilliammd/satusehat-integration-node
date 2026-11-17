@@ -10,6 +10,7 @@ export * from './datatype';
 
 // --- terminologi, ssrequest, ssresponse, parser, antrean, konfigurasi ---
 export * from './terminology/index';
+export * from './conformance/R4ElementGuard';
 export * from './terminology/Cvx';
 export * from './terminology/FhirR4term';
 export * from './terminology/FhirR4vs';
