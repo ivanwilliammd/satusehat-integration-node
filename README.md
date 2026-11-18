@@ -47,7 +47,7 @@ Built on the official [SATUSEHAT Platform Guidelines](https://satusehat.kemkes.g
 - **31 DataType** classes — composable FHIR R4 value objects with `toJSON()` serialization
 - **OAuth2Client & SSRequest** — HTTP client with automatic OAuth2 token caching/refresh on 401 and exponential backoff / `Retry-After` on 429 & 5xx
 - **SSResponse, BundleResponse & SSValidationError** — response wrappers with full 558 SATUSEHAT validation rule dictionary (`RULE_MAP`) and 14 response categories
-- **18 FHIR Resource Parsers** — `PatientParser`, `EncounterParser`, `ObservationParser`, `DiagnosticReportParser`, `PractitionerParser`, etc.
+- **142 FHIR Resource Parsers** — `PatientParser`, `EncounterParser`, `ObservationParser`, `DiagnosticReportParser`, `PractitionerParser`, etc.
 - **TerminologyResolver & TerminologyClient** — castable terminology strings (`"ICD10:A00"`, `"LOINC:2951-2"`, `"SNOMED:38341003"`) and SmarTerm API client
 - **3 SATUSEHAT-specific** resources: BillingStatus (NON-FHIR JSON), PurificationDecision (NON-FHIR JSON), Endpoint (FHIR R4)
 - **Full SQLite Queue + Worker + Monitor + Rate Limiter** — persistent `better-sqlite3` queue (`SqliteQueue`), `Worker`, `QueueMonitor`, `ErrorClassifier`, and `RateLimiter`
