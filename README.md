@@ -7,16 +7,16 @@
 [![FHIR R4](https://img.shields.io/badge/FHIR-R4-orange)](https://hl7.org/fhir/R4/)
 [![License](https://img.shields.io/badge/License-MIT-green)](LICENSE)
 
-## Status & cakupan (diukur, bukan diklaim)
+## Status and coverage (measured, not claimed)
 
-| Bagian | Jumlah | Bukti |
+| Area | Count | Evidence |
 | --- | --- | --- |
-| Builder | 141 resource | `src/builder` |
-| Method builder | 1.405 | `src/builder/method_surface.test.ts` |
-| Parser | 141 kelas | `src/parser`, `src/parser/parser_surface.test.ts` |
-| Namespace R5 | 141 builder | `src/r5/builder`, `src/r5/r5_namespace.test.ts` |
-| Golden | 189 | `src/.../testdata` |
-| Tes | 973 | `npx vitest run`, `tsc` bersih |
+| Builder | 141 resources | `src/builder` |
+| Builder methods | 1,405 | `src/builder/method_surface.test.ts` |
+| Parser | 141 classes | `src/parser`, `src/parser/parser_surface.test.ts` |
+| R5 namespace | 141 builders | `src/r5/builder`, `src/r5/r5_namespace.test.ts` |
+| Golden payloads | 189 | `src/.../testdata` |
+| Tests | 1,279 | `npx vitest run`, `tsc` clean |
 
 R4 remains the reference. Using R5 means changing one import line:
 
