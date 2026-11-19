@@ -328,3 +328,6 @@ export * from './builder/VisionPrescription';
 export { VisionPrescription as VisionPrescriptionBuilder } from './builder/VisionPrescription';
 export { ListResource as List } from './builder/ListResource';
 export { ListResource as ListBuilder } from './builder/ListResource';
+
+// HL7 v2 + MLLP (analyzers, LIS) — same package, same install.
+export * from './hl7v2';

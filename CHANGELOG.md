@@ -1,5 +1,17 @@
 # Changelog
 
+## Unreleased
+
+### Added
+
+- **HL7 v2 + MLLP**: `Message`/`Segment` (ER7 parse, path access, escape decode/encode, byte-for-byte
+  round trip), `Mllp` framing with a stateful `MllpReader`, `Ack` (AA/AE/AR with MSA-2 echo), `Client`
+  with `send()` and `session()` (one socket, one result per message), and declarative `Profile`s
+  (`Profiles.adtA01()`, `adtA08()`, `oruR01()`).
+- **Shared corpus**: the 20 fixtures are copied byte-for-byte from the PHP SDK so behaviour parity is
+  tested with the same messages, not re-described in prose.
+
+
 ## v4.19.1 - 2026-11-18
 
 ### Fixed

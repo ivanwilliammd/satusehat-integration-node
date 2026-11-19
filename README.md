@@ -271,6 +271,51 @@ console.log(monitor.healthCheck());
 
 ---
 
+## HL7 v2 and MLLP
+
+The same install also speaks HL7 v2, because a hospital is rarely a single standard: analyzers and
+LIS speak v2 over MLLP while SATUSEHAT speaks FHIR R4.
+
+```ts
+import { Message, Mllp, Ack, Client, Profiles } from '@ivanwilliammd/satusehat-integration';
+
+const msg = Message.parse(er7);       // CR, LF or CRLF, encoding characters read from MSH-2
+msg.messageType();                    // "ADT"
+msg.get('PID.5.1');                   // family name, escapes decoded
+msg.set('PID.8', 'F');                // re-escaped on write
+msg.toString();                       // ER7, CR-terminated, byte-for-byte round trip
+```
+
+```ts
+const result = await new Client('10.0.0.21:2575').send(msg);
+result.accepted;      // MSA-1 === AA
+result.controlId;     // MSA-2, verified against MSH-10
+
+const results = await new Client('10.0.0.21:2575').session(messages); // one socket, one result each
+```
+
+Rules that are enforced rather than documented:
+
+- **Transport failures retry, verdicts do not.** `AE`/`AR` is returned to the caller; retrying an
+  application rejection turns one bad message into a thousand.
+- **MSA-2 must echo MSH-10.** A reply with a different control id is stale or misrouted and throws.
+- **Frames carry over.** `MllpReader` keeps bytes that arrive after a complete frame, because one TCP
+  read often returns two or three ACKs — a stateless reader would return the first and lose the rest.
+
+Validation is data:
+
+```ts
+const issues = Profiles.oruR01().validate(msg);   // ADT_A01, ADT_A08, ORU_R01 built in
+const errors = issues.filter(i => i.severity === 'error');   // warnings do not block
+```
+
+The test corpus is **shared byte-for-byte with the PHP SDK** (`src/hl7v2/__fixtures__`): ten messages
+a hospital actually sends and ten that must be refused. Porting the corpus rather than rewriting the
+tests is what makes "same behaviour in five languages" a measurable claim instead of a slogan.
+
+Not implemented yet, and not claimed: batches (FHS/BHS), vendor-specific profiles beyond the three
+built in, HL7 v2 table validation, and a supervised MLLP server daemon.
+
 ## Documentation
 
 | Page | Description |
